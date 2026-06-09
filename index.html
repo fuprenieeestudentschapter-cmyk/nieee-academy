@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NIEEE Academy of Digital Skills</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Oatmeal+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --navy:#0A1628; --navy-mid:#112240; --blue:#1A56DB; --blue-light:#3B82F6;
@@ -18,9 +18,7 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(56,189,248,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
 .page{position:relative;z-index:1;}
 nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2rem;border-bottom:1px solid var(--border);background:rgba(10,22,40,0.95);position:sticky;top:0;z-index:100;}
-.nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;color:var(--white);display:flex;align-items:center;gap:10px;text-decoration:none;}
-.nav-logo:hover{opacity:0.9;}
-.nav-logo img{width:24px;height:24px;border-radius:6px;display:block;}
+.nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;color:var(--white);display:flex;align-items:center;gap:10px;cursor:pointer;}
 .nav-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;}
 .nav-badge{font-size:11px;background:rgba(56,189,248,0.1);color:var(--accent);border:1px solid rgba(56,189,248,0.2);padding:4px 12px;border-radius:20px;font-weight:500;}
 .screen{display:none;} .screen.active{display:block;}
@@ -151,23 +149,128 @@ footer strong{color:var(--white);}
   .hero{padding:3rem 1.25rem 2rem;}
   .section,.class-page-header,.lessons-wrap,.player-wrap{padding-left:1.25rem;padding-right:1.25rem;}
 }
+
+/* AUTH GATE */
+.auth-gate{max-width:480px;margin:0 auto;padding:3rem 2rem 4rem;text-align:center;}
+.auth-gate-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.12em;color:var(--accent);text-transform:uppercase;margin-bottom:1rem;}
+.auth-gate-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.6rem;font-weight:800;color:var(--white);margin-bottom:0.75rem;line-height:1.25;}
+.auth-gate-sub{font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;}
+.auth-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;}
+.auth-divider{border-top:1px solid var(--border);margin:2.5rem 0;}
+
+/* AUTH MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,12,25,0.85);z-index:200;align-items:center;justify-content:center;padding:1.5rem;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--navy-mid);border:1px solid var(--border);border-radius:16px;padding:2rem;width:100%;max-width:420px;position:relative;}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;line-height:1;}
+.modal-close:hover{color:var(--white);}
+.modal-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:0.3rem;}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.6;}
+.form-group{margin-bottom:1rem;text-align:left;}
+.form-label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:6px;letter-spacing:0.04em;}
+.form-input{width:100%;background:rgba(10,22,40,0.8);border:1px solid var(--border);border-radius:8px;padding:0.7rem 0.9rem;font-size:14px;color:var(--white);font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;}
+.form-input:focus{border-color:rgba(56,189,248,0.5);}
+.form-input::placeholder{color:var(--muted);}
+.form-input-hint{font-size:11px;color:var(--muted);margin-top:4px;}
+.modal-msg{font-size:13px;padding:0.75rem 1rem;border-radius:8px;margin-bottom:1rem;display:none;}
+.modal-msg.error{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#FCA5A5;display:block;}
+.modal-msg.success{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:#6EE7B7;display:block;}
+.modal-switch{font-size:13px;color:var(--muted);text-align:center;margin-top:1.25rem;}
+.modal-switch a{color:var(--accent);cursor:pointer;text-decoration:none;}
+.modal-switch a:hover{text-decoration:underline;}
+.btn-full{width:100%;justify-content:center;}
+.loading-dots::after{content:'...';animation:dots 1.2s steps(4,end) infinite;}
+@keyframes dots{0%,20%{content:''}40%{content:'.'}60%{content:'..'}80%,100%{content:'...'}}
+
+/* NAV USER */
+.nav-user{display:flex;align-items:center;gap:10px;}
+.nav-user-name{font-size:13px;color:var(--white);font-weight:500;}
+.nav-logout-btn{font-size:12px;background:none;border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:20px;cursor:pointer;font-family:'Inter',sans-serif;transition:color 0.2s,border-color 0.2s;}
+.nav-logout-btn:hover{color:var(--white);border-color:var(--accent);}
+
+/* WELCOME BANNER */
+.welcome-banner{background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.15);border-radius:12px;padding:1rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.welcome-banner-text{flex:1;font-size:14px;color:var(--off-white);line-height:1.5;}
+.welcome-banner-text strong{color:var(--white);}
 </style>
 </head>
 <body>
 <div class="page">
 <nav>
-  <a class="nav-logo" href="index.html" onclick="showScreen('home'); return false;" aria-label="Go to home">
-    <img src="favicon.png" alt="NIEEE Academy logo">
-    <span><span class="dot"></span>NIEEE Academy of Digital Skills</span>
-  </a>
-  <span class="nav-badge">2025/2026 Session</span>
+  <div class="nav-logo" onclick="goHome()"><span class="dot"></span>NIEEE Academy of Digital Skills</div>
+  <div id="nav-right">
+    <span class="nav-badge">2025/2026 Session</span>
+  </div>
 </nav>
 
+<!-- AUTH MODALS -->
+<div class="modal-overlay" id="modal-register">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModals()">✕</button>
+    <div class="modal-title">Create your account</div>
+    <div class="modal-sub">Register once and your progress saves across all your devices.</div>
+    <div class="modal-msg" id="reg-msg"></div>
+    <div class="form-group">
+      <label class="form-label">Full name</label>
+      <input class="form-input" id="reg-name" type="text" placeholder="e.g. Amara Okafor">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input class="form-input" id="reg-email" type="email" placeholder="e.g. amara@example.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">WhatsApp number</label>
+      <input class="form-input" id="reg-phone" type="tel" placeholder="e.g. 08012345678">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Department / Course of study</label>
+      <input class="form-input" id="reg-dept" type="text" placeholder="e.g. Electrical Engineering">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" id="reg-pass" type="password" placeholder="Choose a password (min 6 characters)">
+      <div class="form-input-hint">Remember this — you'll use it to log in next time.</div>
+    </div>
+    <button class="btn btn-primary btn-full" id="reg-btn" onclick="doRegister()">Create account</button>
+    <div class="modal-switch">Already have an account? <a onclick="openLogin()">Log in</a></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-login">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModals()">✕</button>
+    <div class="modal-title">Welcome back</div>
+    <div class="modal-sub">Log in to continue from where you left off.</div>
+    <div class="modal-msg" id="login-msg"></div>
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input class="form-input" id="login-email" type="email" placeholder="The email you registered with">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" id="login-pass" type="password" placeholder="Your password">
+    </div>
+    <button class="btn btn-primary btn-full" id="login-btn" onclick="doLogin()">Log in</button>
+    <div class="modal-switch">Don't have an account? <a onclick="openRegister()">Register</a></div>
+  </div>
+</div>
+
+<!-- HOME SCREEN -->
 <div id="screen-home" class="screen active">
   <section class="hero">
     <p class="hero-eyebrow">NIEEE FUPRE Students Chapter</p>
     <h1>Build Skills.<br><span>Build the Future.</span></h1>
     <p class="hero-sub">A 6-week intensive digital skills programme for FUPRE engineering students. Seven classes. Real tools. Practical outcomes.</p>
+
+    <!-- AUTH GATE (shown when not logged in) -->
+    <div id="auth-gate">
+      <div class="auth-btns">
+        <button class="btn btn-primary" onclick="openRegister()">✦ Enroll now — it's free</button>
+        <button class="btn btn-secondary" onclick="openLogin()">Log in</button>
+      </div>
+      <p style="font-size:12px;color:var(--muted);">Register once. Your progress saves automatically across all devices.</p>
+    </div>
+
     <div class="hero-stats">
       <div><div class="hero-stat-num">7</div><div class="hero-stat-label">Classes</div></div>
       <div><div class="hero-stat-num">6</div><div class="hero-stat-label">Weeks</div></div>
@@ -175,11 +278,31 @@ footer strong{color:var(--white);}
       <div><div class="hero-stat-num">Jun–Jul</div><div class="hero-stat-label">2026</div></div>
     </div>
   </section>
-  <section class="section">
+
+  <!-- CLASSES (shown only when logged in) -->
+  <section class="section" id="classes-section" style="display:none;">
+    <div class="welcome-banner" id="welcome-banner">
+      <span style="font-size:1.5rem;">👋</span>
+      <div class="welcome-banner-text"><strong id="welcome-name">Welcome back!</strong><br>Pick up where you left off or start a new class below.</div>
+    </div>
     <p class="section-label">What you'll learn</p>
     <h2 class="section-title">Choose your class</h2>
     <div class="classes-grid" id="classes-grid"></div>
   </section>
+
+  <!-- PROMPT TO LOG IN (shown when not logged in, below hero) -->
+  <section class="section" id="locked-section" style="display:none;">
+    <div style="text-align:center;padding:2rem;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;">
+      <div style="font-size:2rem;margin-bottom:1rem;">🔐</div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">Log in to access your classes</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.6;">Register or log in to view all 7 classes, watch lessons, and track your progress across devices.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="openRegister()">Enroll now</button>
+        <button class="btn btn-secondary" onclick="openLogin()">Log in</button>
+      </div>
+    </div>
+  </section>
+
   <footer><strong>NIEEE Academy of Digital Skills</strong> &nbsp;·&nbsp; NIEEE FUPRE Students Chapter &nbsp;·&nbsp; 2025/2026 Academic Session</footer>
 </div>
 
@@ -639,14 +762,140 @@ const CLASSES = [
   },
 ];
 
-const state = { currentClass:null, currentLesson:null, quizAnswers:{}, quizSubmitted:false };
+// ─── CONFIG ─────────────────────────────────────────────────────────────────
+// Paste your Google Apps Script Web App URL here after deploying Code.gs
+const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
 
-function getProgress() {
-  try { return JSON.parse(localStorage.getItem('nieee_progress')||'{}'); } catch(e){ return {}; }
+// ─── STATE ───────────────────────────────────────────────────────────────────
+const state = {
+  currentClass:null, currentLesson:null, quizAnswers:{}, quizSubmitted:false,
+  user: null,   // { email, name, dept, phone, progress:{} }
+};
+
+// ─── AUTH HELPERS ─────────────────────────────────────────────────────────────
+function saveSession(user){ try{ localStorage.setItem('nieee_session', JSON.stringify(user)); }catch(e){} }
+function loadSession(){ try{ return JSON.parse(localStorage.getItem('nieee_session')||'null'); }catch(e){ return null; } }
+function clearSession(){ try{ localStorage.removeItem('nieee_session'); }catch(e){} }
+
+// ─── PROGRESS (backed by user object, synced to Sheet) ────────────────────────
+function getCompleted(classId){ return (state.user && state.user.progress && state.user.progress[classId]) || []; }
+function markComplete(classId,idx){
+  if(!state.user) return;
+  if(!state.user.progress) state.user.progress={};
+  if(!state.user.progress[classId]) state.user.progress[classId]=[];
+  if(!state.user.progress[classId].includes(idx)){
+    state.user.progress[classId].push(idx);
+    saveSession(state.user);
+    syncProgress(); // fire-and-forget sync to Sheet
+  }
 }
-function saveProgress(p){ try{ localStorage.setItem('nieee_progress',JSON.stringify(p)); }catch(e){} }
-function getCompleted(classId){ return getProgress()[classId]||[]; }
-function markComplete(classId,idx){ const p=getProgress(); if(!p[classId])p[classId]=[]; if(!p[classId].includes(idx))p[classId].push(idx); saveProgress(p); }
+async function syncProgress(){
+  if(!state.user) return;
+  try{
+    await fetch(APPS_SCRIPT_URL, {
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'saveProgress', email: state.user.email, progress: state.user.progress })
+    });
+  }catch(e){}
+}
+
+// ─── MODAL CONTROLS ───────────────────────────────────────────────────────────
+function openRegister(){ closeModals(); document.getElementById('modal-register').classList.add('open'); }
+function openLogin(){ closeModals(); document.getElementById('modal-login').classList.add('open'); }
+function closeModals(){ document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open')); }
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModals(); });
+
+// ─── REGISTER ─────────────────────────────────────────────────────────────────
+async function doRegister(){
+  const name=document.getElementById('reg-name').value.trim();
+  const email=document.getElementById('reg-email').value.trim().toLowerCase();
+  const phone=document.getElementById('reg-phone').value.trim();
+  const dept=document.getElementById('reg-dept').value.trim();
+  const pass=document.getElementById('reg-pass').value;
+  const msg=document.getElementById('reg-msg');
+  msg.className='modal-msg';
+  if(!name||!email||!phone||!dept||!pass){ showMsg(msg,'error','Please fill in all fields.'); return; }
+  if(pass.length<6){ showMsg(msg,'error','Password must be at least 6 characters.'); return; }
+  if(!/\S+@\S+\.\S+/.test(email)){ showMsg(msg,'error','Please enter a valid email address.'); return; }
+  const btn=document.getElementById('reg-btn');
+  btn.disabled=true; btn.innerHTML='<span class="loading-dots">Creating account</span>';
+  try{
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'register', name, email, phone, dept, pass })
+    });
+    const data = await res.json();
+    if(data.success){
+      const user = { name, email, phone, dept, progress:{} };
+      state.user = user; saveSession(user);
+      closeModals(); updateAuthUI(); buildHome();
+      showMsg(document.getElementById('reg-msg'),'success','');
+    } else {
+      showMsg(msg,'error', data.error||'Registration failed. Please try again.');
+    }
+  }catch(e){
+    showMsg(msg,'error','Could not connect. Check your internet and try again.');
+  }
+  btn.disabled=false; btn.textContent='Create account';
+}
+
+// ─── LOGIN ────────────────────────────────────────────────────────────────────
+async function doLogin(){
+  const email=document.getElementById('login-email').value.trim().toLowerCase();
+  const pass=document.getElementById('login-pass').value;
+  const msg=document.getElementById('login-msg');
+  msg.className='modal-msg';
+  if(!email||!pass){ showMsg(msg,'error','Please enter your email and password.'); return; }
+  const btn=document.getElementById('login-btn');
+  btn.disabled=true; btn.innerHTML='<span class="loading-dots">Logging in</span>';
+  try{
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'login', email, pass })
+    });
+    const data = await res.json();
+    if(data.success){
+      state.user = data.user; saveSession(data.user);
+      closeModals(); updateAuthUI(); buildHome();
+    } else {
+      showMsg(msg,'error', data.error||'Incorrect email or password.');
+    }
+  }catch(e){
+    showMsg(msg,'error','Could not connect. Check your internet and try again.');
+  }
+  btn.disabled=false; btn.textContent='Log in';
+}
+
+function doLogout(){
+  state.user=null; clearSession(); updateAuthUI(); buildHome();
+}
+
+function showMsg(el,type,text){ el.className='modal-msg '+type; el.textContent=text; }
+
+// ─── UI STATE ─────────────────────────────────────────────────────────────────
+function updateAuthUI(){
+  const loggedIn = !!state.user;
+  const navRight = document.getElementById('nav-right');
+  if(loggedIn){
+    navRight.innerHTML=`<div class="nav-user"><span class="nav-user-name">👤 ${state.user.name.split(' ')[0]}</span><button class="nav-logout-btn" onclick="doLogout()">Log out</button></div>`;
+  } else {
+    navRight.innerHTML=`<span class="nav-badge">2025/2026 Session</span>`;
+  }
+  document.getElementById('auth-gate').style.display = loggedIn ? 'none' : 'block';
+  document.getElementById('classes-section').style.display = loggedIn ? 'block' : 'none';
+  document.getElementById('locked-section').style.display = loggedIn ? 'none' : 'block';
+  if(loggedIn){
+    document.getElementById('welcome-name').textContent = 'Welcome back, '+state.user.name.split(' ')[0]+'!';
+  }
+}
+
+function goHome(){
+  showScreen('home');
+  buildHome();
+}
 
 function showScreen(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -834,7 +1083,18 @@ function submitQuiz(classId,lessonIdx){
   }
 }
 
-buildHome();
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+(function init(){
+  // Restore session if user was previously logged in
+  const saved = loadSession();
+  if(saved){ state.user = saved; }
+  updateAuthUI();
+  buildHome();
+
+  // Allow pressing Enter in login/register forms
+  document.getElementById('reg-pass').addEventListener('keydown', e=>{ if(e.key==='Enter') doRegister(); });
+  document.getElementById('login-pass').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
+})();
 </script>
 </body>
 </html>
