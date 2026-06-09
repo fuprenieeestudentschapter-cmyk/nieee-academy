@@ -251,7 +251,28 @@ footer strong{color:var(--white);}
       <input class="form-input" id="login-pass" type="password" placeholder="Your password">
     </div>
     <button class="btn btn-primary btn-full" id="login-btn" onclick="doLogin()">Log in</button>
+    <div class="modal-switch" style="margin-top:0.75rem;">
+      <a onclick="openForgotPassword()" style="color:var(--muted);font-size:12px;">Forgot your password?</a>
+    </div>
     <div class="modal-switch">Don't have an account? <a onclick="openRegister()">Register</a></div>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD MODAL -->
+<div class="modal-overlay" id="modal-forgot">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModals()">✕</button>
+    <div style="font-size:2rem;margin-bottom:0.75rem;">🔑</div>
+    <div class="modal-title">Forgot your password?</div>
+    <div class="modal-sub">No problem. Enter your registered email below and we'll send your password via WhatsApp.</div>
+    <div class="form-group">
+      <label class="form-label">Your registered email</label>
+      <input class="form-input" id="forgot-email" type="email" placeholder="e.g. amara@example.com">
+    </div>
+    <button class="btn btn-primary btn-full" onclick="doForgotPassword()">Send password via WhatsApp</button>
+    <div class="modal-switch" style="margin-top:1rem;">
+      <a onclick="openLogin()">← Back to login</a>
+    </div>
   </div>
 </div>
 
@@ -762,10 +783,6 @@ const CLASSES = [
   },
 ];
 
-// ─── CONFIG ─────────────────────────────────────────────────────────────────
-// Paste your Google Apps Script Web App URL here after deploying Code.gs
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx7LbWoiCC9EBSI1Pz4EnVSpj4kvMaM57OeVKiVYDkQqEWRjfzGCtRCQWZL6qEdCQU9/exec';
-
 // ─── STATE ───────────────────────────────────────────────────────────────────
 const state = {
   currentClass:null, currentLesson:null, quizAnswers:{}, quizSubmitted:false,
@@ -777,6 +794,17 @@ function saveSession(user){ try{ localStorage.setItem('nieee_session', JSON.stri
 function loadSession(){ try{ return JSON.parse(localStorage.getItem('nieee_session')||'null'); }catch(e){ return null; } }
 function clearSession(){ try{ localStorage.removeItem('nieee_session'); }catch(e){} }
 
+// ─── API HELPER (calls Vercel serverless function — works on all devices) ─────
+async function callAPI(params) {
+  const response = await fetch('/api/academy', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params)
+  });
+  if (!response.ok) throw new Error('Could not connect. Check your internet and try again.');
+  return response.json();
+}
+
 // ─── PROGRESS (backed by user object, synced to Sheet) ────────────────────────
 function getCompleted(classId){ return (state.user && state.user.progress && state.user.progress[classId]) || []; }
 function markComplete(classId,idx){
@@ -786,18 +814,13 @@ function markComplete(classId,idx){
   if(!state.user.progress[classId].includes(idx)){
     state.user.progress[classId].push(idx);
     saveSession(state.user);
-    syncProgress(); // fire-and-forget sync to Sheet
+    syncProgress();
   }
 }
-async function syncProgress(){
+function syncProgress(){
   if(!state.user) return;
-  try{
-    await fetch(APPS_SCRIPT_URL, {
-      method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ action:'saveProgress', email: state.user.email, progress: state.user.progress })
-    });
-  }catch(e){}
+  callAPI({ action:'saveProgress', email: state.user.email, progress: JSON.stringify(state.user.progress) })
+    .catch(function(){});  // silent fail — progress is already saved locally
 }
 
 // ─── MODAL CONTROLS ───────────────────────────────────────────────────────────
@@ -808,55 +831,44 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModals(); })
 
 // ─── REGISTER ─────────────────────────────────────────────────────────────────
 async function doRegister(){
-  const name=document.getElementById('reg-name').value.trim();
-  const email=document.getElementById('reg-email').value.trim().toLowerCase();
-  const phone=document.getElementById('reg-phone').value.trim();
-  const dept=document.getElementById('reg-dept').value.trim();
-  const pass=document.getElementById('reg-pass').value;
-  const msg=document.getElementById('reg-msg');
+  var name=document.getElementById('reg-name').value.trim();
+  var email=document.getElementById('reg-email').value.trim().toLowerCase();
+  var phone=document.getElementById('reg-phone').value.trim();
+  var dept=document.getElementById('reg-dept').value.trim();
+  var pass=document.getElementById('reg-pass').value;
+  var msg=document.getElementById('reg-msg');
   msg.className='modal-msg';
   if(!name||!email||!phone||!dept||!pass){ showMsg(msg,'error','Please fill in all fields.'); return; }
   if(pass.length<6){ showMsg(msg,'error','Password must be at least 6 characters.'); return; }
   if(!/\S+@\S+\.\S+/.test(email)){ showMsg(msg,'error','Please enter a valid email address.'); return; }
-  const btn=document.getElementById('reg-btn');
+  var btn=document.getElementById('reg-btn');
   btn.disabled=true; btn.innerHTML='<span class="loading-dots">Creating account</span>';
   try{
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ action:'register', name, email, phone, dept, pass })
-    });
-    const data = await res.json();
+    var data = await callAPI({ action:'register', name:name, email:email, phone:phone, dept:dept, pass:pass });
     if(data.success){
-      const user = { name, email, phone, dept, progress:{} };
+      var user = { name:name, email:email, phone:phone, dept:dept, progress:{} };
       state.user = user; saveSession(user);
       closeModals(); updateAuthUI(); buildHome();
-      showMsg(document.getElementById('reg-msg'),'success','');
     } else {
       showMsg(msg,'error', data.error||'Registration failed. Please try again.');
     }
   }catch(e){
-    showMsg(msg,'error','Could not connect. Check your internet and try again.');
+    showMsg(msg,'error', e.message||'Could not connect. Check your internet and try again.');
   }
   btn.disabled=false; btn.textContent='Create account';
 }
 
 // ─── LOGIN ────────────────────────────────────────────────────────────────────
 async function doLogin(){
-  const email=document.getElementById('login-email').value.trim().toLowerCase();
-  const pass=document.getElementById('login-pass').value;
-  const msg=document.getElementById('login-msg');
+  var email=document.getElementById('login-email').value.trim().toLowerCase();
+  var pass=document.getElementById('login-pass').value;
+  var msg=document.getElementById('login-msg');
   msg.className='modal-msg';
   if(!email||!pass){ showMsg(msg,'error','Please enter your email and password.'); return; }
-  const btn=document.getElementById('login-btn');
+  var btn=document.getElementById('login-btn');
   btn.disabled=true; btn.innerHTML='<span class="loading-dots">Logging in</span>';
   try{
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ action:'login', email, pass })
-    });
-    const data = await res.json();
+    var data = await callAPI({ action:'login', email:email, pass:pass });
     if(data.success){
       state.user = data.user; saveSession(data.user);
       closeModals(); updateAuthUI(); buildHome();
@@ -864,16 +876,52 @@ async function doLogin(){
       showMsg(msg,'error', data.error||'Incorrect email or password.');
     }
   }catch(e){
-    showMsg(msg,'error','Could not connect. Check your internet and try again.');
+    showMsg(msg,'error', e.message||'Could not connect. Check your internet and try again.');
   }
   btn.disabled=false; btn.textContent='Log in';
 }
 
-function doLogout(){
-  state.user=null; clearSession(); updateAuthUI(); buildHome();
+function openForgotPassword(){ closeModals(); document.getElementById('modal-forgot').classList.add('open'); }
+
+async function doForgotPassword(){
+  var email = document.getElementById('forgot-email').value.trim().toLowerCase();
+  if(!email){ alert('Please enter your registered email address.'); return; }
+  if(!/\S+@\S+\.\S+/.test(email)){ alert('Please enter a valid email address.'); return; }
+
+  // Look up the student via the API
+  try {
+    var data = await callAPI({ action:'getPassword', email: email });
+    if(data.success){
+      // Open WhatsApp with prefilled message to admin
+      var msg = encodeURIComponent(
+        'Hello NIEEE Academy Admin,\n\n' +
+        'I forgot my password. My registered email is: ' + email + '\n\n' +
+        'Please help me recover my account. Thank you.'
+      );
+      var whatsappURL = 'https://wa.me/2349137958005?text=' + msg;
+      window.open(whatsappURL, '_blank');
+      closeModals();
+    } else {
+      alert('No account found with that email address. Please check and try again.');
+    }
+  } catch(e) {
+    // Even if API fails, still open WhatsApp — student can describe their issue
+    var msg = encodeURIComponent(
+      'Hello NIEEE Academy Admin,\n\n' +
+      'I forgot my password. My registered email is: ' + email + '\n\n' +
+      'Please help me recover my account. Thank you.'
+    );
+    var whatsappURL = 'https://wa.me/2349137958005?text=' + msg;
+    window.open(whatsappURL, '_blank');
+    closeModals();
+  }
 }
 
 function showMsg(el,type,text){ el.className='modal-msg '+type; el.textContent=text; }
+
+function doLogout(){
+  state.user=null; clearSession(); updateAuthUI(); buildHome();
+}
 
 // ─── UI STATE ─────────────────────────────────────────────────────────────────
 function updateAuthUI(){
