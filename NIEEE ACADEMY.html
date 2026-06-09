@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIEEE Academy of Digital Skills</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0A1628; --navy-mid:#112240; --blue:#1A56DB; --blue-light:#3B82F6;
+  --accent:#38BDF8; --white:#FFFFFF; --off-white:#F0F4FF; --muted:#8CA0C4;
+  --border:rgba(56,189,248,0.15); --card-bg:rgba(17,34,64,0.8);
+  --success:#10B981; --danger:#EF4444; --warning:#F59E0B;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(56,189,248,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2rem;border-bottom:1px solid var(--border);background:rgba(10,22,40,0.95);position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--white);display:flex;align-items:center;gap:10px;cursor:pointer;}
+.nav-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;}
+.nav-badge{font-size:11px;background:rgba(56,189,248,0.1);color:var(--accent);border:1px solid rgba(56,189,248,0.2);padding:4px 12px;border-radius:20px;font-weight:500;}
+.screen{display:none;} .screen.active{display:block;}
+.hero{padding:5rem 2rem 3rem;max-width:900px;margin:0 auto;text-align:center;}
+.hero-eyebrow{font-size:12px;font-weight:500;letter-spacing:0.12em;color:var(--accent);text-transform:uppercase;margin-bottom:1.5rem;}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.25rem;}
+.hero h1 span{color:var(--accent);}
+.hero-sub{font-size:1rem;color:var(--muted);line-height:1.7;max-width:580px;margin:0 auto 2.5rem;}
+.hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid var(--border);}
+.hero-stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--white);line-height:1;}
+.hero-stat-label{font-size:12px;color:var(--muted);margin-top:4px;}
+.section{max-width:960px;margin:0 auto;padding:3rem 2rem;}
+.section-label{font-size:11px;font-weight:500;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase;margin-bottom:0.5rem;}
+.section-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:2rem;}
+.classes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+.class-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1.5rem;position:relative;overflow:hidden;transition:border-color 0.2s,transform 0.2s;cursor:pointer;}
+.class-card:hover{border-color:rgba(56,189,248,0.45);transform:translateY(-2px);}
+.class-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0;}
+.class-card.blue::before{background:#3B82F6;} .class-card.pink::before{background:#EC4899;}
+.class-card.green::before{background:#10B981;} .class-card.orange::before{background:#F97316;}
+.class-card.amber::before{background:#F59E0B;} .class-card.purple::before{background:#8B5CF6;}
+.class-card.cyan::before{background:#06B6D4;}
+.class-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:1rem;}
+.class-card.blue .class-icon{background:rgba(59,130,246,0.15);}
+.class-card.pink .class-icon{background:rgba(236,72,153,0.15);}
+.class-card.green .class-icon{background:rgba(16,185,129,0.15);}
+.class-card.orange .class-icon{background:rgba(249,115,22,0.15);}
+.class-card.amber .class-icon{background:rgba(245,158,11,0.15);}
+.class-card.purple .class-icon{background:rgba(139,92,246,0.15);}
+.class-card.cyan .class-icon{background:rgba(6,182,212,0.15);}
+.class-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:0.4rem;}
+.class-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:1rem;}
+.class-meta{display:flex;gap:8px;flex-wrap:wrap;}
+.meta-tag{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500;}
+.class-card.blue .meta-tag{background:rgba(59,130,246,0.12);color:#93C5FD;}
+.class-card.pink .meta-tag{background:rgba(236,72,153,0.12);color:#F9A8D4;}
+.class-card.green .meta-tag{background:rgba(16,185,129,0.12);color:#6EE7B7;}
+.class-card.orange .meta-tag{background:rgba(249,115,22,0.12);color:#FED7AA;}
+.class-card.amber .meta-tag{background:rgba(245,158,11,0.12);color:#FDE68A;}
+.class-card.purple .meta-tag{background:rgba(139,92,246,0.12);color:#C4B5FD;}
+.class-card.cyan .meta-tag{background:rgba(6,182,212,0.12);color:#A5F3FC;}
+.class-footer{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.class-sessions{font-size:12px;color:var(--muted);}
+.class-arrow{font-size:18px;color:var(--accent);}
+.progress-bar-mini{height:3px;background:rgba(56,189,248,0.1);border-radius:2px;margin-top:8px;}
+.progress-bar-mini-fill{height:3px;border-radius:2px;background:var(--accent);transition:width 0.4s;}
+
+/* CLASS PAGE */
+.class-page-header{padding:3rem 2rem 2rem;max-width:960px;margin:0 auto;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer;margin-bottom:2rem;transition:color 0.2s;background:none;border:none;font-family:'Inter',sans-serif;}
+.back-btn:hover{color:var(--white);}
+.class-page-icon{font-size:2.5rem;margin-bottom:1rem;}
+.class-page-title{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;margin-bottom:0.5rem;}
+.class-page-sub{color:var(--muted);font-size:0.95rem;line-height:1.6;max-width:600px;}
+.class-page-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.25rem;}
+.lessons-wrap{max-width:960px;margin:0 auto;padding:0 2rem 4rem;}
+.week-group{margin-bottom:2rem;}
+.week-heading{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;}
+.lesson-item{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:8px;display:flex;align-items:center;gap:1rem;cursor:pointer;transition:border-color 0.2s;}
+.lesson-item:hover:not(.locked){border-color:rgba(56,189,248,0.4);}
+.lesson-item.locked{opacity:0.4;cursor:not-allowed;}
+.lesson-item.completed{border-color:rgba(16,185,129,0.3);}
+.lesson-num{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--muted);flex-shrink:0;}
+.lesson-item.completed .lesson-num{background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.4);color:#6EE7B7;}
+.lesson-item.active-lesson .lesson-num{background:rgba(56,189,248,0.15);border-color:rgba(56,189,248,0.4);color:var(--accent);}
+.lesson-info{flex:1;}
+.lesson-title{font-size:14px;font-weight:500;color:var(--white);margin-bottom:2px;}
+.lesson-item.locked .lesson-title{color:var(--muted);}
+.lesson-duration{font-size:12px;color:var(--muted);}
+.lesson-status{font-size:12px;flex-shrink:0;}
+.status-done{color:#6EE7B7;} .status-locked{color:var(--muted);} .status-available{color:var(--accent);}
+.progress-wrap{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
+.progress-label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:0.6rem;}
+.progress-bar{background:rgba(56,189,248,0.1);border-radius:4px;height:6px;}
+.progress-fill{background:var(--accent);border-radius:4px;height:6px;transition:width 0.4s;}
+
+/* PLAYER */
+.player-wrap{max-width:960px;margin:0 auto;padding:0 2rem 4rem;}
+.video-container{background:#000;border-radius:12px;overflow:hidden;position:relative;padding-top:56.25%;margin-bottom:1.5rem;border:1px solid var(--border);}
+.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+.video-placeholder{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:var(--navy-mid);}
+.video-placeholder .play-icon{font-size:3rem;}
+.video-placeholder p{color:var(--muted);font-size:14px;text-align:center;max-width:300px;line-height:1.6;}
+.video-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:0.5rem;}
+.video-meta-text{font-size:13px;color:var(--muted);margin-bottom:1.5rem;}
+
+/* QUIZ */
+.quiz-wrap{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:2rem;margin-top:2rem;}
+.quiz-header{margin-bottom:1.5rem;}
+.quiz-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:0.4rem;}
+.quiz-subtitle{font-size:13px;color:var(--muted);}
+.question-block{margin-bottom:1.75rem;}
+.question-text{font-size:14px;font-weight:500;color:var(--white);margin-bottom:0.75rem;line-height:1.6;}
+.question-num{font-size:11px;color:var(--accent);font-weight:500;margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.06em;}
+.options-list{display:flex;flex-direction:column;gap:8px;}
+.option-btn{display:flex;align-items:center;gap:10px;padding:0.75rem 1rem;border-radius:8px;border:1px solid var(--border);background:rgba(10,22,40,0.5);cursor:pointer;font-size:13px;color:var(--off-white);transition:border-color 0.15s,background 0.15s;text-align:left;font-family:'Inter',sans-serif;width:100%;}
+.option-btn:hover:not(:disabled){border-color:rgba(56,189,248,0.4);background:rgba(56,189,248,0.05);}
+.option-btn.selected{border-color:rgba(56,189,248,0.5);background:rgba(56,189,248,0.08);}
+.option-btn.correct{border-color:rgba(16,185,129,0.6);background:rgba(16,185,129,0.1);color:#6EE7B7;}
+.option-btn.wrong{border-color:rgba(239,68,68,0.5);background:rgba(239,68,68,0.08);color:#FCA5A5;}
+.option-marker{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;color:var(--muted);}
+.option-btn.selected .option-marker{border-color:var(--accent);color:var(--accent);}
+.option-btn.correct .option-marker{border-color:#6EE7B7;color:#6EE7B7;}
+.option-btn.wrong .option-marker{border-color:#FCA5A5;color:#FCA5A5;}
+.quiz-result{padding:1.25rem;border-radius:10px;margin-top:1.5rem;text-align:center;}
+.quiz-result.pass{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);}
+.quiz-result.fail{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);}
+.result-score{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;margin-bottom:0.25rem;}
+.result-score.pass{color:#6EE7B7;} .result-score.fail{color:#FCA5A5;}
+.result-msg{font-size:13px;color:var(--muted);margin-bottom:1rem;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:0.7rem 1.4rem;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:opacity 0.2s;}
+.btn:hover:not(:disabled){opacity:0.85;}
+.btn:disabled{opacity:0.5;cursor:not-allowed;}
+.btn-primary{background:var(--blue);color:var(--white);}
+.btn-secondary{background:rgba(56,189,248,0.1);color:var(--accent);border:1px solid rgba(56,189,248,0.2);}
+.btn-success{background:rgba(16,185,129,0.15);color:#6EE7B7;border:1px solid rgba(16,185,129,0.3);}
+.btn-danger{background:rgba(239,68,68,0.1);color:#FCA5A5;border:1px solid rgba(239,68,68,0.25);}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:1rem;}
+
+/* GOOGLE FORM BANNER */
+.form-banner{background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.2);border-radius:12px;padding:1.5rem;margin-top:1.5rem;text-align:center;}
+.form-banner h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.4rem;}
+.form-banner p{font-size:13px;color:var(--muted);margin-bottom:1rem;line-height:1.6;}
+
+footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--muted);}
+footer strong{color:var(--white);}
+@media(max-width:600px){
+  .hero{padding:3rem 1.25rem 2rem;}
+  .section,.class-page-header,.lessons-wrap,.player-wrap{padding-left:1.25rem;padding-right:1.25rem;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<nav>
+  <div class="nav-logo" onclick="showScreen('home')"><span class="dot"></span>NIEEE Academy of Digital Skills</div>
+  <span class="nav-badge">2025/2026 Session</span>
+</nav>
+
+<div id="screen-home" class="screen active">
+  <section class="hero">
+    <p class="hero-eyebrow">NIEEE FUPRE Students Chapter</p>
+    <h1>Build Skills.<br><span>Build the Future.</span></h1>
+    <p class="hero-sub">A 6-week intensive digital skills programme for FUPRE engineering students. Seven classes. Real tools. Practical outcomes.</p>
+    <div class="hero-stats">
+      <div><div class="hero-stat-num">7</div><div class="hero-stat-label">Classes</div></div>
+      <div><div class="hero-stat-num">6</div><div class="hero-stat-label">Weeks</div></div>
+      <div><div class="hero-stat-num">Free</div><div class="hero-stat-label">For members</div></div>
+      <div><div class="hero-stat-num">Jun–Jul</div><div class="hero-stat-label">2026</div></div>
+    </div>
+  </section>
+  <section class="section">
+    <p class="section-label">What you'll learn</p>
+    <h2 class="section-title">Choose your class</h2>
+    <div class="classes-grid" id="classes-grid"></div>
+  </section>
+  <footer><strong>NIEEE Academy of Digital Skills</strong> &nbsp;·&nbsp; NIEEE FUPRE Students Chapter &nbsp;·&nbsp; 2025/2026 Academic Session</footer>
+</div>
+
+<div id="screen-class" class="screen">
+  <div class="class-page-header">
+    <button class="back-btn" onclick="showScreen('home');buildHome()">← Back to all classes</button>
+    <div class="class-page-icon" id="cp-icon"></div>
+    <h1 class="class-page-title" id="cp-title"></h1>
+    <p class="class-page-sub" id="cp-desc"></p>
+    <div class="class-page-meta" id="cp-meta"></div>
+  </div>
+  <div class="lessons-wrap">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Your progress</span><span id="cp-progress-text">0 of 6 lessons completed</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="cp-progress-fill" style="width:0%"></div></div>
+    </div>
+    <div id="lessons-list"></div>
+  </div>
+  <footer><strong>NIEEE Academy of Digital Skills</strong> &nbsp;·&nbsp; NIEEE FUPRE Students Chapter &nbsp;·&nbsp; 2025/2026 Academic Session</footer>
+</div>
+
+<div id="screen-player" class="screen">
+  <div class="player-wrap">
+    <button class="back-btn" id="back-to-class-btn">← Back to class</button>
+    <div class="video-container" id="video-container"></div>
+    <h2 class="video-title" id="vp-title"></h2>
+    <p class="video-meta-text" id="vp-meta"></p>
+    <div id="quiz-area"></div>
+  </div>
+  <footer><strong>NIEEE Academy of Digital Skills</strong> &nbsp;·&nbsp; NIEEE FUPRE Students Chapter &nbsp;·&nbsp; 2025/2026 Academic Session</footer>
+</div>
+</div>
+
+<script>
+const GOOGLE_FORM_URL = 'https://forms.gle/YOUR_FORM_LINK_HERE';
+
+const CLASSES = [
+  { id:'graphic-design', color:'blue', icon:'🎨', name:'Graphic Design',
+    desc:'Colour theory, typography, layout, and hands-on design using modern tools. Create flyers, banners, and visual content for any platform.',
+    day:'Monday · 4–6pm', format:'Online', tutor:'Ogregade Doubara Prudence',
+    lessons:[
+      { week:1, title:'Introduction to design principles', topic:'Colour theory, contrast, and visual hierarchy', driveId:null,
+        quiz:[
+          { q:'What does visual hierarchy help a viewer do?', opts:['Ignore the design','Know where to look first','Choose colours','Print the design'], ans:1 },
+          { q:'Which colour property refers to how light or dark a colour is?', opts:['Hue','Saturation','Value','Temperature'], ans:2 },
+          { q:'Contrast in design is used to:', opts:['Make everything the same size','Create confusion','Make elements stand out from each other','Remove colour'], ans:2 },
+          { q:'What is the term for the empty space around design elements?', opts:['Padding','Negative space','Margin','Buffer'], ans:1 },
+          { q:'Which of these is a primary colour in the RGB colour model?', opts:['Yellow','Green','Orange','Purple'], ans:1 },
+        ]
+      },
+      { week:2, title:'Typography and font pairing', topic:'Choosing and combining fonts effectively', driveId:null,
+        quiz:[
+          { q:'Which font style has small decorative strokes at the ends of letters?', opts:['Sans-serif','Serif','Script','Monospace'], ans:1 },
+          { q:'How many fonts in a single design is generally recommended?', opts:['5 or more','1 only','2 to 3','As many as possible'], ans:2 },
+          { q:'What is "kerning" in typography?', opts:['The height of capital letters','Spacing between individual characters','The thickness of a font','The colour of text'], ans:1 },
+          { q:'Which font type is generally easier to read on screens at small sizes?', opts:['Serif','Decorative','Sans-serif','Handwritten'], ans:2 },
+          { q:'Font weight refers to:', opts:['The file size of the font','How tall the letters are','The thickness or boldness of the font strokes','The number of characters in a font'], ans:2 },
+        ]
+      },
+      { week:3, title:'Layout and composition', topic:'Grid systems, spacing, and balance', driveId:null,
+        quiz:[
+          { q:'What is a grid system used for in design?', opts:['Adding colour','Organising content consistently','Choosing fonts','Printing designs'], ans:1 },
+          { q:'The rule of thirds divides a design into how many sections?', opts:['4','6','9','12'], ans:2 },
+          { q:'Symmetrical balance means:', opts:['Elements are randomly placed','Both sides of the design mirror each other','Only one side has elements','The design has no balance'], ans:1 },
+          { q:'Which layout principle guides the viewer\'s eye through a design?', opts:['Repetition','Alignment','Flow','Proximity'], ans:2 },
+          { q:'Proximity in design means:', opts:['Making elements large','Placing related items close together','Using the same colour','Adding borders'], ans:1 },
+        ]
+      },
+      { week:4, title:'Working with Canva', topic:'Templates, brand kits, and exporting', driveId:null,
+        quiz:[
+          { q:'What is a brand kit in Canva?', opts:['A set of random templates','A collection of your brand colours, fonts, and logos','A printing service','An image library'], ans:1 },
+          { q:'Which file format is best for sharing a design on social media?', opts:['PDF','PNG','DOCX','PSD'], ans:1 },
+          { q:'What does "resizing" a design in Canva do?', opts:['Changes the colour palette','Adapts the design to different dimensions','Deletes the design','Adds new elements'], ans:1 },
+          { q:'In Canva, what is the purpose of "elements"?', opts:['To change the page background only','Shapes, icons, lines and graphics you can add to a design','To export the file','To invite collaborators'], ans:1 },
+          { q:'Which export format preserves the best quality for print?', opts:['JPG','GIF','PDF Print','PNG Standard'], ans:2 },
+        ]
+      },
+      { week:5, title:'Creating for social media', topic:'Flyers, banners, and Instagram graphics', driveId:null,
+        quiz:[
+          { q:'What is the standard Instagram square post size?', opts:['1920x1080px','800x600px','1080x1080px','720x720px'], ans:2 },
+          { q:'A call to action (CTA) in a flyer is designed to:', opts:['Decorate the flyer','Tell the viewer what to do next','List all sponsors','Replace the headline'], ans:1 },
+          { q:'Which element should be most prominent on an event flyer?', opts:['The designer\'s name','The event name and date','The venue address','The ticket price'], ans:1 },
+          { q:'For a social media banner, which orientation is typically used?', opts:['Square','Portrait','Landscape','Circular'], ans:2 },
+          { q:'Why is it important to use high-resolution images in designs?', opts:['They load faster','They look sharp and clear when printed or displayed','They take less storage','They are easier to edit'], ans:1 },
+        ]
+      },
+      { week:6, title:'Final project showcase', topic:'Present your completed design portfolio', driveId:null,
+        quiz:[
+          { q:'What should a design portfolio demonstrate?', opts:['Only one type of design','Your range of skills and completed projects','Only digital work','Unfinished concepts'], ans:1 },
+          { q:'When presenting a design, what is most important to explain?', opts:['The tools you used only','The problem it solves and your design decisions','How long it took','The file size'], ans:1 },
+          { q:'Consistency in a design portfolio means:', opts:['Every design looks identical','A unified style, quality, and presentation across your work','Using only one colour','Only including one project'], ans:1 },
+          { q:'Feedback on a design should be:', opts:['Ignored','Used to improve the work','Only positive','Only from the designer'], ans:1 },
+          { q:'What makes a strong final design project?', opts:['It uses many fonts','It solves a real brief with clear visual communication','It has many colours','It is the largest file size'], ans:1 },
+        ]
+      },
+    ]
+  },
+  { id:'video-editing', color:'pink', icon:'🎬', name:'Video Editing',
+    desc:'Timeline editing, transitions, colour grading, and audio. Produce polished short-form content for YouTube, Instagram, and beyond.',
+    day:'Tuesday · 4–6pm', format:'Online', tutor:'To be announced',
+    lessons:[
+      { week:1, title:'Introduction to video editing', topic:'Timelines, cuts, and file formats', driveId:null,
+        quiz:[
+          { q:'What is a timeline in a video editor?', opts:['A file storage folder','A visual sequence of clips arranged in order','A colour grading tool','An audio mixer'], ans:1 },
+          { q:'Which file format is most commonly used for high-quality video export?', opts:['MP3','GIF','MP4','DOCX'], ans:2 },
+          { q:'What is a "cut" in video editing?', opts:['Deleting the entire project','An instant transition from one clip to another','Adding a filter','Changing the audio'], ans:1 },
+          { q:'Frame rate (fps) refers to:', opts:['The file size of a video','How many frames are shown per second','The resolution of the video','The length of the video'], ans:1 },
+          { q:'What does "rendering" a video mean?', opts:['Filming new footage','Processing and exporting the final edited video','Adding subtitles','Uploading to YouTube'], ans:1 },
+        ]
+      },
+      { week:2, title:'Transitions and effects', topic:'Smooth cuts, motion effects, and text overlays', driveId:null,
+        quiz:[
+          { q:'What is the purpose of a transition in video editing?', opts:['To delete a clip','To move smoothly between two clips','To change the aspect ratio','To add music'], ans:1 },
+          { q:'A "fade to black" transition is commonly used to indicate:', opts:['A new scene starting','The end of a segment or scene','A colour change','An audio cut'], ans:1 },
+          { q:'Text overlays in videos are used to:', opts:['Replace the video footage','Add titles, subtitles, or information on screen','Change the frame rate','Remove background noise'], ans:1 },
+          { q:'What does "motion graphics" refer to?', opts:['Filming movement','Animated graphic elements added to video','A camera filter','A type of audio effect'], ans:1 },
+          { q:'Which type of transition is most professional for documentary-style videos?', opts:['Star wipe','Spin transition','Simple cut or cross dissolve','Checkerboard wipe'], ans:2 },
+        ]
+      },
+      { week:3, title:'Audio editing', topic:'Background music, voiceovers, and noise removal', driveId:null,
+        quiz:[
+          { q:'What is a voiceover in video production?', opts:['Background music','A recorded narration played over video footage','A sound effect','An interview clip'], ans:1 },
+          { q:'Audio levels in video should typically peak at:', opts:['-6dB to -3dB','+10dB','0dB','As high as possible'], ans:0 },
+          { q:'What is the purpose of noise removal in audio editing?', opts:['To add echo','To eliminate unwanted background sounds','To increase volume','To add music'], ans:1 },
+          { q:'Fading audio in and out is used to:', opts:['Cut the audio abruptly','Create smooth audio transitions','Increase bass','Remove the audio completely'], ans:1 },
+          { q:'Which audio file format gives the best quality?', opts:['MP3','WAV','WMA','AAC'], ans:1 },
+        ]
+      },
+      { week:4, title:'Colour grading basics', topic:'Mood, tone, and colour correction', driveId:null,
+        quiz:[
+          { q:'What is the difference between colour correction and colour grading?', opts:['They are the same thing','Correction fixes technical issues; grading creates a stylistic look','Grading is done first','Correction is only for audio'], ans:1 },
+          { q:'Increasing the "exposure" of a video clip will:', opts:['Make it darker','Make it brighter','Change the colour temperature','Add contrast'], ans:1 },
+          { q:'A warm colour grade typically uses more:', opts:['Blues and greens','Oranges and yellows','Purples and pinks','Greys and blacks'], ans:1 },
+          { q:'What does "white balance" control in a video?', opts:['The brightness of whites only','The overall colour temperature of the image','The audio levels','The frame rate'], ans:1 },
+          { q:'LUTs in colour grading are:', opts:['A type of audio filter','Preset colour transformations applied to footage','Video transitions','Screen recording tools'], ans:1 },
+        ]
+      },
+      { week:5, title:'Editing for platforms', topic:'Exporting for YouTube, Instagram, and WhatsApp', driveId:null,
+        quiz:[
+          { q:'What aspect ratio is standard for YouTube videos?', opts:['1:1','4:3','16:9','9:16'], ans:2 },
+          { q:'Instagram Reels are best exported in which aspect ratio?', opts:['16:9','4:3','1:1','9:16'], ans:3 },
+          { q:'What does "bitrate" affect in a video export?', opts:['The video length','Video quality and file size','The frame rate','The colour grade'], ans:1 },
+          { q:'For WhatsApp sharing, which is most important to consider?', opts:['4K resolution','Small file size for easy sharing','High bitrate','Lossless audio'], ans:1 },
+          { q:'H.264 is a commonly used video:', opts:['Editing software','Compression codec','Camera brand','Audio format'], ans:1 },
+        ]
+      },
+      { week:6, title:'Final project showcase', topic:'Present your completed 60-second edit', driveId:null,
+        quiz:[
+          { q:'A strong 60-second video should have:', opts:['As many transitions as possible','A clear beginning, middle, and end','Only one type of shot','No music'], ans:1 },
+          { q:'When reviewing your own edit, what should you check first?', opts:['The file name','Audio sync, pacing, and clarity of message','The export format','The file size'], ans:1 },
+          { q:'What is a "rough cut"?', opts:['The final exported video','An early version of the edit with all clips in place before fine-tuning','A deleted segment','A colour-graded version'], ans:1 },
+          { q:'Adding captions to a video is important because:', opts:['It makes the video longer','It improves accessibility for viewers','It increases file size','It changes the colour grade'], ans:1 },
+          { q:'The most important thing a video should do is:', opts:['Use the latest effects','Communicate its message clearly to the audience','Have the highest resolution','Be the longest possible'], ans:1 },
+        ]
+      },
+    ]
+  },
+  { id:'python', color:'green', icon:'🐍', name:'Python Programming',
+    desc:'From variables to functions, loops, and libraries. Write real scripts and apply Python to engineering problems and data analysis.',
+    day:'Wednesday · 4–6pm', format:'Online', tutor:'To be announced',
+    lessons:[
+      { week:1, title:'Getting started with Python', topic:'Variables, data types, and your first script', driveId:null,
+        quiz:[
+          { q:'Which symbol is used for comments in Python?', opts:['//','/*','#','--'], ans:2 },
+          { q:'What data type is the value 3.14 in Python?', opts:['int','str','float','bool'], ans:2 },
+          { q:'How do you print "Hello" in Python?', opts:['echo "Hello"','console.log("Hello")','print("Hello")', 'System.out.println("Hello")'], ans:2 },
+          { q:'Which of these is a valid variable name in Python?', opts:['2name','my-name','my_name','my name'], ans:2 },
+          { q:'What does the len() function do?', opts:['Adds numbers together','Returns the length of a string or list','Converts a value to integer','Prints a value'], ans:1 },
+        ]
+      },
+      { week:2, title:'Control flow', topic:'If statements, loops, and logic', driveId:null,
+        quiz:[
+          { q:'What keyword starts a conditional statement in Python?', opts:['when','check','if','condition'], ans:2 },
+          { q:'Which loop runs a fixed number of times?', opts:['while loop','for loop','do loop','repeat loop'], ans:1 },
+          { q:'What does "elif" mean in Python?', opts:['End if','Else if','Equal if','Empty if'], ans:1 },
+          { q:'What is the output of: for i in range(3): print(i)', opts:['1 2 3','0 1 2','0 1 2 3','1 2'], ans:1 },
+          { q:'Which operator checks if two values are equal in Python?', opts:['=','==','!=','>='], ans:1 },
+        ]
+      },
+      { week:3, title:'Functions and modules', topic:'Writing reusable code and importing libraries', driveId:null,
+        quiz:[
+          { q:'Which keyword is used to define a function in Python?', opts:['function','define','def','func'], ans:2 },
+          { q:'What does "return" do in a function?', opts:['Ends the script','Prints a value','Sends a value back to the caller','Loops the function'], ans:2 },
+          { q:'How do you import a module in Python?', opts:['include math','require math','import math','use math'], ans:2 },
+          { q:'What is the purpose of a module?', opts:['To create loops','To store reusable code and functions','To print output','To define variables'], ans:1 },
+          { q:'What does math.sqrt(16) return?', opts:['8','4.0','2','16'], ans:1 },
+        ]
+      },
+      { week:4, title:'Working with data', topic:'Lists, dictionaries, and file handling', driveId:null,
+        quiz:[
+          { q:'How do you access the first item in a Python list called "items"?', opts:['items[1]','items[0]','items.first()','items(0)'], ans:1 },
+          { q:'Which data structure stores key-value pairs in Python?', opts:['List','Tuple','Dictionary','Set'], ans:2 },
+          { q:'What does the append() method do to a list?', opts:['Removes the last item','Sorts the list','Adds an item to the end','Clears the list'], ans:2 },
+          { q:'To open a file for reading in Python, which mode is used?', opts:['"w"','"a"','"r"','"x"'], ans:2 },
+          { q:'What does len([1,2,3,4]) return?', opts:['3','5','4','0'], ans:2 },
+        ]
+      },
+      { week:5, title:'NumPy and Matplotlib', topic:'Data analysis and simple plotting', driveId:null,
+        quiz:[
+          { q:'What is NumPy primarily used for?', opts:['Web development','Numerical computation and array operations','Video editing','Database management'], ans:1 },
+          { q:'Which function creates a NumPy array from a list?', opts:['numpy.list()','numpy.make()','numpy.array()','numpy.create()'], ans:2 },
+          { q:'What does Matplotlib do?', opts:['Runs machine learning models','Creates data visualisations and plots','Handles database queries','Builds web applications'], ans:1 },
+          { q:'Which function in Matplotlib shows the plot on screen?', opts:['plt.draw()','plt.render()','plt.show()','plt.display()'], ans:2 },
+          { q:'What does numpy.mean([2,4,6]) return?', opts:['6','2','4.0','12'], ans:2 },
+        ]
+      },
+      { week:6, title:'Final project showcase', topic:'Present your Python engineering mini-project', driveId:null,
+        quiz:[
+          { q:'A good Python project should:', opts:['Use as many libraries as possible','Solve a real problem with clean, readable code','Be as long as possible','Avoid comments'], ans:1 },
+          { q:'What is the purpose of adding comments to your code?', opts:['To make it run faster','To explain what the code does for anyone reading it','To add more lines','To import modules'], ans:1 },
+          { q:'Which of these makes Python code more readable?', opts:['Using very long variable names with no spaces','Consistent indentation and meaningful variable names','Writing everything on one line','Removing all spaces'], ans:1 },
+          { q:'Version control tools like Git are used to:', opts:['Speed up your code','Track changes and collaborate on code','Format your code','Debug errors automatically'], ans:1 },
+          { q:'What should you test before submitting a final Python project?', opts:['Only the first function','That the code runs without errors and produces correct output','Only the print statements','The file size'], ans:1 },
+        ]
+      },
+    ]
+  },
+  { id:'plc', color:'orange', icon:'🏭', name:'PLC Programming & Factory I/O',
+    desc:'Industrial automation fundamentals. Write ladder logic, configure PLCs, and simulate real factory processes using Factory I/O.',
+    day:'Thursday · 4–6pm', format:'Hybrid', tutor:'Ogregade Doubara Prudence',
+    lessons:[
+      { week:1, title:'Introduction to industrial automation', topic:'PLCs, sensors, actuators, and control systems', driveId:null,
+        quiz:[
+          { q:'What does PLC stand for?', opts:['Power Load Controller','Programmable Logic Controller','Process Line Computer','Portable Logic Circuit'], ans:1 },
+          { q:'Which component in an automation system detects physical conditions?', opts:['Actuator','PLC','Sensor','HMI'], ans:2 },
+          { q:'An actuator in an automation system is responsible for:', opts:['Detecting changes','Processing logic','Performing physical actions like moving or switching','Displaying information'], ans:2 },
+          { q:'What is the role of a PLC in a factory?', opts:['To generate electricity','To control and automate machines and processes','To store products','To communicate with customers'], ans:1 },
+          { q:'HMI in automation stands for:', opts:['High Machine Interface','Human-Machine Interface','Hardware Management Interface','Hydraulic Motor Integration'], ans:1 },
+        ]
+      },
+      { week:2, title:'Ladder logic fundamentals', topic:'Contacts, coils, and basic logic rungs', driveId:null,
+        quiz:[
+          { q:'Ladder logic is named after its resemblance to:', opts:['A flowchart','The rungs of a ladder','A circuit board','A spreadsheet'], ans:1 },
+          { q:'In ladder logic, a normally open (NO) contact passes current when:', opts:['It is de-energised','It is energised/activated','The power is off','There is a fault'], ans:1 },
+          { q:'What does a coil represent in ladder logic?', opts:['An input sensor','An output that is activated by the logic','A timer','A counter'], ans:1 },
+          { q:'A normally closed (NC) contact passes current when:', opts:['It is energised','It is de-energised','There is an error','The PLC restarts'], ans:1 },
+          { q:'What is a "rung" in a ladder logic program?', opts:['A physical wire','One line/row of logic in the program','A type of sensor','An output device'], ans:1 },
+        ]
+      },
+      { week:3, title:'Timers and counters', topic:'Using TON, TOF, CTU in ladder programs', driveId:null,
+        quiz:[
+          { q:'What does a TON (Timer On Delay) do?', opts:['Turns output off after a delay','Turns output on after a set delay time','Counts events','Resets the PLC'], ans:1 },
+          { q:'A CTU (Count Up) counter increments when:', opts:['Power is switched on','A rising edge signal is detected at its input','A timer expires','The output is activated'], ans:1 },
+          { q:'What does the preset value (PT) in a timer define?', opts:['The current time','The time delay before the timer output activates','The reset value','The scan rate'], ans:1 },
+          { q:'A TOF (Timer Off Delay) turns the output off:', opts:['Immediately when input goes off','After a set delay once the input goes off','Before the input activates','When power is lost'], ans:1 },
+          { q:'In a CTU counter, the output (Q) activates when:', opts:['The count is zero','The accumulated value reaches the preset value','The reset is triggered','The timer expires'], ans:1 },
+        ]
+      },
+      { week:4, title:'Introduction to Factory I/O', topic:'Navigating the simulation environment', driveId:null,
+        quiz:[
+          { q:'What is Factory I/O used for?', opts:['Writing ladder logic code','Simulating 3D industrial factory processes','Designing electrical schematics','Programming microcontrollers'], ans:1 },
+          { q:'In Factory I/O, "sensors" are mapped to PLC:', opts:['Outputs','Inputs','Timers','Coils'], ans:1 },
+          { q:'In Factory I/O, "actuators" are mapped to PLC:', opts:['Inputs','Counters','Outputs','Memory bits'], ans:2 },
+          { q:'What must be done in Factory I/O before running a simulation?', opts:['Install a new operating system','Connect Factory I/O to a PLC driver and configure I/O tags','Update the graphics card','Print the schematic'], ans:1 },
+          { q:'Which of these is a scene available in Factory I/O?', opts:['A submarine engine room','A conveyor belt system','A nuclear reactor','An aircraft cockpit'], ans:1 },
+        ]
+      },
+      { week:5, title:'Connecting PLC to Factory I/O', topic:'Simulating a conveyor belt control system', driveId:null,
+        quiz:[
+          { q:'To connect a PLC simulator to Factory I/O, you typically use:', opts:['A USB cable','A Modbus or built-in driver connection','Bluetooth','An HDMI cable'], ans:1 },
+          { q:'In a conveyor belt simulation, a start button is typically mapped to a PLC:', opts:['Output coil','Input contact','Timer preset','Counter accumulator'], ans:1 },
+          { q:'What does a motor output coil control in a conveyor simulation?', opts:['The conveyor sensor','The conveyor belt motor (start/stop)','The PLC power','The HMI display'], ans:1 },
+          { q:'An emergency stop (E-Stop) is typically wired as a:', opts:['Normally open contact','Normally closed contact','Output coil','Timer'], ans:1 },
+          { q:'In Factory I/O, running the simulation allows you to:', opts:['Edit ladder logic in real time','See the physical effect of your PLC program in 3D','Generate automatic code','Print circuit diagrams'], ans:1 },
+        ]
+      },
+      { week:6, title:'Final project showcase', topic:'Present your automated factory simulation', driveId:null,
+        quiz:[
+          { q:'A complete automation project should include:', opts:['Only the ladder logic code','The problem statement, ladder logic, and simulation results','Only the Factory I/O scene','Only the wiring diagram'], ans:1 },
+          { q:'Safety in industrial automation is important because:', opts:['It looks professional','Faults can cause injury, damage, or production loss','It is optional','It speeds up the system'], ans:1 },
+          { q:'What is the purpose of documenting a PLC program?', opts:['To make it longer','To explain the logic so others can understand and maintain it','To slow down the processor','To add more rungs'], ans:1 },
+          { q:'A well-structured ladder logic program should be:', opts:['As complex as possible','Organised, commented, and easy to follow','Entirely in one rung','Without any timers'], ans:1 },
+          { q:'What is the final step before deploying a PLC program in industry?', opts:['Deleting the simulation','Full testing and validation to confirm the system works safely','Increasing the timer values','Removing all counters'], ans:1 },
+        ]
+      },
+    ]
+  },
+  { id:'autocad', color:'amber', icon:'📐', name:'AutoCAD Drawing',
+    desc:'Technical draughting from scratch. Layers, dimensions, schematics, and floor plans. Produce drawings to professional engineering standards.',
+    day:'Saturday · 10am–12pm', format:'Physical', tutor:'Ogregade Doubara Prudence',
+    lessons:[
+      { week:1, title:'Navigating AutoCAD', topic:'Interface, drawing commands, and coordinate systems', driveId:null,
+        quiz:[
+          { q:'What is the command to draw a straight line in AutoCAD?', opts:['DRAW','LINE','L','STRAIGHT'], ans:1 },
+          { q:'The coordinate system (0,0) in AutoCAD represents:', opts:['The centre of the drawing','The origin point of the drawing','The last drawn point','The print area'], ans:1 },
+          { q:'What does the ERASE command do?', opts:['Undoes the last action','Deletes selected objects','Hides the object','Moves the object'], ans:1 },
+          { q:'Which key cancels a command in AutoCAD?', opts:['Delete','Enter','Escape','Tab'], ans:2 },
+          { q:'What is the function of the zoom tool in AutoCAD?', opts:['Changes the size of objects','Magnifies or reduces the view of the drawing','Prints the drawing','Exports the file'], ans:1 },
+        ]
+      },
+      { week:2, title:'Layers and line types', topic:'Organising drawings with layers and properties', driveId:null,
+        quiz:[
+          { q:'What is the main purpose of layers in AutoCAD?', opts:['To add colour only','To organise and manage different elements of a drawing','To scale the drawing','To print in colour'], ans:1 },
+          { q:'Which panel is used to manage layers in AutoCAD?', opts:['Properties panel','Layer Properties Manager','View panel','Insert panel'], ans:1 },
+          { q:'A frozen layer in AutoCAD is:', opts:['Deleted permanently','Not visible and not regenerated, speeding up performance','Locked from editing','Saved as a template'], ans:1 },
+          { q:'Line weight in a drawing refers to:', opts:['The length of a line','The colour of a line','The thickness of a line','The layer a line is on'], ans:2 },
+          { q:'What does a dashed line typically represent in engineering drawings?', opts:['A visible edge','A hidden edge or feature not directly visible','A centre line only','A dimension line'], ans:1 },
+        ]
+      },
+      { week:3, title:'Editing tools', topic:'Trim, extend, offset, mirror, and array', driveId:null,
+        quiz:[
+          { q:'The TRIM command in AutoCAD is used to:', opts:['Extend a line to meet another','Remove portions of objects that cross a boundary','Copy objects','Rotate objects'], ans:1 },
+          { q:'What does the OFFSET command create?', opts:['A rotated copy','A parallel copy of an object at a specified distance','A scaled copy','A mirrored copy'], ans:1 },
+          { q:'The MIRROR command:', opts:['Copies an object at a set distance','Creates a reflected copy of selected objects about a mirror line','Rotates an object 180 degrees','Scales an object'], ans:1 },
+          { q:'An ARRAY creates:', opts:['A single copy','Multiple copies arranged in a pattern (rectangular or polar)','A scaled version','A trimmed version'], ans:1 },
+          { q:'EXTEND in AutoCAD:', opts:['Shortens a line','Lengthens an object to meet a boundary edge','Deletes an object','Offsets an object'], ans:1 },
+        ]
+      },
+      { week:4, title:'Dimensioning and annotation', topic:'Adding dimensions, text, and leaders', driveId:null,
+        quiz:[
+          { q:'What is the purpose of dimensioning in an engineering drawing?', opts:['To make it look complex','To communicate the exact size and position of features','To add colour','To show the title block only'], ans:1 },
+          { q:'A leader line in AutoCAD is used to:', opts:['Align objects','Point to a feature and attach a note or label','Create a border','Draw centre lines'], ans:1 },
+          { q:'What is the DTEXT command used for?', opts:['Drawing lines','Adding single-line text to a drawing','Creating dimensions','Inserting images'], ans:1 },
+          { q:'Tolerance in dimensioning refers to:', opts:['The colour of the dimension','The acceptable range of variation for a measurement','The line weight','The font size'], ans:1 },
+          { q:'A title block in a drawing contains:', opts:['Only the drawing itself','Project name, scale, date, drawn by, and revision information','Only the legend','Only the border'], ans:1 },
+        ]
+      },
+      { week:5, title:'Drawing electrical schematics', topic:'Symbols, connections, and layout standards', driveId:null,
+        quiz:[
+          { q:'In an electrical schematic, what does a circle with an X represent?', opts:['A battery','A lamp/light bulb','A motor','A switch'], ans:1 },
+          { q:'A single horizontal line in a basic electrical schematic represents:', opts:['A resistor','A wire or conductor','A capacitor','A ground'], ans:1 },
+          { q:'What is the purpose of a ground symbol in an electrical schematic?', opts:['To show the power source','To indicate a reference point of zero voltage','To mark a switch','To show a lamp'], ans:1 },
+          { q:'IEC and ANSI refer to:', opts:['Software brands','International standards for electrical symbols and diagrams','Types of cables','PLC brands'], ans:1 },
+          { q:'In a schematic, a normally open switch is drawn as:', opts:['Two lines with a gap and no bridge','Two lines connected directly','A circle','A zigzag line'], ans:0 },
+        ]
+      },
+      { week:6, title:'Final project showcase', topic:'Present your dimensioned technical drawing', driveId:null,
+        quiz:[
+          { q:'A complete engineering drawing should include:', opts:['Only the shape','Title block, dimensions, layers, and annotations','Only the dimensions','Only the border'], ans:1 },
+          { q:'Scale in a drawing means:', opts:['The colour used','The ratio of the drawing size to the actual object size','The line weight','The layer count'], ans:1 },
+          { q:'What does "As built" mean on an engineering drawing?', opts:['A preliminary sketch','A drawing that reflects what was actually constructed','A design proposal','A template'], ans:1 },
+          { q:'Why is it important to use standard symbols in engineering drawings?', opts:['To make it artistic','So anyone trained in engineering can read and understand them','To save space','To speed up drawing'], ans:1 },
+          { q:'Before printing a drawing, you should check:', opts:['The file name only','Scale, dimensions, title block, and layer visibility','Only the colours','Only the font size'], ans:1 },
+        ]
+      },
+    ]
+  },
+  { id:'proteus', color:'purple', icon:'⚡', name:'Proteus Simulation',
+    desc:'Design and simulate analogue and digital circuits. Work with virtual instruments, Arduino integration, and microcontroller prototyping.',
+    day:'Saturday · 2–4pm', format:'Physical', tutor:'To be announced',
+    lessons:[
+      { week:1, title:'Introduction to Proteus', topic:'Navigating the schematic editor and component library', driveId:null,
+        quiz:[
+          { q:'What is Proteus primarily used for?', opts:['3D mechanical design','Electronic circuit design and simulation','Factory automation','Video editing'], ans:1 },
+          { q:'The ISIS module in Proteus is used for:', opts:['PCB layout','Schematic capture and simulation','3D rendering','File conversion'], ans:1 },
+          { q:'How do you add a component in Proteus ISIS?', opts:['Press F1','Click the component mode button and search the library','Double click the canvas','Press Ctrl+N'], ans:1 },
+          { q:'What does "running" a simulation in Proteus do?', opts:['Exports the schematic','Activates the circuit and shows real-time behaviour','Prints the circuit','Saves the file'], ans:1 },
+          { q:'Wire in Proteus ISIS represents:', opts:['A component','An electrical connection between components','A power rail','A ground symbol'], ans:1 },
+        ]
+      },
+      { week:2, title:'Basic circuit simulation', topic:'Resistors, capacitors, LEDs, and voltage sources', driveId:null,
+        quiz:[
+          { q:'What happens to an LED in a simulation if connected without a current-limiting resistor?', opts:['It glows brighter','It may be shown as blown/overloaded','Nothing changes','It flashes'], ans:1 },
+          { q:'Ohm\'s Law states that V =', opts:['I + R','I × R','I / R','R / I'], ans:1 },
+          { q:'A capacitor in a DC circuit will eventually:', opts:['Keep charging indefinitely','Block DC current once fully charged','Discharge continuously','Explode'], ans:1 },
+          { q:'In Proteus, a VSOURCE component represents:', opts:['A variable resistor','A voltage signal source','A virtual switch','A ground'], ans:1 },
+          { q:'What colour does an LED component in Proteus typically glow when forward biased?', opts:['Black','It depends on the LED type selected','Always blue','Always white'], ans:1 },
+        ]
+      },
+      { week:3, title:'Digital logic circuits', topic:'Gates, flip-flops, and 7-segment displays', driveId:null,
+        quiz:[
+          { q:'An AND gate outputs HIGH only when:', opts:['Any input is HIGH','All inputs are HIGH','All inputs are LOW','One input is HIGH'], ans:1 },
+          { q:'A NOT gate (inverter) outputs:', opts:['The same as its input','The opposite of its input','Always HIGH','Always LOW'], ans:1 },
+          { q:'A D flip-flop stores:', opts:['Analogue voltage','One bit of digital data','Multiple bytes','A clock signal'], ans:1 },
+          { q:'A 7-segment display shows:', opts:['Images','Numerical digits and some letters using 7 LED segments','Analogue waveforms','Binary code only'], ans:1 },
+          { q:'An OR gate outputs HIGH when:', opts:['All inputs are LOW','No inputs are HIGH','At least one input is HIGH','Only two inputs are HIGH'], ans:2 },
+        ]
+      },
+      { week:4, title:'Virtual instruments', topic:'Oscilloscope, voltmeter, and signal analysis', driveId:null,
+        quiz:[
+          { q:'What does an oscilloscope measure?', opts:['Resistance','Voltage over time (waveform)','Current only','Temperature'], ans:1 },
+          { q:'A voltmeter in Proteus is connected:', opts:['In series with the component','In parallel with the component','Between ground and power only','Anywhere in the circuit'], ans:1 },
+          { q:'The frequency of a signal refers to:', opts:['Its voltage amplitude','How many cycles occur per second','Its phase','Its DC offset'], ans:1 },
+          { q:'An ammeter in a circuit measures:', opts:['Voltage','Resistance','Current flow','Power'], ans:2 },
+          { q:'What does a signal generator (VSOURCE with AC) produce?', opts:['A constant DC voltage','A time-varying alternating signal','A digital pulse only','A random noise signal'], ans:1 },
+        ]
+      },
+      { week:5, title:'Arduino in Proteus', topic:'Uploading code and simulating microcontroller circuits', driveId:null,
+        quiz:[
+          { q:'To simulate an Arduino in Proteus, you need to attach:', opts:['A physical Arduino board','A compiled HEX file of your Arduino code','A USB cable','An internet connection'], ans:1 },
+          { q:'The Arduino UNO operates at a supply voltage of:', opts:['12V','3.3V','9V','5V'], ans:3 },
+          { q:'Digital pins on Arduino output either:', opts:['Any voltage between 0–5V','HIGH (5V) or LOW (0V)','Only 3.3V','AC voltage'], ans:1 },
+          { q:'The delay() function in Arduino code:', opts:['Stops the program permanently','Pauses execution for a specified number of milliseconds','Increases clock speed','Resets the board'], ans:1 },
+          { q:'PWM on Arduino is commonly used to:', opts:['Read analogue inputs','Control the speed of motors or brightness of LEDs','Send serial data','Power the board'], ans:1 },
+        ]
+      },
+      { week:6, title:'Final project showcase', topic:'Present your simulated circuit project', driveId:null,
+        quiz:[
+          { q:'A complete Proteus simulation project should include:', opts:['Only the schematic','The schematic, correct component values, simulation results, and explanation','Only the simulation video','Only the component list'], ans:1 },
+          { q:'Why is circuit simulation important before building physically?', opts:['It is not important','It saves time and money by catching errors before physical construction','It is faster than real circuits','It removes the need for components'], ans:1 },
+          { q:'What should you verify after running a simulation?', opts:['The file size','That the circuit behaves as expected according to the design intent','Only the component count','The colour of wires'], ans:1 },
+          { q:'In a good project presentation, you should explain:', opts:['Only the tools used','What the circuit does, how it works, and the results observed','Only the component values','Only the schematic'], ans:1 },
+          { q:'PCB layout (ARES in Proteus) is used after schematic design to:', opts:['Simulate the circuit again','Design the physical printed circuit board','Add more components','Change the simulation speed'], ans:1 },
+        ]
+      },
+    ]
+  },
+  { id:'ai', color:'cyan', icon:'🤖', name:'AI & Prompt Engineering',
+    desc:'How AI tools work, how to prompt them effectively, and how to apply them to engineering, research, coding, and productivity.',
+    day:'Sunday · 4–6pm', format:'Online', tutor:'To be announced',
+    lessons:[
+      { week:1, title:'How AI works', topic:'Large language models explained simply', driveId:null,
+        quiz:[
+          { q:'What does LLM stand for?', opts:['Large Logic Machine','Large Language Model','Linear Learning Method','Layered Language Module'], ans:1 },
+          { q:'How do large language models generate text?', opts:['By searching the internet in real time','By predicting the next most likely word based on patterns in training data','By copying from a database','By random selection'], ans:1 },
+          { q:'Training data for an AI model refers to:', opts:['The electricity used to run it','The large collection of text used to teach the model patterns','The hardware it runs on','The user\'s questions'], ans:1 },
+          { q:'AI models can sometimes produce incorrect information confidently. This is called:', opts:['An update','A hallucination','A bug','A timeout'], ans:1 },
+          { q:'Which of these is an example of a large language model?', opts:['Microsoft Excel','Adobe Photoshop','ChatGPT','AutoCAD'], ans:2 },
+        ]
+      },
+      { week:2, title:'Writing effective prompts', topic:'Clarity, context, and iteration techniques', driveId:null,
+        quiz:[
+          { q:'What is a "prompt" in the context of AI tools?', opts:['A reminder notification','The input text or instruction you give to an AI model','The AI\'s memory','The model\'s training data'], ans:1 },
+          { q:'Which prompt is more effective?', opts:['"Write something"','"Write a 200-word summary of photosynthesis for a secondary school student"','"Tell me about science"','"Help"'], ans:1 },
+          { q:'Adding context to a prompt helps because:', opts:['It makes the prompt longer','It gives the AI enough information to produce a relevant and accurate response','It confuses the AI','It speeds up the response'], ans:1 },
+          { q:'Iterating on a prompt means:', opts:['Deleting the conversation','Refining and adjusting the prompt based on the AI\'s output','Copying the response','Starting a new AI tool'], ans:1 },
+          { q:'Asking the AI to respond "step by step" typically:', opts:['Slows the AI down','Produces more structured and logical responses','Makes responses shorter','Causes errors'], ans:1 },
+        ]
+      },
+      { week:3, title:'AI for engineering students', topic:'Research, calculations, and technical writing', driveId:null,
+        quiz:[
+          { q:'How can AI tools help with engineering research?', opts:['They replace textbooks entirely','They can summarise topics, explain concepts, and suggest sources to explore','They perform lab experiments','They write code automatically without prompting'], ans:1 },
+          { q:'When using AI for technical writing, you should always:', opts:['Submit the output directly without checking','Review, verify, and edit the AI output before use','Use only the first response','Avoid adding your own ideas'], ans:1 },
+          { q:'AI tools are best used for engineering calculations when:', opts:['You want to replace your calculator entirely','You need to check your work, explore methods, or understand steps','You want to bypass learning','You need certified results'], ans:1 },
+          { q:'Which of these is a responsible use of AI in academic work?', opts:['Submitting AI output as your own without acknowledgement','Using AI to understand a concept then writing your own explanation','Letting AI take exams for you','Ignoring what AI says entirely'], ans:1 },
+          { q:'AI tools can help with report writing by:', opts:['Writing the entire report from scratch to submit','Helping structure ideas, improve grammar, and suggest phrasing','Replacing your engineering knowledge','Doing your site visits for you'], ans:1 },
+        ]
+      },
+      { week:4, title:'AI coding assistants', topic:'Using AI to write, debug, and explain code', driveId:null,
+        quiz:[
+          { q:'AI coding assistants like GitHub Copilot are best used to:', opts:['Replace the need to learn programming','Speed up coding by suggesting completions and helping debug','Write final production code without review','Avoid testing code'], ans:1 },
+          { q:'When AI generates code for you, you should:', opts:['Run it immediately without reading it','Read, understand, test, and verify the code before using it','Delete your own code','Never modify it'], ans:1 },
+          { q:'Asking an AI to "explain this code" helps you:', opts:['Delete the code','Understand what each part does so you can learn and modify it','Make it run faster','Translate it to another language automatically'], ans:1 },
+          { q:'AI debugging assistance works best when you:', opts:['Give no context','Provide the code and describe the error or unexpected behaviour','Ask it to fix all bugs everywhere','Give only the error message with no code'], ans:1 },
+          { q:'Which of these is a limitation of AI-generated code?', opts:['It always works perfectly','It may contain bugs, security issues, or outdated practices','It is always more efficient than human code','It never needs testing'], ans:1 },
+        ]
+      },
+      { week:5, title:'Ethics and limitations', topic:'Responsible AI use and knowing its limits', driveId:null,
+        quiz:[
+          { q:'AI bias refers to:', opts:['The AI preferring certain users','Unfair or skewed outputs resulting from patterns in training data','The AI being too slow','A technical error'], ans:1 },
+          { q:'Why is it important to verify AI-generated information?', opts:['AI is always correct','AI can produce plausible-sounding but incorrect information','AI never makes mistakes','Verification wastes time'], ans:1 },
+          { q:'Which of these is an ethical concern with AI?', opts:['AI making calculations faster','Privacy risks from how data is collected and used to train models','AI helping with writing','AI answering questions'], ans:1 },
+          { q:'AI tools should be used to:', opts:['Replace human thinking entirely','Augment and support human decision-making, not replace it','Make all decisions automatically','Avoid all manual work'], ans:1 },
+          { q:'A key limitation of current AI language models is:', opts:['They are too slow','They do not have real-world understanding and can confidently state falsehoods','They cannot write text','They are too expensive for everyone'], ans:1 },
+        ]
+      },
+      { week:6, title:'Final project showcase', topic:'Present your AI prompt toolkit', driveId:null,
+        quiz:[
+          { q:'A good AI prompt toolkit for engineering should include:', opts:['Random prompts with no structure','Organised, tested prompts for common engineering tasks like research, writing, and coding','Only prompts for fun','Prompts that replace all coursework'], ans:1 },
+          { q:'Prompt engineering is a skill because:', opts:['Anyone can use AI without thinking','The quality of AI output depends significantly on how well the prompt is crafted','AI always gives the same output regardless of the prompt','It requires coding knowledge'], ans:1 },
+          { q:'When sharing an AI prompt toolkit, you should include:', opts:['Only the prompts','The prompts, example outputs, and notes on when/how to use each one','Only screenshots','Only the tool name'], ans:1 },
+          { q:'The future of AI in engineering is likely to involve:', opts:['AI fully replacing all engineers','Engineers using AI as a powerful tool to design, analyse, and communicate more effectively','AI being banned in industry','No change from today'], ans:1 },
+          { q:'What is the most important skill for engineers working alongside AI?', opts:['The ability to copy AI output','Critical thinking to evaluate, verify, and apply AI outputs responsibly','Typing speed','Avoiding AI tools'], ans:1 },
+        ]
+      },
+    ]
+  },
+];
+
+const state = { currentClass:null, currentLesson:null, quizAnswers:{}, quizSubmitted:false };
+
+function getProgress() {
+  try { return JSON.parse(localStorage.getItem('nieee_progress')||'{}'); } catch(e){ return {}; }
+}
+function saveProgress(p){ try{ localStorage.setItem('nieee_progress',JSON.stringify(p)); }catch(e){} }
+function getCompleted(classId){ return getProgress()[classId]||[]; }
+function markComplete(classId,idx){ const p=getProgress(); if(!p[classId])p[classId]=[]; if(!p[classId].includes(idx))p[classId].push(idx); saveProgress(p); }
+
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function buildHome(){
+  const grid=document.getElementById('classes-grid');
+  grid.innerHTML=CLASSES.map(c=>{
+    const done=getCompleted(c.id).length;
+    const pct=Math.round((done/6)*100);
+    return `<div class="class-card ${c.color}" onclick="openClass('${c.id}')">
+      <div class="class-icon">${c.icon}</div>
+      <div class="class-name">${c.name}</div>
+      <div class="class-desc">${c.desc}</div>
+      <div class="class-meta"><span class="meta-tag">${c.day}</span><span class="meta-tag">${c.format}</span></div>
+      <div class="class-footer">
+        <span class="class-sessions">${done}/6 lessons completed</span>
+        <span class="class-arrow">→</span>
+      </div>
+      <div class="progress-bar-mini"><div class="progress-bar-mini-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function openClass(classId){
+  const c=CLASSES.find(x=>x.id===classId);
+  state.currentClass=c;
+  document.getElementById('cp-icon').textContent=c.icon;
+  document.getElementById('cp-title').textContent=c.name;
+  document.getElementById('cp-desc').textContent=c.desc;
+  const tagStyle='padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;background:rgba(56,189,248,0.1);color:#38BDF8;border:1px solid rgba(56,189,248,0.2);';
+  document.getElementById('cp-meta').innerHTML=
+    `<span style="${tagStyle}">${c.day}</span><span style="${tagStyle}">${c.format}</span><span style="${tagStyle}">Instructor: ${c.tutor}</span>`;
+  const completed=getCompleted(classId);
+  const pct=Math.round((completed.length/6)*100);
+  document.getElementById('cp-progress-text').textContent=`${completed.length} of 6 lessons completed`;
+  document.getElementById('cp-progress-fill').style.width=pct+'%';
+  const list=document.getElementById('lessons-list');
+  const byWeek={};
+  c.lessons.forEach((l,i)=>{ if(!byWeek[l.week])byWeek[l.week]=[]; byWeek[l.week].push({...l,idx:i}); });
+  list.innerHTML=Object.entries(byWeek).map(([week,lessons])=>
+    `<div class="week-group"><div class="week-heading">Week ${week}</div>
+    ${lessons.map(l=>{
+      const isDone=completed.includes(l.idx);
+      const isUnlocked=l.idx===0||completed.includes(l.idx-1);
+      const cls=isDone?'completed':isUnlocked?'active-lesson':'locked';
+      const statusIcon=isDone?'<span class="lesson-status status-done">✓ Done</span>'
+        :isUnlocked?'<span class="lesson-status status-available">▶ Watch</span>'
+        :'<span class="lesson-status status-locked">🔒</span>';
+      return `<div class="lesson-item ${cls}" onclick="${(isUnlocked||isDone)?`openLesson('${classId}',${l.idx})`:'void(0)'}">
+        <div class="lesson-num">${l.idx+1}</div>
+        <div class="lesson-info"><div class="lesson-title">${l.title}</div><div class="lesson-duration">${l.topic}</div></div>
+        ${statusIcon}
+      </div>`;
+    }).join('')}</div>`
+  ).join('');
+  showScreen('class');
+}
+
+function openLesson(classId,lessonIdx){
+  const c=CLASSES.find(x=>x.id===classId);
+  const lesson=c.lessons[lessonIdx];
+  state.currentClass=c; state.currentLesson=lessonIdx;
+  state.quizAnswers={}; state.quizSubmitted=false;
+  document.getElementById('back-to-class-btn').onclick=()=>{ buildHome(); openClass(classId); };
+  document.getElementById('vp-title').textContent=lesson.title;
+  document.getElementById('vp-meta').textContent=`${c.name} · Week ${lesson.week} · ${lesson.topic}`;
+  const container=document.getElementById('video-container');
+  if(lesson.driveId){
+    container.innerHTML=`<iframe src="https://drive.google.com/file/d/${lesson.driveId}/preview" allow="autoplay" allowfullscreen></iframe>`;
+  } else {
+    container.innerHTML=`<div class="video-placeholder"><div class="play-icon">🎬</div><p>Video coming soon. Check back once your instructor uploads the recording for this lesson.</p></div>`;
+  }
+  renderQuiz(classId,lessonIdx);
+  showScreen('player');
+}
+
+function renderQuiz(classId,lessonIdx){
+  const c=CLASSES.find(x=>x.id===classId);
+  const lesson=c.lessons[lessonIdx];
+  const isDone=getCompleted(classId).includes(lessonIdx);
+  const area=document.getElementById('quiz-area');
+  if(isDone){
+    area.innerHTML=`<div class="quiz-wrap">
+      <div class="quiz-result pass">
+        <div class="result-score pass">✓ Completed</div>
+        <div class="result-msg">You have already completed this lesson.</div>
+        ${lessonIdx<c.lessons.length-1?`<button class="btn btn-secondary" onclick="openLesson('${classId}',${lessonIdx+1})">Next lesson →</button>`:'<p style="color:#6EE7B7;font-size:13px;">🎉 You have completed all lessons in this class!</p>'}
+      </div></div>`;
+    return;
+  }
+  area.innerHTML=`<div class="quiz-wrap">
+    <div class="quiz-header">
+      <div class="quiz-title">Lesson quiz</div>
+      <div class="quiz-subtitle">Answer the questions below to confirm you watched this lesson. You need 50% or above to proceed. You can retry if needed.</div>
+    </div>
+    <div id="questions-block">
+    ${lesson.quiz.map((q,qi)=>`
+      <div class="question-block" id="qblock-${qi}">
+        <div class="question-num">Question ${qi+1} of ${lesson.quiz.length}</div>
+        <div class="question-text">${q.q}</div>
+        <div class="options-list">
+          ${q.opts.map((opt,oi)=>`
+            <button class="option-btn" id="opt-${qi}-${oi}" onclick="selectOption(${qi},${oi})">
+              <span class="option-marker">${String.fromCharCode(65+oi)}</span>
+              ${opt}
+            </button>`).join('')}
+        </div>
+      </div>`).join('')}
+    </div>
+    <div class="btn-row"><button class="btn btn-primary" id="submit-quiz-btn" onclick="submitQuiz('${classId}',${lessonIdx})" disabled>Submit answers</button></div>
+    <div id="quiz-result-block"></div>
+  </div>`;
+}
+
+function selectOption(qi,oi){
+  if(state.quizSubmitted) return;
+  const lesson=state.currentClass.lessons[state.currentLesson];
+  state.quizAnswers[qi]=oi;
+  lesson.quiz[qi].opts.forEach((_,i)=>{
+    const btn=document.getElementById(`opt-${qi}-${i}`);
+    btn.classList.remove('selected');
+    btn.querySelector('.option-marker').textContent=String.fromCharCode(65+i);
+  });
+  const sel=document.getElementById(`opt-${qi}-${oi}`);
+  sel.classList.add('selected');
+  sel.querySelector('.option-marker').textContent='●';
+  const answered=Object.keys(state.quizAnswers).length;
+  const submitBtn=document.getElementById('submit-quiz-btn');
+  if(submitBtn) submitBtn.disabled=(answered<lesson.quiz.length);
+}
+
+function submitQuiz(classId,lessonIdx){
+  const c=CLASSES.find(x=>x.id===classId);
+  const lesson=c.lessons[lessonIdx];
+  state.quizSubmitted=true;
+  let correct=0;
+  lesson.quiz.forEach((q,qi)=>{
+    const chosen=state.quizAnswers[qi];
+    q.opts.forEach((_,oi)=>{
+      const btn=document.getElementById(`opt-${qi}-${oi}`);
+      if(btn){
+        btn.disabled=true;
+        btn.classList.remove('selected');
+        if(oi===q.ans){ btn.classList.add('correct'); btn.querySelector('.option-marker').textContent='✓'; }
+        else if(oi===chosen && chosen!==q.ans){ btn.classList.add('wrong'); btn.querySelector('.option-marker').textContent='✗'; }
+      }
+    });
+    if(chosen===q.ans) correct++;
+  });
+  const score=Math.round((correct/lesson.quiz.length)*100);
+  const passed=score>=50;
+  const submitBtn=document.getElementById('submit-quiz-btn');
+  if(submitBtn) submitBtn.style.display='none';
+  const resultBlock=document.getElementById('quiz-result-block');
+  if(passed){
+    markComplete(classId,lessonIdx);
+    const isLast=lessonIdx===c.lessons.length-1;
+    resultBlock.innerHTML=`
+      <div class="quiz-result pass" style="margin-top:1.5rem;">
+        <div class="result-score pass">${score}%</div>
+        <div class="result-msg">You passed! Great work — ${correct} out of ${lesson.quiz.length} correct.</div>
+        <div class="form-banner" style="margin-top:1rem;">
+          <h3>One more step — complete the written assessment</h3>
+          <p>Open the form below to submit your typed answers and any required screenshots or uploads. The next lesson unlocks once you have submitted the form.</p>
+          <a href="${GOOGLE_FORM_URL}?entry.class=${encodeURIComponent(c.name)}&entry.lesson=${encodeURIComponent('Week '+lesson.week+': '+lesson.title)}" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-flex;">Open assessment form ↗</a>
+        </div>
+        <div class="btn-row" style="justify-content:center;margin-top:1rem;">
+          ${!isLast?`<button class="btn btn-secondary" onclick="openLesson('${classId}',${lessonIdx+1})">Next lesson →</button>`
+          :'<p style="color:#6EE7B7;font-size:13px;margin-top:0.5rem;">🎉 You have completed all lessons in this class!</p>'}
+          <button class="btn btn-secondary" onclick="buildHome();openClass('${classId}')">Back to class</button>
+        </div>
+      </div>`;
+  } else {
+    resultBlock.innerHTML=`
+      <div class="quiz-result fail" style="margin-top:1.5rem;">
+        <div class="result-score fail">${score}%</div>
+        <div class="result-msg">You scored ${correct} out of ${lesson.quiz.length}. You need 50% to pass. Review the answers above and try again.</div>
+        <div class="btn-row" style="justify-content:center;margin-top:1rem;">
+          <button class="btn btn-danger" onclick="renderQuiz('${classId}',${lessonIdx})">Retry quiz</button>
+        </div>
+      </div>`;
+  }
+}
+
+buildHome();
+</script>
+</body>
+</html>
