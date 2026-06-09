@@ -18,7 +18,9 @@ body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);mi
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(56,189,248,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
 .page{position:relative;z-index:1;}
 nav{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2rem;border-bottom:1px solid var(--border);background:rgba(10,22,40,0.95);position:sticky;top:0;z-index:100;}
-.nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;color:var(--white);display:flex;align-items:center;gap:10px;cursor:pointer;}
+.nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1rem;color:var(--white);display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo:hover{opacity:0.9;}
+.nav-logo img{width:24px;height:24px;border-radius:6px;display:block;}
 .nav-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;}
 .nav-badge{font-size:11px;background:rgba(56,189,248,0.1);color:var(--accent);border:1px solid rgba(56,189,248,0.2);padding:4px 12px;border-radius:20px;font-weight:500;}
 .screen{display:none;} .screen.active{display:block;}
@@ -154,7 +156,10 @@ footer strong{color:var(--white);}
 <body>
 <div class="page">
 <nav>
-  <div class="nav-logo" onclick="showScreen('home')"><span class="dot"></span>NIEEE Academy of Digital Skills</div>
+  <a class="nav-logo" href="index.html" onclick="showScreen('home'); return false;" aria-label="Go to home">
+    <img src="favicon.png" alt="NIEEE Academy logo">
+    <span><span class="dot"></span>NIEEE Academy of Digital Skills</span>
+  </a>
   <span class="nav-badge">2025/2026 Session</span>
 </nav>
 
