@@ -1014,14 +1014,13 @@ function openLesson(classId,lessonIdx){
   document.getElementById('vp-title').textContent=lesson.title;
   document.getElementById('vp-meta').textContent=`${c.name} · Week ${lesson.week} · ${lesson.topic}`;
   const container=document.getElementById('video-container');
-  if(lesson.driveId){
+  if(lesson.youtubeId){
+    container.innerHTML=`<iframe src="https://www.youtube.com/embed/${lesson.youtubeId}?rel=0&modestbranding=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  } else if(lesson.driveId){
     container.innerHTML=`<iframe src="https://drive.google.com/file/d/${lesson.driveId}/preview" allow="autoplay" allowfullscreen></iframe>`;
   } else {
     container.innerHTML=`<div class="video-placeholder"><div class="play-icon">🎬</div><p>Video coming soon. Check back once your instructor uploads the recording for this lesson.</p></div>`;
   }
-  renderQuiz(classId,lessonIdx);
-  showScreen('player');
-}
 
 function renderQuiz(classId,lessonIdx){
   const c=CLASSES.find(x=>x.id===classId);
