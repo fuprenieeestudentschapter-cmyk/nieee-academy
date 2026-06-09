@@ -281,7 +281,7 @@ footer strong{color:var(--white);}
   <section class="hero">
     <p class="hero-eyebrow">NIEEE FUPRE Students Chapter</p>
     <h1>Build Skills.<br><span>Build the Future.</span></h1>
-    <p class="hero-sub">A 6-week intensive digital skills programme for FUPRE engineering students. Seven classes. Real tools. Practical outcomes.</p>
+    <p class="hero-sub">A 6-week intensive digital skills programme hosted by the Exceutive Council of NIEEE for all FUPRE students. Seven classes. Real tools. Practical outcomes.</p>
 
     <!-- AUTH GATE (shown when not logged in) -->
     <div id="auth-gate">
@@ -365,7 +365,11 @@ const CLASSES = [
     desc:'Colour theory, typography, layout, and hands-on design using modern tools. Create flyers, banners, and visual content for any platform.',
     day:'Monday · 4–6pm', format:'Online', tutor:'Ogregade Doubara Prudence',
     lessons:[
+<<<<<<< HEAD
       { week:1, title:'Introduction to design principles', topic:'Colour theory, contrast, and visual hierarchy', driveId:null, youtubeId:'AXpxZMRM1EY',
+=======
+      { week:1, title:'Introduction to design principles', topic:'Colour theory, contrast, and visual hierarchy', driveId:'1RBQelSdW7Cu6V8mGHlYrsVSpg3sNZvgP',
+>>>>>>> 5f825a002e4791e67f5a8977fa46e304035ff0e1
         quiz:[
           { q:'What does visual hierarchy help a viewer do?', opts:['Ignore the design','Know where to look first','Choose colours','Print the design'], ans:1 },
           { q:'Which colour property refers to how light or dark a colour is?', opts:['Hue','Saturation','Value','Temperature'], ans:2 },
@@ -374,7 +378,7 @@ const CLASSES = [
           { q:'Which of these is a primary colour in the RGB colour model?', opts:['Yellow','Green','Orange','Purple'], ans:1 },
         ]
       },
-      { week:2, title:'Typography and font pairing', topic:'Choosing and combining fonts effectively', driveId:null,
+      { week:2, title:'Typography and font pairing', topic:'Choosing and combining fonts effectively', driveId:null, youtubeId:'AXpxZMRM1EY',
         quiz:[
           { q:'Which font style has small decorative strokes at the ends of letters?', opts:['Sans-serif','Serif','Script','Monospace'], ans:1 },
           { q:'How many fonts in a single design is generally recommended?', opts:['5 or more','1 only','2 to 3','As many as possible'], ans:2 },
@@ -663,7 +667,7 @@ const CLASSES = [
   },
   { id:'proteus', color:'purple', icon:'⚡', name:'Proteus Simulation',
     desc:'Design and simulate analogue and digital circuits. Work with virtual instruments, Arduino integration, and microcontroller prototyping.',
-    day:'Saturday · 2–4pm', format:'Physical', tutor:'To be announced',
+    day:'Sunday · 2–4pm', format:'Physical', tutor:'To be announced',
     lessons:[
       { week:1, title:'Introduction to Proteus', topic:'Navigating the schematic editor and component library', driveId:null,
         quiz:[
@@ -723,7 +727,7 @@ const CLASSES = [
   },
   { id:'ai', color:'cyan', icon:'🤖', name:'AI & Prompt Engineering',
     desc:'How AI tools work, how to prompt them effectively, and how to apply them to engineering, research, coding, and productivity.',
-    day:'Sunday · 4–6pm', format:'Online', tutor:'To be announced',
+    day:'Saturday · 4–6pm', format:'Online', tutor:'To be announced',
     lessons:[
       { week:1, title:'How AI works', topic:'Large language models explained simply', driveId:null,
         quiz:[
@@ -1048,9 +1052,6 @@ function openLesson(classId,lessonIdx){
   } else {
     container.innerHTML=`<div class="video-placeholder"><div class="play-icon">🎬</div><p>Video coming soon. Check back once your instructor uploads the recording for this lesson.</p></div>`;
   }
-  renderQuiz(classId,lessonIdx);
-  showScreen('player');
-}
 
 function renderQuiz(classId,lessonIdx){
   const c=CLASSES.find(x=>x.id===classId);
