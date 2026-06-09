@@ -251,7 +251,28 @@ footer strong{color:var(--white);}
       <input class="form-input" id="login-pass" type="password" placeholder="Your password">
     </div>
     <button class="btn btn-primary btn-full" id="login-btn" onclick="doLogin()">Log in</button>
+    <div class="modal-switch" style="margin-top:0.75rem;">
+      <a onclick="openForgotPassword()" style="color:var(--muted);font-size:12px;">Forgot your password?</a>
+    </div>
     <div class="modal-switch">Don't have an account? <a onclick="openRegister()">Register</a></div>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD MODAL -->
+<div class="modal-overlay" id="modal-forgot">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModals()">✕</button>
+    <div style="font-size:2rem;margin-bottom:0.75rem;">🔑</div>
+    <div class="modal-title">Forgot your password?</div>
+    <div class="modal-sub">No problem. Enter your registered email below and we'll send your password via WhatsApp.</div>
+    <div class="form-group">
+      <label class="form-label">Your registered email</label>
+      <input class="form-input" id="forgot-email" type="email" placeholder="e.g. amara@example.com">
+    </div>
+    <button class="btn btn-primary btn-full" onclick="doForgotPassword()">Send password via WhatsApp</button>
+    <div class="modal-switch" style="margin-top:1rem;">
+      <a onclick="openLogin()">← Back to login</a>
+    </div>
   </div>
 </div>
 
@@ -860,11 +881,47 @@ async function doLogin(){
   btn.disabled=false; btn.textContent='Log in';
 }
 
-function doLogout(){
-  state.user=null; clearSession(); updateAuthUI(); buildHome();
+function openForgotPassword(){ closeModals(); document.getElementById('modal-forgot').classList.add('open'); }
+
+async function doForgotPassword(){
+  var email = document.getElementById('forgot-email').value.trim().toLowerCase();
+  if(!email){ alert('Please enter your registered email address.'); return; }
+  if(!/\S+@\S+\.\S+/.test(email)){ alert('Please enter a valid email address.'); return; }
+
+  // Look up the student via the API
+  try {
+    var data = await callAPI({ action:'getPassword', email: email });
+    if(data.success){
+      // Open WhatsApp with prefilled message to admin
+      var msg = encodeURIComponent(
+        'Hello NIEEE Academy Admin,\n\n' +
+        'I forgot my password. My registered email is: ' + email + '\n\n' +
+        'Please help me recover my account. Thank you.'
+      );
+      var whatsappURL = 'https://wa.me/2349137958005?text=' + msg;
+      window.open(whatsappURL, '_blank');
+      closeModals();
+    } else {
+      alert('No account found with that email address. Please check and try again.');
+    }
+  } catch(e) {
+    // Even if API fails, still open WhatsApp — student can describe their issue
+    var msg = encodeURIComponent(
+      'Hello NIEEE Academy Admin,\n\n' +
+      'I forgot my password. My registered email is: ' + email + '\n\n' +
+      'Please help me recover my account. Thank you.'
+    );
+    var whatsappURL = 'https://wa.me/2349137958005?text=' + msg;
+    window.open(whatsappURL, '_blank');
+    closeModals();
+  }
 }
 
 function showMsg(el,type,text){ el.className='modal-msg '+type; el.textContent=text; }
+
+function doLogout(){
+  state.user=null; clearSession(); updateAuthUI(); buildHome();
+}
 
 // ─── UI STATE ─────────────────────────────────────────────────────────────────
 function updateAuthUI(){
