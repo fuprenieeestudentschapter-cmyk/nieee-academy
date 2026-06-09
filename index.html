@@ -777,6 +777,41 @@ function saveSession(user){ try{ localStorage.setItem('nieee_session', JSON.stri
 function loadSession(){ try{ return JSON.parse(localStorage.getItem('nieee_session')||'null'); }catch(e){ return null; } }
 function clearSession(){ try{ localStorage.removeItem('nieee_session'); }catch(e){} }
 
+// ─── JSONP HELPER (bypasses CORS completely) ──────────────────────────────────
+function callAPI(params) {
+  return new Promise(function(resolve, reject) {
+    var cbName = 'cb_' + Math.random().toString(36).slice(2);
+    var timeout = setTimeout(function() {
+      delete window[cbName];
+      reject(new Error('Request timed out. Check your internet connection.'));
+    }, 12000);
+
+    window[cbName] = function(data) {
+      clearTimeout(timeout);
+      delete window[cbName];
+      var tag = document.getElementById(cbName);
+      if (tag) tag.remove();
+      resolve(data);
+    };
+
+    params.callback = cbName;
+    var qs = Object.keys(params).map(function(k){
+      return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+    }).join('&');
+
+    var tag = document.createElement('script');
+    tag.id  = cbName;
+    tag.src = APPS_SCRIPT_URL + '?' + qs;
+    tag.onerror = function() {
+      clearTimeout(timeout);
+      delete window[cbName];
+      tag.remove();
+      reject(new Error('Could not connect. Check your internet and try again.'));
+    };
+    document.head.appendChild(tag);
+  });
+}
+
 // ─── PROGRESS (backed by user object, synced to Sheet) ────────────────────────
 function getCompleted(classId){ return (state.user && state.user.progress && state.user.progress[classId]) || []; }
 function markComplete(classId,idx){
@@ -786,18 +821,13 @@ function markComplete(classId,idx){
   if(!state.user.progress[classId].includes(idx)){
     state.user.progress[classId].push(idx);
     saveSession(state.user);
-    syncProgress(); // fire-and-forget sync to Sheet
+    syncProgress();
   }
 }
-async function syncProgress(){
+function syncProgress(){
   if(!state.user) return;
-  try{
-    await fetch(APPS_SCRIPT_URL, {
-      method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ action:'saveProgress', email: state.user.email, progress: state.user.progress })
-    });
-  }catch(e){}
+  callAPI({ action:'saveProgress', email: state.user.email, progress: JSON.stringify(state.user.progress) })
+    .catch(function(){});  // silent fail — progress is already saved locally
 }
 
 // ─── MODAL CONTROLS ───────────────────────────────────────────────────────────
@@ -808,55 +838,44 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModals(); })
 
 // ─── REGISTER ─────────────────────────────────────────────────────────────────
 async function doRegister(){
-  const name=document.getElementById('reg-name').value.trim();
-  const email=document.getElementById('reg-email').value.trim().toLowerCase();
-  const phone=document.getElementById('reg-phone').value.trim();
-  const dept=document.getElementById('reg-dept').value.trim();
-  const pass=document.getElementById('reg-pass').value;
-  const msg=document.getElementById('reg-msg');
+  var name=document.getElementById('reg-name').value.trim();
+  var email=document.getElementById('reg-email').value.trim().toLowerCase();
+  var phone=document.getElementById('reg-phone').value.trim();
+  var dept=document.getElementById('reg-dept').value.trim();
+  var pass=document.getElementById('reg-pass').value;
+  var msg=document.getElementById('reg-msg');
   msg.className='modal-msg';
   if(!name||!email||!phone||!dept||!pass){ showMsg(msg,'error','Please fill in all fields.'); return; }
   if(pass.length<6){ showMsg(msg,'error','Password must be at least 6 characters.'); return; }
   if(!/\S+@\S+\.\S+/.test(email)){ showMsg(msg,'error','Please enter a valid email address.'); return; }
-  const btn=document.getElementById('reg-btn');
+  var btn=document.getElementById('reg-btn');
   btn.disabled=true; btn.innerHTML='<span class="loading-dots">Creating account</span>';
   try{
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ action:'register', name, email, phone, dept, pass })
-    });
-    const data = await res.json();
+    var data = await callAPI({ action:'register', name:name, email:email, phone:phone, dept:dept, pass:pass });
     if(data.success){
-      const user = { name, email, phone, dept, progress:{} };
+      var user = { name:name, email:email, phone:phone, dept:dept, progress:{} };
       state.user = user; saveSession(user);
       closeModals(); updateAuthUI(); buildHome();
-      showMsg(document.getElementById('reg-msg'),'success','');
     } else {
       showMsg(msg,'error', data.error||'Registration failed. Please try again.');
     }
   }catch(e){
-    showMsg(msg,'error','Could not connect. Check your internet and try again.');
+    showMsg(msg,'error', e.message||'Could not connect. Check your internet and try again.');
   }
   btn.disabled=false; btn.textContent='Create account';
 }
 
 // ─── LOGIN ────────────────────────────────────────────────────────────────────
 async function doLogin(){
-  const email=document.getElementById('login-email').value.trim().toLowerCase();
-  const pass=document.getElementById('login-pass').value;
-  const msg=document.getElementById('login-msg');
+  var email=document.getElementById('login-email').value.trim().toLowerCase();
+  var pass=document.getElementById('login-pass').value;
+  var msg=document.getElementById('login-msg');
   msg.className='modal-msg';
   if(!email||!pass){ showMsg(msg,'error','Please enter your email and password.'); return; }
-  const btn=document.getElementById('login-btn');
+  var btn=document.getElementById('login-btn');
   btn.disabled=true; btn.innerHTML='<span class="loading-dots">Logging in</span>';
   try{
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ action:'login', email, pass })
-    });
-    const data = await res.json();
+    var data = await callAPI({ action:'login', email:email, pass:pass });
     if(data.success){
       state.user = data.user; saveSession(data.user);
       closeModals(); updateAuthUI(); buildHome();
@@ -864,7 +883,7 @@ async function doLogin(){
       showMsg(msg,'error', data.error||'Incorrect email or password.');
     }
   }catch(e){
-    showMsg(msg,'error','Could not connect. Check your internet and try again.');
+    showMsg(msg,'error', e.message||'Could not connect. Check your internet and try again.');
   }
   btn.disabled=false; btn.textContent='Log in';
 }
