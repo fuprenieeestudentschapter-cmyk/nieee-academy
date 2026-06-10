@@ -145,6 +145,27 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:1.25re
 
 footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;font-size:12px;color:var(--muted);}
 footer strong{color:var(--white);}
+
+/* CERTIFICATE */
+.cert-overlay{display:none;position:fixed;inset:0;background:rgba(5,12,25,0.92);z-index:300;align-items:center;justify-content:center;padding:1.5rem;overflow-y:auto;}
+.cert-overlay.open{display:flex;}
+.cert-box{background:#fff;border-radius:16px;padding:3rem 2.5rem;width:100%;max-width:640px;text-align:center;position:relative;color:#0A1628;font-family:'Plus Jakarta Sans',sans-serif;}
+.cert-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.3rem;cursor:pointer;color:#8CA0C4;line-height:1;}
+.cert-close:hover{color:#0A1628;}
+.cert-border{border:3px solid #1A56DB;border-radius:12px;padding:2.5rem 2rem;}
+.cert-logo{font-size:1rem;font-weight:800;color:#1A56DB;letter-spacing:0.04em;margin-bottom:0.5rem;}
+.cert-eyebrow{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8CA0C4;margin-bottom:1.5rem;}
+.cert-presents{font-size:13px;color:#4B6280;margin-bottom:0.4rem;}
+.cert-title{font-size:2rem;font-weight:800;color:#0A1628;line-height:1.15;margin-bottom:0.3rem;}
+.cert-subtitle{font-size:13px;color:#4B6280;margin-bottom:1.5rem;}
+.cert-name{font-size:1.6rem;font-weight:700;color:#1A56DB;border-bottom:2px solid #1A56DB;display:inline-block;padding-bottom:4px;margin-bottom:1.5rem;}
+.cert-body{font-size:13px;color:#4B6280;line-height:1.7;margin-bottom:1.5rem;}
+.cert-class-name{font-size:1.1rem;font-weight:700;color:#0A1628;margin-bottom:0.3rem;}
+.cert-date{font-size:12px;color:#8CA0C4;margin-bottom:2rem;}
+.cert-seal{font-size:3rem;margin-bottom:0.5rem;}
+.cert-org{font-size:11px;color:#8CA0C4;letter-spacing:0.06em;text-transform:uppercase;}
+.cert-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;}
+.cert-hint{font-size:12px;color:#8CA0C4;margin-top:0.75rem;font-family:'Inter',sans-serif;}
 @media(max-width:600px){
   .hero{padding:3rem 1.25rem 2rem;}
   .section,.class-page-header,.lessons-wrap,.player-wrap{padding-left:1.25rem;padding-right:1.25rem;}
@@ -283,6 +304,30 @@ footer strong{color:var(--white);}
     <p class="hero-eyebrow">NIEEE FUPRE Students Chapter</p>
     <h1>Build Skills.<br><span>Build the Future.</span></h1>
     <p class="hero-sub">A 6-week intensive digital skills programme for FUPRE engineering students. Seven classes. Real tools. Practical outcomes.</p>
+
+<!-- CERTIFICATE MODAL -->
+<div class="cert-overlay" id="cert-overlay">
+  <div class="cert-box" id="cert-box">
+    <button class="cert-close" onclick="closeCertificate()">✕</button>
+    <div class="cert-border">
+      <div class="cert-logo">● NIEEE Academy of Digital Skills</div>
+      <div class="cert-eyebrow">Certificate of Completion</div>
+      <div class="cert-presents">This is to certify that</div>
+      <div class="cert-name" id="cert-student-name">Student Name</div>
+      <div class="cert-body">has successfully completed all six lessons in</div>
+      <div class="cert-class-name" id="cert-class-name">Class Name</div>
+      <div class="cert-body">demonstrating commitment to digital skills development as part of the NIEEE FUPRE Students Chapter Academy.</div>
+      <div class="cert-date" id="cert-date"></div>
+      <div class="cert-seal">🏅</div>
+      <div class="cert-org">NIEEE FUPRE Students Chapter · 2025/2026 Session</div>
+    </div>
+    <div class="cert-actions">
+      <button class="btn btn-primary" onclick="printCertificate()">🖨️ Print / Save as PDF</button>
+      <button class="btn btn-secondary" onclick="closeCertificate()">Close</button>
+    </div>
+    <div class="cert-hint">Tip: Take a screenshot or use "Print → Save as PDF" to keep your certificate.</div>
+  </div>
+</div>
 
     <!-- AUTH GATE (shown when not logged in) -->
     <div id="auth-gate">
@@ -1078,7 +1123,7 @@ function renderQuiz(classId,lessonIdx){
       <div class="quiz-result pass">
         <div class="result-score pass">✓ Completed</div>
         <div class="result-msg">You have already completed this lesson.</div>
-        ${lessonIdx<c.lessons.length-1?`<button class="btn btn-secondary" onclick="openLesson('${classId}',${lessonIdx+1})">Next lesson →</button>`:'<p style="color:#6EE7B7;font-size:13px;">🎉 You have completed all lessons in this class!</p>'}
+        ${lessonIdx<c.lessons.length-1?`<button class="btn btn-secondary" onclick="openLesson('${classId}',${lessonIdx+1})">Next lesson →</button>`:`<button class="btn btn-success" onclick="showCertificate('${classId}')">🏅 View your certificate</button>`}
       </div></div>`;
     return;
   }
@@ -1160,7 +1205,7 @@ function submitQuiz(classId,lessonIdx){
         </div>
         <div class="btn-row" style="justify-content:center;margin-top:1rem;">
           ${!isLast?`<button class="btn btn-secondary" onclick="openLesson('${classId}',${lessonIdx+1})">Next lesson →</button>`
-          :'<p style="color:#6EE7B7;font-size:13px;margin-top:0.5rem;">🎉 You have completed all lessons in this class!</p>'}
+          :`<button class="btn btn-success" onclick="showCertificate('${classId}')">🏅 Get your certificate</button>`}
           <button class="btn btn-secondary" onclick="buildHome();openClass('${classId}')">Back to class</button>
         </div>
       </div>`;
@@ -1174,6 +1219,54 @@ function submitQuiz(classId,lessonIdx){
         </div>
       </div>`;
   }
+}
+
+// ─── CERTIFICATE ──────────────────────────────────────────────────────────────
+function showCertificate(classId){
+  const c = CLASSES.find(x=>x.id===classId);
+  const name = state.user ? state.user.name : 'Student';
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('cert-student-name').textContent = name;
+  document.getElementById('cert-class-name').textContent = c.name;
+  document.getElementById('cert-date').textContent = 'Awarded on ' + dateStr;
+  document.getElementById('cert-overlay').classList.add('open');
+}
+
+function closeCertificate(){
+  document.getElementById('cert-overlay').classList.remove('open');
+}
+
+function printCertificate(){
+  const box = document.getElementById('cert-box');
+  const original = document.body.innerHTML;
+  const certHTML = box.innerHTML;
+  // Hide close button and actions for print
+  const printWin = window.open('','_blank');
+  printWin.document.write(`
+    <html><head><title>Certificate of Completion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f0f4ff;font-family:'Plus Jakarta Sans',sans-serif;}
+      .cert-box{background:#fff;border-radius:16px;padding:3rem 2.5rem;width:640px;text-align:center;color:#0A1628;}
+      .cert-border{border:3px solid #1A56DB;border-radius:12px;padding:2.5rem 2rem;}
+      .cert-close,.cert-actions,.cert-hint{display:none!important;}
+      .cert-logo{font-size:1rem;font-weight:800;color:#1A56DB;letter-spacing:0.04em;margin-bottom:0.5rem;}
+      .cert-eyebrow{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#8CA0C4;margin-bottom:1.5rem;}
+      .cert-presents{font-size:13px;color:#4B6280;margin-bottom:0.4rem;}
+      .cert-name{font-size:1.6rem;font-weight:700;color:#1A56DB;border-bottom:2px solid #1A56DB;display:inline-block;padding-bottom:4px;margin-bottom:1.5rem;}
+      .cert-body{font-size:13px;color:#4B6280;line-height:1.7;margin-bottom:1.5rem;}
+      .cert-class-name{font-size:1.1rem;font-weight:700;color:#0A1628;margin-bottom:0.3rem;}
+      .cert-date{font-size:12px;color:#8CA0C4;margin-bottom:2rem;}
+      .cert-seal{font-size:3rem;margin-bottom:0.5rem;}
+      .cert-org{font-size:11px;color:#8CA0C4;letter-spacing:0.06em;text-transform:uppercase;}
+    </style></head><body>
+    <div class="cert-box">${certHTML}</div>
+    </body></html>`);
+  printWin.document.close();
+  printWin.focus();
+  setTimeout(()=>{ printWin.print(); }, 600);
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
