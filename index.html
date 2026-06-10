@@ -743,16 +743,16 @@ const CLASSES = [
           { q:'Asking the AI to respond "step by step" typically:', opts:['Slows the AI down','Produces more structured and logical responses','Makes responses shorter','Causes errors'], ans:1 },
         ]
       },
-      { week:3, title:'AI for engineering students', topic:'Research, calculations, and technical writing', driveId:null,
+      { week:3, title:'Introduction to Claude AI', topic:'What Claude is, how it works, and how to use it effectively', driveId:null, youtubeId:'rRrBbyv3ChM',
         quiz:[
-          { q:'How can AI tools help with engineering research?', opts:['They replace textbooks entirely','They can summarise topics, explain concepts, and suggest sources to explore','They perform lab experiments','They write code automatically without prompting'], ans:1 },
-          { q:'When using AI for technical writing, you should always:', opts:['Submit the output directly without checking','Review, verify, and edit the AI output before use','Use only the first response','Avoid adding your own ideas'], ans:1 },
-          { q:'AI tools are best used for engineering calculations when:', opts:['You want to replace your calculator entirely','You need to check your work, explore methods, or understand steps','You want to bypass learning','You need certified results'], ans:1 },
-          { q:'Which of these is a responsible use of AI in academic work?', opts:['Submitting AI output as your own without acknowledgement','Using AI to understand a concept then writing your own explanation','Letting AI take exams for you','Ignoring what AI says entirely'], ans:1 },
-          { q:'AI tools can help with report writing by:', opts:['Writing the entire report from scratch to submit','Helping structure ideas, improve grammar, and suggest phrasing','Replacing your engineering knowledge','Doing your site visits for you'], ans:1 },
+          { q:'What is Claude AI?', opts:['A search engine like Google','A conversational AI assistant built by Anthropic','A social media platform','A coding language'], ans:1 },
+          { q:'Which company created Claude AI?', opts:['OpenAI','Google','Anthropic','Microsoft'], ans:2 },
+          { q:'What is a prompt in the context of Claude AI?', opts:['A type of computer virus','The instruction or question you give to Claude','A programming language','A hardware device'], ans:1 },
+          { q:'Which of these is an example of a good prompt for Claude?', opts:['Help','Explain the concept of electrical resistance in simple terms with an example','AI','Write something'], ans:1 },
+          { q:'Claude AI can best help an engineering student with:', opts:['Taking exams on their behalf','Understanding difficult concepts, drafting reports, and exploring ideas','Replacing their lecturers entirely','Doing physical lab experiments'], ans:1 },
         ]
       },
-      { week:4, title:'AI coding assistants', topic:'Using AI to write, debug, and explain code', driveId:null,
+      { week:4, title:'AI coding assistants', topic:'Using AI to write, debug, and explain code', driveId:null, youtubeId:'5fhcklZe-qE',
         quiz:[
           { q:'AI coding assistants like GitHub Copilot are best used to:', opts:['Replace the need to learn programming','Speed up coding by suggesting completions and helping debug','Write final production code without review','Avoid testing code'], ans:1 },
           { q:'When AI generates code for you, you should:', opts:['Run it immediately without reading it','Read, understand, test, and verify the code before using it','Delete your own code','Never modify it'], ans:1 },
@@ -761,7 +761,7 @@ const CLASSES = [
           { q:'Which of these is a limitation of AI-generated code?', opts:['It always works perfectly','It may contain bugs, security issues, or outdated practices','It is always more efficient than human code','It never needs testing'], ans:1 },
         ]
       },
-      { week:5, title:'Ethics and limitations', topic:'Responsible AI use and knowing its limits', driveId:null,
+      { week:5, title:'Ethics and limitations', topic:'Responsible AI use and knowing its limits', driveId:null, youtubeId:'nMevhcsKh1E',
         quiz:[
           { q:'AI bias refers to:', opts:['The AI preferring certain users','Unfair or skewed outputs resulting from patterns in training data','The AI being too slow','A technical error'], ans:1 },
           { q:'Why is it important to verify AI-generated information?', opts:['AI is always correct','AI can produce plausible-sounding but incorrect information','AI never makes mistakes','Verification wastes time'], ans:1 },
@@ -770,7 +770,7 @@ const CLASSES = [
           { q:'A key limitation of current AI language models is:', opts:['They are too slow','They do not have real-world understanding and can confidently state falsehoods','They cannot write text','They are too expensive for everyone'], ans:1 },
         ]
       },
-      { week:6, title:'Final project showcase', topic:'Present your AI prompt toolkit', driveId:null,
+      { week:6, title:'Final project showcase', topic:'Present your AI prompt toolkit', driveId:null, youtubeId:'honPjypBV5Y',
         quiz:[
           { q:'A good AI prompt toolkit for engineering should include:', opts:['Random prompts with no structure','Organised, tested prompts for common engineering tasks like research, writing, and coding','Only prompts for fun','Prompts that replace all coursework'], ans:1 },
           { q:'Prompt engineering is a skill because:', opts:['Anyone can use AI without thinking','The quality of AI output depends significantly on how well the prompt is crafted','AI always gives the same output regardless of the prompt','It requires coding knowledge'], ans:1 },
@@ -933,7 +933,7 @@ async function doForgotPassword(){
   } catch(e) {
     // Even if API fails, still open WhatsApp — student can describe their issue
     var msg = encodeURIComponent(
-      'Hello NIEEE Academy Admin,\n\n' +
+      'Hello NIEEE Academy Dean,\n\n' +
       'I forgot my password. My registered email is: ' + email + '\n\n' +
       'Please help me recover my account. Thank you.'
     );
