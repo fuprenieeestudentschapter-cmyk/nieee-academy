@@ -225,6 +225,27 @@ footer strong{color:var(--white);}
 .cert-close-btn{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.6);border:none;color:#fff;font-size:1rem;cursor:pointer;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;z-index:10;line-height:1;}
 .cert-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:0.75rem 1rem;background:#ede8dc;border-top:1px solid #ccc;}
 .cert-hint{font-size:11px;color:#888;text-align:center;padding:0.4rem 1rem 0.6rem;background:#ede8dc;font-family:'Inter',sans-serif;}
+
+/* PRACTICAL TASK */
+.task-wrap{background:rgba(26,86,219,0.06);border:1px solid rgba(26,86,219,0.25);border-radius:12px;padding:1.75rem 2rem;margin-top:1.5rem;}
+.task-header{display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;}
+.task-badge{background:#1A56DB;color:#fff;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;}
+.task-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:0.5rem;}
+.task-desc{font-size:13px;color:var(--off-white);line-height:1.7;margin-bottom:1rem;}
+.task-steps{list-style:none;padding:0;margin:0 0 1.25rem 0;}
+.task-steps li{font-size:13px;color:var(--off-white);line-height:1.7;padding:6px 0 6px 1.5rem;position:relative;border-bottom:1px solid rgba(56,189,248,0.07);}
+.task-steps li:last-child{border-bottom:none;}
+.task-steps li::before{content:counter(task-counter);counter-increment:task-counter;position:absolute;left:0;top:6px;width:18px;height:18px;background:rgba(56,189,248,0.15);color:var(--accent);border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.task-steps{counter-reset:task-counter;}
+.task-note{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:1.25rem;padding:0.6rem 0.9rem;background:rgba(56,189,248,0.05);border-radius:8px;border-left:3px solid rgba(56,189,248,0.3);}
+
+/* VIDEO WATCH GATE */
+.watch-gate{background:var(--card-bg);border:1px solid rgba(245,158,11,0.35);border-radius:12px;padding:1.75rem 2rem;margin-top:1.5rem;text-align:center;}
+.watch-gate-icon{font-size:2rem;margin-bottom:0.75rem;}
+.watch-gate-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:0.4rem;}
+.watch-gate-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:1.25rem;}
+.btn-watch{background:rgba(245,158,11,0.15);color:#F59E0B;border:1px solid rgba(245,158,11,0.35);padding:0.7rem 1.6rem;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s;}
+.btn-watch:hover{background:rgba(245,158,11,0.25);}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
@@ -874,7 +895,7 @@ function sendWelcomeEmail(name, email, dept) {
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 const state = {
-  currentClass:null, currentLesson:null, quizAnswers:{}, quizSubmitted:false,
+  currentClass:null, currentLesson:null, quizAnswers:{}, quizSubmitted:false, videoWatched:false,
   user: null,   // { email, name, dept, phone, progress:{} }
 };
 
@@ -1098,7 +1119,7 @@ function buildHome(){
       banner.style.cssText = 'background:linear-gradient(135deg,rgba(245,166,35,0.15),rgba(26,61,191,0.15));border:1px solid rgba(245,166,35,0.4);border-radius:16px;padding:1.5rem 2rem;margin-top:1.5rem;text-align:center;';
       banner.innerHTML = `<div style="font-size:2rem;margin-bottom:0.5rem;">🏆</div>
         <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:0.4rem;">You completed the entire Academy!</div>
-        <p style="font-size:13px;color:#8CA0C4;margin-bottom:1rem;line-height:1.6;">You've finished all 7 classes. Claim your Certificate of Excellence.</p>
+        <p style="font-size:13px;color:#8CA0C4;margin-bottom:1rem;line-height:1.6;">You\'ve finished all 7 classes. Claim your Certificate of Excellence.</p>
         <button class="btn btn-primary" onclick="showCertificate('full-academy')" style="font-size:14px;padding:0.8rem 2rem;">🏅 Get Certificate of Excellence</button>`;
       section.appendChild(banner);
     }
@@ -1147,6 +1168,7 @@ function openLesson(classId,lessonIdx){
   const lesson=c.lessons[lessonIdx];
   state.currentClass=c; state.currentLesson=lessonIdx;
   state.quizAnswers={}; state.quizSubmitted=false;
+  state.videoWatched=false;
   document.getElementById('back-to-class-btn').onclick=()=>{ buildHome(); openClass(classId); };
   document.getElementById('vp-title').textContent=lesson.title;
   document.getElementById('vp-meta').textContent=`${c.name} · Week ${lesson.week} · ${lesson.topic}`;
@@ -1158,8 +1180,63 @@ function openLesson(classId,lessonIdx){
   } else {
     container.innerHTML=`<div class="video-placeholder"><div class="play-icon">🎬</div><p>Video coming soon. Check back once your instructor uploads the recording for this lesson.</p></div>`;
   }
-  renderQuiz(classId,lessonIdx);
+  renderQuizArea(classId,lessonIdx);
+  renderPracticalTask(classId,lessonIdx);
   showScreen('player');
+}
+
+function renderQuizArea(classId,lessonIdx){
+  const isDone=getCompleted(classId).includes(lessonIdx);
+  if(isDone){ renderQuiz(classId,lessonIdx); return; }
+  // Show watch gate instead of quiz
+  const area=document.getElementById('quiz-area');
+  area.innerHTML=`<div class="watch-gate" id="watch-gate">
+    <div class="watch-gate-icon">🎬</div>
+    <div class="watch-gate-title">Watch the video first</div>
+    <div class="watch-gate-sub">Please watch the lesson video above before answering the questions.<br>When you are done, click the button below to unlock the quiz.</div>
+    <button class="btn-watch" onclick="confirmWatched('${classId}',${lessonIdx})">✓ I have watched the video — unlock the quiz</button>
+  </div>`;
+}
+
+function confirmWatched(classId,lessonIdx){
+  const c=CLASSES.find(x=>x.id===classId);
+  const lesson=c.lessons[lessonIdx];
+  state.videoWatched=true;
+  // Log watch confirmation to backend
+  if(state.user){
+    callAPI({
+      action:'logWatch',
+      email:state.user.email,
+      name:state.user.name,
+      class:c.name,
+      lesson:'Week '+lesson.week+': '+lesson.title,
+      timestamp:new Date().toISOString()
+    }).catch(function(){});
+  }
+  renderQuiz(classId,lessonIdx);
+}
+
+function renderPracticalTask(classId,lessonIdx){
+  const tasks=PRACTICAL_TASKS[classId];
+  const c=CLASSES.find(x=>x.id===classId);
+  const lesson=c.lessons[lessonIdx];
+  const existing=document.getElementById('practical-task-area');
+  if(existing) existing.remove();
+  const wrap=document.getElementById('quiz-area');
+  if(!tasks||!tasks[lessonIdx]) return;
+  const t=tasks[lessonIdx];
+  const div=document.createElement('div');
+  div.id='practical-task-area';
+  div.innerHTML=`<div class="task-wrap">
+    <div class="task-header"><span class="task-badge">📋 Practical Task</span></div>
+    <div class="task-title">${t.title}</div>
+    <div class="task-desc">${t.desc}</div>
+    <ol class="task-steps">${t.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+    <div class="task-note">💡 You must complete this task and submit it via the form below to fully unlock the next lesson.</div>
+    <a href="${GOOGLE_FORM_URL}?entry.class=${encodeURIComponent(c.name)}&entry.lesson=${encodeURIComponent('Week '+lesson.week+': '+lesson.title)}" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-flex;margin-top:0.25rem;">Submit your work ↗</a>
+  </div>`;
+  // Insert practical task after quiz-area div
+  wrap.parentNode.insertBefore(div, wrap.nextSibling);
 }
 
 function renderQuiz(classId,lessonIdx){
@@ -1269,6 +1346,67 @@ function submitQuiz(classId,lessonIdx){
       </div>`;
   }
 }
+
+
+// ─── PRACTICAL TASKS ──────────────────────────────────────────────────────────
+const PRACTICAL_TASKS = {
+  'graphic-design': [
+    { title:'Visual Hierarchy Poster', desc:'Apply today\'s principles to create a real design.', steps:['Choose any topic (an event, a product, or a quote)','Create a single-page poster (A4 or 1080×1080px) in Canva, Photoshop, or any design tool','Apply at least 3 elements: contrast, colour, and visual hierarchy so the viewer\'s eye goes where you want','Export as JPG or PNG','Submit the exported image via the form below'] },
+    { title:'Font Pairing Flyer', desc:'Demonstrate your understanding of typography in a real design.', steps:['Design a simple event flyer (any fictional event)','Use exactly 2 font families — one serif or display font for the heading, one sans-serif for body','Apply correct kerning, weight variation, and hierarchy','Label your font choices in a note on the submission form','Export and submit via the form below'] },
+    { title:'Grid-Based Layout', desc:'Show that you can use a grid system to organise content.', steps:['Create a 3-column grid layout for a fictional magazine page or website hero section','Include a headline, subheading, body text, and at least one image placeholder','Ensure consistent spacing and alignment throughout','Screenshot or export the finished layout','Submit via the form below'] },
+    { title:'Photoshop Background Removal', desc:'Demonstrate your Photoshop layer and selection skills.', steps:['Find or photograph any object with a busy background','Open it in Photoshop and remove the background using the Magic Wand or Quick Selection tool','Place the isolated object on a new solid-colour or gradient background','Export as PNG (to preserve transparency if needed)','Submit the before and after images via the form below'] },
+    { title:'Social Media Graphics Set', desc:'Create a 3-piece social media content set for a fictional brand.', steps:['Design 3 graphics: an Instagram post (1080×1080px), a story (1080×1920px), and a Twitter/X banner (1500×500px)','Keep a consistent colour palette and font across all three','Include a brand name, tagline, and call to action on at least one graphic','Export all three and zip them or upload individually','Submit via the form below'] },
+    { title:'Final Design Portfolio Slide', desc:'Create a single portfolio presentation slide showcasing your best work from this course.', steps:['Choose your best design from the previous 5 weeks','Create a presentation slide (16:9 ratio) showing the design with a brief description: what it is, the tools used, and the design decisions made','Add your name and course title to the slide','Export as PDF or JPG','Submit via the form below — this counts as your final project'] },
+  ],
+  'video-editing': [
+    { title:'30-Second Introduction Clip', desc:'Edit a short talking-head or screen recording clip from scratch.', steps:['Record a 30–60 second clip of yourself introducing any topic (or use free stock footage)','Import into your editing software and make at least 3 cuts to tighten the pacing','Add a title text overlay at the start','Export as MP4 (1080p or 720p)','Submit the exported video file or a Google Drive link via the form below'] },
+    { title:'Transition Showcase', desc:'Demonstrate your ability to use transitions and motion effects cleanly.', steps:['Create a 45-second edit using at least 4 different clips','Apply at least 3 different transitions between clips — use them intentionally, not randomly','Add one animated text overlay (e.g. a lower-third name tag or title)','Export as MP4 and upload to Google Drive','Submit the Drive link via the form below'] },
+    { title:'Audio-Synced Edit', desc:'Show that you can work with audio professionally.', steps:['Choose a 30–60 second piece of royalty-free music (YouTube Audio Library or Pixabay)','Edit a video clip so the cuts sync with the beat or mood of the music','Add a voiceover narrating at least one sentence over the footage','Remove any background noise using your editing software\'s noise reduction tool','Export and submit via the form below'] },
+    { title:'Colour Grade Comparison', desc:'Show the difference a colour grade makes on the same footage.', steps:['Take any clip (your own or stock footage)','Export 2 versions: the original flat/neutral version, and a graded version with a clear mood (e.g. warm cinematic, cool documentary, or high-contrast dramatic)','Put both side-by-side in a split-screen or back-to-back edit','Add a text label identifying each version','Export and submit via the form below'] },
+    { title:'Platform-Specific Export', desc:'Demonstrate you can export correctly for different platforms.', steps:['Take one 30-second video and export it in 3 formats: 16:9 for YouTube (1080p), 9:16 for Instagram Reels (1080×1920), and a compressed version under 15MB for WhatsApp','Check each export plays correctly','Submit all 3 files or Google Drive links with labels via the form below'] },
+    { title:'Final 60-Second Edit', desc:'Your final project — a polished, complete 60-second video edit.', steps:['Choose a topic: a short documentary, a product promo, an event highlight, or a tutorial clip','Apply everything from the course: clean cuts, transitions, colour grade, background music, and text overlays','Ensure audio levels are balanced (no clipping, music under voice)','Export at 1080p for YouTube','Submit via the form below — this is your final project for Video Editing'] },
+  ],
+  'python': [
+    { title:'Temperature Converter Script', desc:'Write your first real Python script using variables and data types.', steps:['Write a Python script that converts temperatures between Celsius, Fahrenheit, and Kelvin','The user should be able to input a temperature and choose the conversion','Use variables, arithmetic operations, and print() to display the result','Save as temperature_converter.py','Paste your code into the submission form below'] },
+    { title:'Number Guessing Game', desc:'Use loops and conditionals to build an interactive game.', steps:['Write a script that randomly picks a number between 1 and 100','The user keeps guessing until they get it right','After each guess, print "Too high", "Too low", or "Correct!"','Count and display how many guesses it took','Paste your code into the submission form below'] },
+    { title:'Student Grade Calculator', desc:'Build a practical tool using functions and lists.', steps:['Write a Python program that takes a list of at least 5 student scores','Define a function that calculates the average, highest, and lowest score','Print a formatted report showing all scores and the summary statistics','Add a function that assigns a grade (A, B, C, D, F) based on the average','Paste your code and a screenshot of the output via the form below'] },
+    { title:'CSV Data Reader', desc:'Read and process real data using a Python library.', steps:['Create a simple CSV file with at least 10 rows of data (e.g. student names and scores, or product names and prices)','Write a Python script using the csv module to read the file','Calculate and print a summary (total, average, max, min)','Format the output clearly with labels','Paste your code and submit a screenshot of the output via the form below'] },
+    { title:'File Organiser Script', desc:'Apply Python to a real-world automation task.', steps:['Write a script that scans a folder and lists all files grouped by extension (e.g. all .jpg files, all .pdf files, all .txt files)','Print a neat report showing each file type and how many files of that type exist','Bonus: move each file type into a subfolder named after the extension','Paste your code and a screenshot of the output via the form below'] },
+    { title:'Final Python Project', desc:'Build a complete mini-application in Python — your final project.', steps:['Choose one of the following: a simple contact book (add, search, delete contacts saved to a file), a basic quiz game (at least 10 questions with a score at the end), or a BMI calculator with health category output','Your project must use functions, loops, and at least one file operation or library','Write clean, commented code','Submit your .py file (pasted or as a Google Drive link) via the form below'] },
+  ],
+  'autocad': [
+    { title:'Basic 2D Shape Drawing', desc:'Demonstrate your ability to navigate AutoCAD and use the core drawing tools.', steps:['Draw the following shapes with exact dimensions: a rectangle (150mm × 80mm), a circle (diameter 60mm), and a regular hexagon (inscribed in a 50mm circle)','Use the correct drawing tools and snap settings','Do not dimension yet — just accurate shapes','Save as a .dwg file or export as PDF','Submit via the form below'] },
+    { title:'Precision Floor Plan', desc:'Use layers and precision drawing to create a simple floor plan.', steps:['Draw a simple room floor plan: one room (5m × 4m) with a door (900mm wide, with swing arc) and a window (1200mm wide)','Create at least 3 layers: Walls, Doors, Windows — each with different colours and line weights','Use snap and ortho mode throughout','Export as PDF','Submit via the form below'] },
+    { title:'Edited Mechanical Part', desc:'Apply editing commands to modify a given shape into a finished component.', steps:['Draw a 200mm × 120mm rectangle','Use OFFSET to create a 10mm border inside it','Add 4 circles (diameter 20mm each) in the four inner corners, positioned 25mm from each inner edge','Use TRIM to clean up any overlapping lines','Dimension the overall width and height only','Export as PDF and submit via the form below'] },
+    { title:'Fully Dimensioned Component', desc:'Apply dimensioning and annotation to a technical drawing.', steps:['Draw any mechanical component with at least 6 distinct features (holes, slots, curves, or steps)','Add full dimensions to all features using the appropriate dimension types (linear, radius, diameter)','Add a title block in the corner with your name, the date, and a scale','Include at least one text annotation (e.g. a note about material or surface finish)','Export as PDF and submit via the form below'] },
+    { title:'Electrical Schematic', desc:'Draw a complete electrical schematic using standard symbols.', steps:['Draw a simple electrical circuit including: a power source, a switch, a lamp, and a resistor','Use correct IEC or ANSI symbols for each component','Add wire connections and labels','Include a title block','Export as PDF and submit via the form below'] },
+    { title:'Final Technical Drawing', desc:'Your final project — a complete, professional-standard engineering drawing.', steps:['Draw a mechanical or electrical component of your choice with a minimum of 8 features','Include: correct layers, full dimensions, a title block, at least one annotation or note, and a scale bar','Ensure all drawing standards are followed','Export as PDF','Submit via the form below — this is your AutoCAD final project'] },
+  ],
+  'proteus': [
+    { title:'LED Circuit Simulation', desc:'Build and simulate your first Proteus circuit.', steps:['Open Proteus ISIS and create a new project','Place a DC voltage source (5V), a resistor (330Ω), and an LED','Wire them in series and run the simulation','Verify the LED lights up in the simulation','Take a screenshot of your working simulation and submit via the form below'] },
+    { title:'Ohm\'s Law Verification', desc:'Use Proteus to verify Ohm\'s Law experimentally.', steps:['Build a simple resistor circuit with a known voltage source (e.g. 9V) and a known resistor (e.g. 1kΩ)','Place a voltmeter across the resistor and an ammeter in series','Run the simulation and record the voltage and current readings','Calculate the expected current using Ohm\'s Law (I = V/R) and compare with the simulation reading','Screenshot your results and submit via the form below, noting whether the values match'] },
+    { title:'Logic Gate Circuit', desc:'Design and test a digital logic circuit in Proteus.', steps:['Build a circuit with at least 2 different logic gates (e.g. AND + NOT, or OR + AND)','Use logic input switches and LED outputs to demonstrate the truth table','Run the simulation and test all possible input combinations','Screenshot 2 different input states showing different outputs','Submit your screenshots and describe what logic function your circuit performs via the form below'] },
+    { title:'Oscilloscope Measurement', desc:'Use the virtual oscilloscope to analyse a signal.', steps:['Build a simple AC signal circuit using a signal generator (VSOURCE set to sine wave, 1kHz, 5V peak)','Connect the virtual oscilloscope across the load','Run the simulation and measure the frequency and peak voltage from the oscilloscope display','Screenshot the oscilloscope reading','Submit the screenshot and state the measured frequency and voltage via the form below'] },
+    { title:'Arduino LED Blink', desc:'Simulate a basic Arduino project in Proteus.', steps:['Add an Arduino UNO component and an LED with resistor to your schematic','Write or paste a basic blink sketch (LED on for 1 second, off for 1 second)','Load the code into the Arduino component in Proteus','Run the simulation and verify the LED blinks','Screenshot the running simulation and submit via the form below'] },
+    { title:'Final Proteus Project', desc:'Your final project — a complete, functional circuit simulation.', steps:['Design a circuit of your choice that solves a real problem — suggestions: traffic light controller, temperature alarm, or a 4-bit binary counter','Your circuit must include at least 5 components and a power source','Run a full simulation and verify correct operation','Write a brief description (3–5 sentences) of how the circuit works','Submit your screenshots and description via the form below'] },
+  ],
+  'ai-prompt': [
+    { title:'AI Tool Comparison', desc:'Explore and compare two AI tools hands-on.', steps:['Use ChatGPT (or Claude) and one other AI tool (e.g. Gemini, Copilot, or Perplexity)','Ask both the same 3 questions — choose questions relevant to engineering or your studies','Screenshot both responses for each question','Write a short comparison (5–8 sentences): which gave better answers and why','Submit your screenshots and comparison via the form below'] },
+    { title:'Prompt Engineering Experiment', desc:'Test how prompt quality affects AI output.', steps:['Choose one task (e.g. "explain how a transformer works" or "write a professional email")','Write 3 versions of the prompt: a vague one-word prompt, a medium-detail prompt, and a detailed structured prompt','Submit all 3 prompts to the same AI tool and screenshot the responses','Write a short analysis of how the output quality changed with each version','Submit via the form below'] },
+    { title:'AI for Engineering Problems', desc:'Apply AI to a real engineering or study problem.', steps:['Identify a real problem from your engineering coursework or daily life','Use an AI tool to help you understand or solve it (e.g. explain a concept, debug a circuit idea, or summarise a textbook chapter)','Screenshot the conversation','Write a short reflection: was the AI accurate? Did you have to correct it? How useful was it?','Submit via the form below'] },
+    { title:'Image Generation Prompt', desc:'Use an AI image generation tool and practise descriptive prompting.', steps:['Use a free AI image tool (e.g. Adobe Firefly, Ideogram, or Canva AI)','Generate 3 images using progressively more detailed prompts — start simple, then add style, lighting, and composition details','Screenshot all 3 generated images alongside the prompts you used','Write 2–3 sentences explaining how the extra detail affected the results','Submit via the form below'] },
+    { title:'AI Workflow Automation', desc:'Use AI to automate a real task in your workflow.', steps:['Identify a task you do repeatedly (e.g. writing a weekly summary, responding to common messages, or organising notes)','Use an AI tool to create a reusable prompt template for that task','Test the template with 2 real examples and screenshot the results','Write a brief description of the task and how the template helps','Submit your template and screenshots via the form below'] },
+    { title:'Final AI Project', desc:'Your final project — build something useful with AI tools.', steps:['Create a real mini-project using at least 2 AI tools — examples: a student study guide generated and formatted with AI, an AI-assisted research summary on a technical topic, or a set of 10 professional social media posts for a fictional brand','Document your process: what prompts you used, what tools, and what you had to refine','Export or screenshot your final output','Write a short reflection (5–8 sentences) on what you learned about working with AI','Submit via the form below'] },
+  ],
+  'control-system': [
+    { title:'Block Diagram Sketching', desc:'Manually draw and label a control system block diagram.', steps:['Draw a complete closed-loop control system block diagram for a real-world example of your choice (e.g. a home thermostat, a cruise control system, or a water level controller)','Label all blocks: plant, controller, sensor/feedback, and summing junction','Identify and label the reference input, error signal, control signal, output, and feedback signal','Photograph or scan your hand-drawn diagram clearly','Submit via the form below'] },
+    { title:'MATLAB Transfer Function', desc:'Model a simple system in MATLAB and plot its response.', steps:['Open MATLAB (or use the free online MATLAB at matlab.mathworks.com)','Define a simple first-order or second-order transfer function (e.g. G(s) = 1/(s+2) or G(s) = 4/(s²+3s+4))','Use step() to plot the step response','Label the axes and add a title','Screenshot the plot and paste your MATLAB code into the submission form below'] },
+    { title:'Stability Analysis', desc:'Analyse the stability of a system using Bode plot or root locus.', steps:['Choose a transfer function (you may use the one from last week or a new one)','Plot either the Bode plot (using bode() in MATLAB) or the root locus (using rlocus())','From the plot, determine whether the system is stable','Identify the gain margin or phase margin from the Bode plot, or state where the poles are from the root locus','Screenshot and submit with a written conclusion about the system\'s stability via the form below'] },
+    { title:'PID Controller Design', desc:'Design and simulate a PID controller in MATLAB or Simulink.', steps:['Take a second-order plant transfer function (e.g. G(s) = 1/(s²+2s+1))','Design a PID controller (you may use MATLAB\'s pidtune() function or tune manually)','Plot the closed-loop step response showing the system with and without your controller','Note the settling time, overshoot, and steady-state error','Submit your MATLAB code and response plot via the form below'] },
+    { title:'Simulink Model', desc:'Build and simulate a complete control system in Simulink.', steps:['Open Simulink and create a new model','Build a closed-loop system using: a Step input block, a PID Controller block, a Transfer Function block (plant), and a Scope block','Connect them correctly to form a feedback loop','Run the simulation and capture the scope output','Submit a screenshot of your Simulink block diagram and the scope output via the form below'] },
+    { title:'Final Control Systems Report', desc:'Your final project — analyse and design a control system for a real application.', steps:['Choose a real-world control system application from electrical engineering (e.g. DC motor speed control, inverter voltage regulation, or PLC-based temperature control)','Define the plant, draw the block diagram, model the transfer function, and design a simple controller','Use MATLAB/Simulink to simulate the response','Write a 1-page report: system description, block diagram, transfer function, simulation results, and conclusion','Submit your report (as PDF) and simulation screenshots via the form below'] },
+  ],
+};
 
 // ─── CERTIFICATE ──────────────────────────────────────────────────────────────
 const CLASS_LEARNINGS = {
