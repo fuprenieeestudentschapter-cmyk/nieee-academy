@@ -193,6 +193,7 @@ footer strong{color:var(--white);}
 .welcome-banner-text{flex:1;font-size:14px;color:var(--off-white);line-height:1.5;}
 .welcome-banner-text strong{color:var(--white);}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
 <div class="page">
@@ -783,6 +784,20 @@ const CLASSES = [
   },
 ];
 
+// ─── EMAILJS INIT ─────────────────────────────────────────────────────────────
+emailjs.init('TFnXzDj8drTEEHMpO');
+
+function sendWelcomeEmail(name, email, dept) {
+  emailjs.send('nieee_service', 'nieee_welcome', {
+    student_name: name,
+    student_email: email,
+    student_dept: dept,
+    academy_url: 'https://nieee-academy-72v8.vercel.app'
+  }).catch(function(err) {
+    console.log('Email send failed (non-critical):', err);
+  });
+}
+
 // ─── STATE ───────────────────────────────────────────────────────────────────
 const state = {
   currentClass:null, currentLesson:null, quizAnswers:{}, quizSubmitted:false,
@@ -874,6 +889,7 @@ async function doRegister(){
     if(data.success){
       var user = { name:name, email:email, phone:phone, dept:dept, progress:{} };
       state.user = user; saveSession(user);
+      sendWelcomeEmail(name, email, dept); // send welcome email
       closeModals(); updateAuthUI(); buildHome();
     } else {
       showMsg(msg,'error', data.error||'Registration failed. Please try again.');
