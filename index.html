@@ -246,6 +246,32 @@ footer strong{color:var(--white);}
 .watch-gate-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:1.25rem;}
 .btn-watch{background:rgba(245,158,11,0.15);color:#F59E0B;border:1px solid rgba(245,158,11,0.35);padding:0.7rem 1.6rem;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s;}
 .btn-watch:hover{background:rgba(245,158,11,0.25);}
+/* ANNOUNCEMENT POPUP */
+.announce-overlay{display:none;position:fixed;inset:0;background:rgba(5,12,25,0.88);z-index:400;align-items:center;justify-content:center;padding:1.25rem;overflow-y:auto;}
+.announce-overlay.open{display:flex;}
+.announce-box{background:var(--navy-mid);border:1px solid rgba(56,189,248,0.25);border-radius:20px;width:100%;max-width:460px;overflow:hidden;position:relative;animation:popIn 0.3s ease;}
+@keyframes popIn{from{transform:scale(0.92);opacity:0;}to{transform:scale(1);opacity:1;}}
+.announce-top-bar{background:linear-gradient(135deg,#1A56DB,#0EA5E9);padding:1.25rem 1.5rem 1rem;position:relative;}
+.announce-label{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-bottom:0.4rem;}
+.announce-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:800;color:#fff;line-height:1.25;}
+.announce-close{position:absolute;top:0.9rem;right:1rem;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:1rem;cursor:pointer;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;}
+.announce-close:hover{background:rgba(255,255,255,0.28);}
+.announce-body{padding:1.25rem 1.5rem 1.5rem;}
+.announce-detail-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:0.55rem;font-size:13px;color:var(--off-white);}
+.announce-detail-row .di{font-size:14px;flex-shrink:0;margin-top:1px;}
+.announce-section-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin:1rem 0 0.5rem;}
+.announce-checklist{list-style:none;padding:0;margin:0 0 1rem 0;}
+.announce-checklist li{font-size:13px;color:var(--off-white);padding:3px 0;display:flex;align-items:flex-start;gap:8px;line-height:1.55;}
+.announce-checklist li::before{content:'✅';font-size:11px;flex-shrink:0;margin-top:2px;}
+.announce-note{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:1.1rem;padding:0.6rem 0.9rem;background:rgba(56,189,248,0.05);border-radius:8px;border-left:3px solid rgba(56,189,248,0.3);line-height:1.6;}
+.announce-actions{display:flex;flex-direction:column;gap:8px;}
+.announce-link-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:0.7rem 1rem;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;text-decoration:none;transition:opacity 0.2s;width:100%;box-sizing:border-box;}
+.announce-link-btn:hover{opacity:0.85;}
+.announce-btn-green{background:#25D366;color:#fff;}
+.announce-btn-blue{background:var(--blue);color:#fff;}
+.announce-dismiss{font-size:12px;color:var(--muted);text-align:center;margin-top:0.9rem;cursor:pointer;transition:color 0.2s;}
+.announce-dismiss:hover{color:var(--white);}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
@@ -296,6 +322,36 @@ footer strong{color:var(--white);}
       <button class="btn btn-secondary" onclick="closeCertificate()">Close</button>
     </div>
     <div class="cert-hint">💡 Tip: Use "Print → Save as PDF" or take a screenshot to keep your certificate.</div>
+  </div>
+</div>
+
+<!-- ANNOUNCEMENT POPUP -->
+<div class="announce-overlay" id="announce-overlay" onclick="if(event.target===this)closeAnnouncement()">
+  <div class="announce-box">
+    <div class="announce-top-bar">
+      <button class="announce-close" onclick="closeAnnouncement()">✕</button>
+      <div class="announce-label">🚀 Session Alert · All Students</div>
+      <div class="announce-title">First Physical Session —<br>AI &amp; Prompt Engineering</div>
+    </div>
+    <div class="announce-body">
+      <div class="announce-detail-row"><span class="di">📅</span><span><strong>Friday, 12th June 2026</strong></span></div>
+      <div class="announce-detail-row"><span class="di">⏰</span><span>10:00 AM prompt — please be on time</span></div>
+      <div class="announce-detail-row"><span class="di">📍</span><span>TLH2, Old TetFund Building, FUPRE</span></div>
+      <div class="announce-section-label">What to expect</div>
+      <ul class="announce-checklist">
+        <li>Introduction to the Academy</li>
+        <li>Software Installation Session</li>
+        <li>Introduction to AI &amp; Prompt Engineering</li>
+        <li>Practical Prompting Techniques</li>
+        <li>Interactive Learning Experience</li>
+      </ul>
+      <div class="announce-note">💻 Participants are encouraged to come with their laptops. Important but not compulsory.</div>
+      <div class="announce-actions">
+        <a class="announce-link-btn announce-btn-blue" href="https://forms.gle/kYreqzhk7BZkxUEs7" target="_blank">📋 Complete Registration Form</a>
+        <a class="announce-link-btn announce-btn-green" href="https://chat.whatsapp.com/Emx38p3YUdLGVN5wvPRIzl" target="_blank">💬 Join the WhatsApp Community</a>
+      </div>
+      <div class="announce-dismiss" onclick="closeAnnouncement()">Dismiss — I've seen this</div>
+    </div>
   </div>
 </div>
 
@@ -894,7 +950,7 @@ function sendWelcomeEmail(name, email, dept) {
 }
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
-const state = {
+var state = {
   currentClass:null, currentLesson:null, quizAnswers:{}, quizSubmitted:false, videoWatched:false,
   user: null,   // { email, name, dept, phone, progress:{} }
 };
@@ -985,7 +1041,7 @@ async function doRegister(){
       var user = { name:name, email:email, phone:phone, dept:dept, progress:{} };
       state.user = user; saveSession(user);
       sendWelcomeEmail(name, email, dept); // send welcome email
-      closeModals(); updateAuthUI(); buildHome();
+      closeModals(); updateAuthUI(); buildHome(); setTimeout(showAnnouncementIfAny, 700);
     } else {
       showMsg(msg,'error', data.error||'Registration failed. Please try again.');
     }
@@ -1008,7 +1064,7 @@ async function doLogin(){
     var data = await callAPI({ action:'login', email:email, pass:pass });
     if(data.success){
       state.user = data.user; saveSession(data.user);
-      closeModals(); updateAuthUI(); buildHome();
+      closeModals(); updateAuthUI(); buildHome(); setTimeout(showAnnouncementIfAny, 700);
     } else {
       showMsg(msg,'error', data.error||'Incorrect email or password.');
     }
@@ -1517,6 +1573,25 @@ function printCertificate(){
   document.getElementById('reg-pass').addEventListener('keydown', e=>{ if(e.key==='Enter') doRegister(); });
   document.getElementById('login-pass').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
 })();
+
+// ─── ANNOUNCEMENTS ────────────────────────────────────────────────────────────
+// To update: change the content in the HTML modal above and update the id below.
+// Set active:false to hide without deleting.
+var ANNOUNCEMENTS = [
+  { id:'physical-session-2026-06-12', active:true }
+];
+
+function showAnnouncementIfAny(){
+  var active = ANNOUNCEMENTS.find(function(a){ return a.active; });
+  if(active){
+    document.getElementById('announce-overlay').classList.add('open');
+  }
+}
+
+function closeAnnouncement(){
+  document.getElementById('announce-overlay').classList.remove('open');
+}
+
 </script>
 </body>
 </html>
