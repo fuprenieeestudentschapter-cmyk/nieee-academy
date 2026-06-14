@@ -112,6 +112,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:1.25re
 .quiz-subtitle{font-size:13px;color:var(--muted);}
 .question-block{margin-bottom:1.75rem;}
 .question-text{font-size:14px;font-weight:500;color:var(--white);margin-bottom:0.75rem;line-height:1.6;}
+.typed-textarea{width:100%;min-height:90px;padding:0.75rem 1rem;border-radius:8px;border:1px solid var(--border);background:rgba(10,22,40,0.5);color:var(--off-white);font-family:'Inter',sans-serif;font-size:13px;resize:vertical;box-sizing:border-box;}
+.typed-textarea:focus{outline:none;border-color:rgba(56,189,248,0.4);}
+.typed-textarea::placeholder{color:var(--muted);}
 .question-num{font-size:11px;color:var(--accent);font-weight:500;margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.06em;}
 .options-list{display:flex;flex-direction:column;gap:8px;}
 .option-btn{display:flex;align-items:center;gap:10px;padding:0.75rem 1rem;border-radius:8px;border:1px solid var(--border);background:rgba(10,22,40,0.5);cursor:pointer;font-size:13px;color:var(--off-white);transition:border-color 0.15s,background 0.15s;text-align:left;font-family:'Inter',sans-serif;width:100%;}
@@ -331,22 +334,21 @@ footer strong{color:var(--white);}
     <div class="announce-top-bar">
       <button class="announce-close" onclick="closeAnnouncement()">✕</button>
       <div class="announce-label">🚀 Session Alert · All Students</div>
-      <div class="announce-title">Second Physical Session —<br>Graphic Design</div>
+      <div class="announce-title">First Physical Session —<br>AI &amp; Prompt Engineering</div>
     </div>
     <div class="announce-body">
-      <div class="announce-detail-row"><span class="di">📅</span><span><strong>Saturday, 20th June 2026</strong></span></div>
-      <div class="announce-detail-row"><span class="di">⏰</span><span>11:00 AM prompt — Please be on time</span></div>
+      <div class="announce-detail-row"><span class="di">📅</span><span><strong>Friday, 12th June 2026</strong></span></div>
+      <div class="announce-detail-row"><span class="di">⏰</span><span>10:00 AM prompt — please be on time</span></div>
       <div class="announce-detail-row"><span class="di">📍</span><span>TLH2, Old TetFund Building, FUPRE</span></div>
       <div class="announce-section-label">What to expect</div>
       <ul class="announce-checklist">
-        <li>Principles of Graphic Design</li>
-        <li>Photoshop Installation</li>
-        <li>Tips and Tips for a Good Design</li>
-        <li>Integrating AI in Graphic Design</li>
+        <li>Introduction to the Academy</li>
+        <li>Software Installation Session</li>
+        <li>Introduction to AI &amp; Prompt Engineering</li>
+        <li>Practical Prompting Techniques</li>
         <li>Interactive Learning Experience</li>
       </ul>
       <div class="announce-note">💻 Participants are encouraged to come with their laptops. Important but not compulsory.</div>
-      <div class="announce-note">💻 WiFi and Electricity will be made available!!</div>
       <div class="announce-actions">
         <a class="announce-link-btn announce-btn-blue" href="https://forms.gle/kYreqzhk7BZkxUEs7" target="_blank">📋 Complete Registration Form</a>
         <a class="announce-link-btn announce-btn-green" href="https://chat.whatsapp.com/Emx38p3YUdLGVN5wvPRIzl" target="_blank">💬 Join the WhatsApp Community</a>
@@ -520,38 +522,86 @@ const CLASSES = [
     lessons:[
       { week:1, title:'Introduction to design principles', topic:'Colour theory, contrast, and visual hierarchy', driveId:null, youtubeId:'GQS7wPujL2k',
         quiz:[
-          { q:'What does visual hierarchy help a viewer do?', opts:['Ignore the design','Know where to look first','Choose colours','Print the design'], ans:1 },
-          { q:'Which colour property refers to how light or dark a colour is?', opts:['Hue','Saturation','Value','Temperature'], ans:2 },
-          { q:'Contrast in design is used to:', opts:['Make everything the same size','Create confusion','Make elements stand out from each other','Remove colour'], ans:2 },
-          { q:'What is the term for the empty space around design elements?', opts:['Padding','Negative space','Margin','Buffer'], ans:1 },
-          { q:'Which of these is a primary colour in the RGB colour model?', opts:['Yellow','Green','Orange','Purple'], ans:1 },
+          { q:'What design principle refers to the level of difference between elements, helping create visual hierarchy?', opts:['Repetition','Contrast','Pattern','Rhythm'], ans:1 },
+          { q:'Which colour mode is used for designs that will be displayed on a screen?', opts:['CMYK','Pantone','RGB','Grayscale'], ans:2 },
+          { q:'A colour scheme that pairs two colours directly opposite each other on the colour wheel is called:', opts:['Analogous','Monochromatic','Complementary','Triadic'], ans:2 },
+          { q:'What is "kerning" in typography?', opts:['The space between lines of text','The adjustment of space between two individual characters','The size of the font','The colour of the text'], ans:1 },
+          { q:'Which of these best describes "legibility"?', opts:['How the type is arranged on a page','How easy it is to distinguish letters and words from one another','The colour contrast of text','The font\'s file format'], ans:1 },
+          { q:'In colour theory, "value" refers to:', opts:['The price of a design','How light or dark a colour is','The saturation of a colour','The warmth of a colour'], ans:1 },
+          { q:'Which design principle is described as "the repetition of more than one design element throughout a design"?', opts:['Repetition','Rhythm','Pattern','Unity'], ans:2 },
+        ],
+        typedQuestions:[
+          'In your own words, explain the difference between symmetrical and asymmetrical balance.',
+          'Why is contrast important in a design, and how can it be achieved?',
+          'Explain the difference between RGB and CMYK, and when you would use each.',
+          'What are shade, tint, and tone, and how is each one created?',
+          'Describe one complementary and one analogous colour harmony, and explain how they differ.',
+          'What is the difference between readability and legibility? Give an example of how each affects a design.',
+          'Explain what "orphans" and "widows" are in typography, and how a designer can fix them.',
+          'Looking at the design principles covered in this lesson (balance, contrast, repetition, unity, etc.), pick ONE principle and describe how you would apply it to a flyer design.'
         ]
       },
       { week:2, title:'Typography and font pairing', topic:'Choosing and combining fonts effectively', driveId:null, youtubeId:'AXpxZMRM1EY',
         quiz:[
-          { q:'Which font style has small decorative strokes at the ends of letters?', opts:['Sans-serif','Serif','Script','Monospace'], ans:1 },
-          { q:'How many fonts in a single design is generally recommended?', opts:['5 or more','1 only','2 to 3','As many as possible'], ans:2 },
-          { q:'What is "kerning" in typography?', opts:['The height of capital letters','Spacing between individual characters','The thickness of a font','The colour of text'], ans:1 },
-          { q:'Which font type is generally easier to read on screens at small sizes?', opts:['Serif','Decorative','Sans-serif','Handwritten'], ans:2 },
-          { q:'Font weight refers to:', opts:['The file size of the font','How tall the letters are','The thickness or boldness of the font strokes','The number of characters in a font'], ans:2 },
+          { q:'What are the small decorative lines at the ends of letters in serif fonts called?', opts:['Serifs','Kerns','Ligatures','Tracks'], ans:0 },
+          { q:'According to the video, sans-serif fonts are generally:', opts:['Older than serif fonts and less legible','More versatile and used in roughly 90% of consumer products','Only suitable for logos','The same as script fonts'], ans:1 },
+          { q:'What is the default unit of measurement in typography?', opts:['Pixel','Point','Em','Percent'], ans:1 },
+          { q:'The spacing between individual characters within a word is called:', opts:['Leading','Tracking','Kerning','Line height'], ans:2 },
+          { q:'For text to be considered accessible, the contrast ratio between text and background should generally be:', opts:['1:1','3:1','7:1 or greater','21:1 always'], ans:2 },
+          { q:'In web design, a typography hierarchy is generally divided into how many categories?', opts:['Two','Three','Four','Six'], ans:2 },
+          { q:'Which type of typeface has every character occupying exactly the same width, and is often used for coding?', opts:['Display','Script','Monospace','Serif'], ans:2 },
+        ],
+        typedQuestions:[
+          'Explain the difference between tracking (letter spacing) and kerning.',
+          'Why are sans-serif fonts considered more versatile than serif fonts?',
+          'What is "leading" (line height), and why does it matter for legibility?',
+          'Describe the four categories used to build a typography hierarchy (headings, paragraphs, buttons, labels) and how they typically differ in size and weight.',
+          'Why do buttons often use bolder text and more letter spacing than paragraph text?',
+          'In your own words, explain what "accessible contrast" means and why it matters.',
+          'How many grid columns are typically used in web design, and why is that number useful?',
+          'Choose two font types covered in this lesson (serif, sans-serif, script, monospace, display) and describe a real-world use case for each.'
         ]
       },
       { week:3, title:'Layout and composition', topic:'Grid systems, spacing, and balance', driveId:null, youtubeId:'PKfZ1gnVJ44',
         quiz:[
-          { q:'What is a grid system used for in design?', opts:['Adding colour','Organising content consistently','Choosing fonts','Printing designs'], ans:1 },
-          { q:'The rule of thirds divides a design into how many sections?', opts:['4','6','9','12'], ans:2 },
-          { q:'Symmetrical balance means:', opts:['Elements are randomly placed','Both sides of the design mirror each other','Only one side has elements','The design has no balance'], ans:1 },
-          { q:'Which layout principle guides the viewer\'s eye through a design?', opts:['Repetition','Alignment','Flow','Proximity'], ans:2 },
-          { q:'Proximity in design means:', opts:['Making elements large','Placing related items close together','Using the same colour','Adding borders'], ans:1 },
+          { q:'According to the video, the most basic level of movement and flow in a design is achieved through:', opts:['Colour gradients only','Direct visual guidance, such as an arrow pointing to the next element','Random placement of elements','Symmetry alone'], ans:1 },
+          { q:'"Implied motion" in a static design can be created using:', opts:['Animation only','Repetition, progressive scaling, blurring, or directional patterns','Removing all elements from the page','Adding background music'], ans:1 },
+          { q:'What does "flow disruption" do in a design, according to the video?', opts:['Makes the design boring','Forces re-engagement by interrupting the visual journey','Removes all hierarchy','Has no real effect'], ans:1 },
+          { q:'"Temporal flow" refers to:', opts:['The colour scheme changing over time','Controlling the rhythm of how long the eye lingers, pauses, and moves through a design','The file size of a design','The font weight used'], ans:1 },
+          { q:'According to the video, grids primarily help a designer with:', opts:['Adding more colours','Visual hierarchy and organising content','Reducing file size','Choosing fonts'], ans:1 },
+          { q:'Intentionally breaking the grid in one part of a design can create:', opts:['Confusion only, with no benefit','Contrast and visual impact that grabs attention','Less hierarchy overall','No noticeable effect'], ans:1 },
+          { q:'According to the video, grids can be used for:', opts:['Only magazine layouts','Only posters','Logos, websites, fonts, posters and much more','Only print design'], ans:2 },
+        ],
+        typedQuestions:[
+          'Explain the most basic level of movement and flow in graphic design, using the example given in the video.',
+          'What is "implied motion" and name two techniques used to create it.',
+          'Describe how hierarchy (size and contrast) can create flow without using arrows or lines.',
+          'What is "flow disruption" and why might a designer use it deliberately?',
+          'Explain "temporal flow" using the magazine or product page example from the video.',
+          'Give three reasons why grids are useful to a graphic designer, based on the video.',
+          'How can a designer intentionally break a grid to create visual impact, while keeping order in the rest of the design?',
+          'Explain how grids help create "white space" (both micro and macro) in a design.'
         ]
       },
       { week:4, title:'Working with Photoshop', topic:'Interface, tools, and exporting', driveId:null, youtubeId:'xTzvQkOll2U',
         quiz:[
-          { q:'What does the term "layer" mean in Photoshop?', opts:[' A filter applied to an image','A separate level that holds different elements of a design','A type of brush tool','A colour correction setting'], ans:1 },
-          { q:'Which tool is used to remove the background from an image in Photoshop?', opts:['Crop tool','Brush tool','Magic Wand or Quick Selection tool','Gradient tool'], ans:2 },
-          { q:'What does "exporting as PNG" preserve that "exporting as JPG" does not?', opts:['Colour accuracy','Transparent background','File size','Layer structure'], ans:1 },
-          { q:'What is the purpose of the Clone Stamp tool?', opts:['To add text to an image','To copy pixels from one area and paint them onto another','To resize the canvas','To change the image colour mode'], ans:1 },
-          { q:'Which Photoshop feature allows you to adjust the brightness and contrast of an image non-destructively?', opts:['Filter Gallery','Direct brush painting','Adjustment Layers','The Crop tool'], ans:2 },
+          { q:'According to the video, what is a pixel?', opts:['A type of brush','A small box with just one colour','A font style','A layer effect'], ans:1 },
+          { q:'In Photoshop, what does the Home screen show?', opts:['Only the canvas','Your recent projects and Creative Cloud files','Only the toolbar','Print settings'], ans:1 },
+          { q:'What are the three major parts of the Photoshop workspace, as described in the video?', opts:['Menus, toolbars, plugins','Tools, Panels, and Canvas','Layers, Filters, Brushes','File, Edit, View'], ans:1 },
+          { q:'The Layers panel is used to:', opts:['Pick colours','Maintain the stack/order of all elements in a design','Export files','Change the canvas size'], ans:1 },
+          { q:'How can you reset your Photoshop workspace back to its default layout?', opts:['Restart your computer','Window > Workspace > Reset Essentials','Delete and reinstall Photoshop','File > New'], ans:1 },
+          { q:'If a panel (like Actions) is not visible, how do you bring it back?', opts:['Reinstall Photoshop','Go to the Window menu and click on the panel name','Restart the canvas','Use the Move tool'], ans:1 },
+          { q:'According to the video, the Move tool in Photoshop is used to:', opts:['Select colours','Move objects/layers around the canvas','Crop images','Add text'], ans:1 },
+        ],
+        typedQuestions:[
+          'In your own words, explain what Photoshop is and what a pixel is.',
+          'Describe the difference between the Home screen and the Workspace in Photoshop.',
+          'What are the three major parts of the Photoshop workspace, and what is each one used for?',
+          'Why might a designer want to customise their workspace rather than use the default layout?',
+          'How do you reset your Photoshop workspace if it becomes messy or disorganised?',
+          'How do you bring back a panel (like Actions or Properties) that you can no longer see?',
+          'Name three panels mentioned in the video and briefly explain what each is used for.',
+          'Why is it useful to save your own custom workspace once you have set it up the way you like?'
         ]
       },
       { week:5, title:'Creating for social media', topic:'Flyers, banners, and Instagram graphics', driveId:null, youtubeId:'UjnoHLioKEI',
@@ -561,15 +611,39 @@ const CLASSES = [
           { q:'Which element should be most prominent on an event flyer?', opts:['The designer\'s name','The event name and date','The venue address','The ticket price'], ans:1 },
           { q:'For a social media banner, which orientation is typically used?', opts:['Square','Portrait','Landscape','Circular'], ans:2 },
           { q:'Why is it important to use high-resolution images in designs?', opts:['They load faster','They look sharp and clear when printed or displayed','They take less storage','They are easier to edit'], ans:1 },
+          { q:'What is the recommended aspect ratio for Instagram Stories or Reels?', opts:['16:9','1:1','9:16','4:3'], ans:2 },
+          { q:'Using a consistent colour palette and font across all your social media posts helps build:', opts:['Confusion','Brand recognition','Larger file sizes','Random variety'], ans:1 },
+        ],
+        typedQuestions:[
+          'Why is it important to design at the correct dimensions for each social media platform?',
+          'What information should always be prioritised on an event flyer, and why?',
+          'Explain what a call-to-action (CTA) is and give an example for a social media post.',
+          'How does using a consistent colour palette across posts help a brand?',
+          'Describe the difference between designing for a square post versus a Story or Reel.',
+          'Why should text on a flyer or banner be legible from a distance or at a small size on a phone screen?',
+          'What role does white space play in social media graphics?',
+          'Think of a real flyer or Instagram graphic you have seen recently. Describe what design principles from earlier lessons it used well or poorly.'
         ]
       },
       { week:6, title:'Final project showcase', topic:'Present your completed design portfolio', driveId:null, youtubeId:'DZ2bB8tL4O0',
         quiz:[
-          { q:'What should a design portfolio demonstrate?', opts:['Only one type of design','Your range of skills and completed projects','Only digital work','Unfinished concepts'], ans:1 },
-          { q:'When presenting a design, what is most important to explain?', opts:['The tools you used only','The problem it solves and your design decisions','How long it took','The file size'], ans:1 },
-          { q:'Consistency in a design portfolio means:', opts:['Every design looks identical','A unified style, quality, and presentation across your work','Using only one colour','Only including one project'], ans:1 },
-          { q:'Feedback on a design should be:', opts:['Ignored','Used to improve the work','Only positive','Only from the designer'], ans:1 },
-          { q:'What makes a strong final design project?', opts:['It uses many fonts','It solves a real brief with clear visual communication','It has many colours','It is the largest file size'], ans:1 },
+          { q:'According to the video, "KISS" in portfolio design stands for:', opts:['Keep It Super Stylish','Keep It Simple, Stupid','Keep Images Sharp and Smooth','Keep Information Short and Sorted'], ans:1 },
+          { q:'A cluttered, convoluted portfolio layout typically:', opts:['Increases conversions','Reduces clicks and conversions from potential clients','Has no effect on clients','Improves SEO automatically'], ans:1 },
+          { q:'What does "conversion" mean in the context of a portfolio website?', opts:['Converting images to PDF','Turning a visitor into a client or contact','Converting fonts','Changing colour modes'], ans:1 },
+          { q:'According to the video, what should a portfolio prioritise in order to convert visitors?', opts:['Flashy animations only','An easy-to-find contact page and a clear call to action','As many pages as possible','Background music'], ans:1 },
+          { q:'What is meant by understanding a client\'s "pain points"?', opts:['Their favourite colours','The problems and frustrations they want solved','Their physical location','Their font preferences'], ans:1 },
+          { q:'According to the video, a strong portfolio should generally include:', opts:['Dozens of unrelated pages','A consistent theme, consistent font, and only your best work','Every project you have ever made, regardless of quality','No contact information'], ans:1 },
+          { q:'The "user path" technique described in the video moves a visitor through which sequence?', opts:['Random clicks with no structure','Show what the user wants, present the problem, present the solution, then a call to action','Pricing, checkout, confirmation','Login, dashboard, settings'], ans:1 },
+        ],
+        typedQuestions:[
+          'What does "KISS" stand for in portfolio design, and why is it important?',
+          'Explain what "conversion" means for a portfolio website and give an example of a CTA.',
+          'Why is having a consistent theme and font important across a portfolio?',
+          'What are "pain points" and how can understanding them help you market your design services?',
+          'Describe the "user path" method explained in the video, step by step.',
+          'Why does the video suggest that having only a few pages (work, about, contact) is often better than many pages?',
+          'What makes a contact page effective for converting visitors into clients?',
+          'Reflecting on everything you have learned in this Graphic Design class, describe your strongest skill and one area you would like to improve.'
         ]
       },
     ]
@@ -1375,21 +1449,13 @@ function submitQuiz(classId,lessonIdx){
   if(submitBtn) submitBtn.style.display='none';
   const resultBlock=document.getElementById('quiz-result-block');
   if(passed){
-    markComplete(classId,lessonIdx);
     const isLast=lessonIdx===c.lessons.length-1;
     resultBlock.innerHTML=`
       <div class="quiz-result pass" style="margin-top:1.5rem;">
         <div class="result-score pass">${score}%</div>
         <div class="result-msg">You passed! Great work — ${correct} out of ${lesson.quiz.length} correct.</div>
-        <div class="form-banner" style="margin-top:1rem;">
-          <h3>One more step — complete the written assessment</h3>
-          <p>Open the form below to submit your typed answers and any required screenshots or uploads. The next lesson unlocks once you have submitted the form.</p>
-          <a href="${GOOGLE_FORM_URL}?entry.class=${encodeURIComponent(c.name)}&entry.lesson=${encodeURIComponent('Week '+lesson.week+': '+lesson.title)}" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-flex;">Open assessment form ↗</a>
-        </div>
         <div class="btn-row" style="justify-content:center;margin-top:1rem;">
-          ${!isLast?`<button class="btn btn-secondary" onclick="openLesson('${classId}',${lessonIdx+1})">Next lesson →</button>`
-          :`<button class="btn btn-success" onclick="showCertificate('${classId}')">🏅 Get your certificate</button>`}
-          <button class="btn btn-secondary" onclick="buildHome();openClass('${classId}')">Back to class</button>
+          <button class="btn btn-primary" onclick="renderTypedQuestions('${classId}',${lessonIdx})">Continue to written questions →</button>
         </div>
       </div>`;
   } else {
@@ -1404,6 +1470,73 @@ function submitQuiz(classId,lessonIdx){
   }
 }
 
+// ─── TYPED (WRITTEN) QUESTIONS ──────────────────────────────────────────────────
+function renderTypedQuestions(classId,lessonIdx){
+  const c=CLASSES.find(x=>x.id===classId);
+  const lesson=c.lessons[lessonIdx];
+  const tq=lesson.typedQuestions||[];
+  const area=document.getElementById('quiz-area');
+  area.innerHTML=`<div class="quiz-wrap">
+    <div class="quiz-header">
+      <div class="quiz-title">Written questions</div>
+      <div class="quiz-subtitle">Answer all ${tq.length} questions in your own words, based on what you watched. Every box must be filled before you can continue — there is no minimum length.</div>
+    </div>
+    <div id="typed-questions-block">
+    ${tq.map((q,qi)=>`
+      <div class="question-block">
+        <div class="question-num">Question ${qi+1} of ${tq.length}</div>
+        <div class="question-text">${q}</div>
+        <textarea class="typed-textarea" id="typed-${qi}" oninput="checkTypedComplete(${tq.length})" placeholder="Type your answer here..."></textarea>
+      </div>`).join('')}
+    </div>
+    <div class="btn-row"><button class="btn btn-primary" id="submit-typed-btn" onclick="submitTypedAnswers('${classId}',${lessonIdx})" disabled>Submit answers</button></div>
+  </div>`;
+}
+
+function checkTypedComplete(n){
+  let filled=0;
+  for(let i=0;i<n;i++){
+    const el=document.getElementById('typed-'+i);
+    if(el && el.value.trim().length>0) filled++;
+  }
+  const btn=document.getElementById('submit-typed-btn');
+  if(btn) btn.disabled = (filled<n);
+}
+
+function submitTypedAnswers(classId,lessonIdx){
+  const c=CLASSES.find(x=>x.id===classId);
+  const lesson=c.lessons[lessonIdx];
+  const tq=lesson.typedQuestions||[];
+  const answers=tq.map((q,qi)=>({ question:q, answer:document.getElementById('typed-'+qi).value.trim() }));
+
+  if(state.user){
+    callAPI({
+      action:'saveWrittenAnswers',
+      email:state.user.email,
+      name:state.user.name,
+      class:c.name,
+      lesson:'Week '+lesson.week+': '+lesson.title,
+      answers: JSON.stringify(answers),
+      timestamp:new Date().toISOString()
+    }).catch(function(){});
+  }
+
+  markComplete(classId,lessonIdx);
+  const isLast=lessonIdx===c.lessons.length-1;
+  const area=document.getElementById('quiz-area');
+  area.innerHTML=`<div class="quiz-wrap">
+    <div class="quiz-result pass">
+      <div class="result-score pass">✓ Submitted</div>
+      <div class="result-msg">Great work — your written answers have been recorded and this lesson is now complete.</div>
+      <div class="btn-row" style="justify-content:center;margin-top:1rem;">
+        ${!isLast?`<button class="btn btn-secondary" onclick="openLesson('${classId}',${lessonIdx+1})">Next lesson →</button>`
+        :`<button class="btn btn-success" onclick="showCertificate('${classId}')">🏅 Get your certificate</button>`}
+        <button class="btn btn-secondary" onclick="buildHome();openClass('${classId}')">Back to class</button>
+      </div>
+    </div>
+  </div>`;
+}
+
 
 // ─── PRACTICAL TASKS ──────────────────────────────────────────────────────────
 const PRACTICAL_TASKS = {
@@ -1411,7 +1544,7 @@ const PRACTICAL_TASKS = {
     { title:'Visual Hierarchy Poster', desc:'Apply today\'s principles to create a real design.', steps:['Choose any topic (an event, a product, or a quote)','Create a single-page poster (A4 or 1080×1080px) in Canva, Photoshop, or any design tool','Apply at least 3 elements: contrast, colour, and visual hierarchy so the viewer\'s eye goes where you want','Export as JPG or PNG','Submit the exported image via the form below'] },
     { title:'Font Pairing Flyer', desc:'Demonstrate your understanding of typography in a real design.', steps:['Design a simple event flyer (any fictional event)','Use exactly 2 font families — one serif or display font for the heading, one sans-serif for body','Apply correct kerning, weight variation, and hierarchy','Label your font choices in a note on the submission form','Export and submit via the form below'] },
     { title:'Grid-Based Layout', desc:'Show that you can use a grid system to organise content.', steps:['Create a 3-column grid layout for a fictional magazine page or website hero section','Include a headline, subheading, body text, and at least one image placeholder','Ensure consistent spacing and alignment throughout','Screenshot or export the finished layout','Submit via the form below'] },
-    { title:'Photoshop Background Removal', desc:'Demonstrate your Photoshop layer and selection skills.', steps:['Find or photograph any object with a busy background','Open it in Photoshop and remove the background using the Magic Wand or Quick Selection tool','Place the isolated object on a new solid-colour or gradient background','Export as PNG (to preserve transparency if needed)','Submit the before and after images via the form below'] },
+    { title:'Photoshop Workspace Setup', desc:'Get comfortable navigating Photoshop\'s interface as covered in this lesson.', steps:['Open Photoshop (or Photopea.com as a free browser-based alternative if Photoshop isn\'t available)','Take a screenshot of the Home screen','Open a new document and take a screenshot of the Workspace, labelling the Tools, Panels, and Canvas areas','Use the Window menu to open at least 2 additional panels (e.g. Actions, Properties) and dock them','Submit both screenshots, clearly labelled, via the form below'] },
     { title:'Social Media Graphics Set', desc:'Create a 3-piece social media content set for a fictional brand.', steps:['Design 3 graphics: an Instagram post (1080×1080px), a story (1080×1920px), and a Twitter/X banner (1500×500px)','Keep a consistent colour palette and font across all three','Include a brand name, tagline, and call to action on at least one graphic','Export all three and zip them or upload individually','Submit via the form below'] },
     { title:'Final Design Portfolio Slide', desc:'Create a single portfolio presentation slide showcasing your best work from this course.', steps:['Choose your best design from the previous 5 weeks','Create a presentation slide (16:9 ratio) showing the design with a brief description: what it is, the tools used, and the design decisions made','Add your name and course title to the slide','Export as PDF or JPG','Submit via the form below — this counts as your final project'] },
   ],
@@ -1456,12 +1589,12 @@ const PRACTICAL_TASKS = {
     { title:'Final AI Project', desc:'Your final project — build something useful with AI tools.', steps:['Create a real mini-project using at least 2 AI tools — examples: a student study guide generated and formatted with AI, an AI-assisted research summary on a technical topic, or a set of 10 professional social media posts for a fictional brand','Document your process: what prompts you used, what tools, and what you had to refine','Export or screenshot your final output','Write a short reflection (5–8 sentences) on what you learned about working with AI','Submit via the form below'] },
   ],
   'plc': [
-    { title:'Block Diagram Sketching', desc:'Manually draw and label a control system block diagram.', steps:['Draw a complete closed-loop control system block diagram for a real-world example of your choice (e.g. a home thermostat, a cruise control system, or a water level controller)','Label all blocks: plant, controller, sensor/feedback, and summing junction','Identify and label the reference input, error signal, control signal, output, and feedback signal','Photograph or scan your hand-drawn diagram clearly','Submit via the form below'] },
-    { title:'MATLAB Transfer Function', desc:'Model a simple system in MATLAB and plot its response.', steps:['Open MATLAB (or use the free online MATLAB at matlab.mathworks.com)','Define a simple first-order or second-order transfer function (e.g. G(s) = 1/(s+2) or G(s) = 4/(s²+3s+4))','Use step() to plot the step response','Label the axes and add a title','Screenshot the plot and paste your MATLAB code into the submission form below'] },
-    { title:'Stability Analysis', desc:'Analyse the stability of a system using Bode plot or root locus.', steps:['Choose a transfer function (you may use the one from last week or a new one)','Plot either the Bode plot (using bode() in MATLAB) or the root locus (using rlocus())','From the plot, determine whether the system is stable','Identify the gain margin or phase margin from the Bode plot, or state where the poles are from the root locus','Screenshot and submit with a written conclusion about the system\'s stability via the form below'] },
-    { title:'PID Controller Design', desc:'Design and simulate a PID controller in MATLAB or Simulink.', steps:['Take a second-order plant transfer function (e.g. G(s) = 1/(s²+2s+1))','Design a PID controller (you may use MATLAB\'s pidtune() function or tune manually)','Plot the closed-loop step response showing the system with and without your controller','Note the settling time, overshoot, and steady-state error','Submit your MATLAB code and response plot via the form below'] },
-    { title:'Simulink Model', desc:'Build and simulate a complete control system in Simulink.', steps:['Open Simulink and create a new model','Build a closed-loop system using: a Step input block, a PID Controller block, a Transfer Function block (plant), and a Scope block','Connect them correctly to form a feedback loop','Run the simulation and capture the scope output','Submit a screenshot of your Simulink block diagram and the scope output via the form below'] },
-    { title:'Final Control Systems Report', desc:'Your final project — analyse and design a control system for a real application.', steps:['Choose a real-world control system application from electrical engineering (e.g. DC motor speed control, inverter voltage regulation, or PLC-based temperature control)','Define the plant, draw the block diagram, model the transfer function, and design a simple controller','Use MATLAB/Simulink to simulate the response','Write a 1-page report: system description, block diagram, transfer function, simulation results, and conclusion','Submit your report (as PDF) and simulation screenshots via the form below'] },
+    { title:'Identify the Components', desc:'Apply what you learned about industrial automation by identifying real system components.', steps:['Look up or sketch a simple industrial automation system (e.g. a conveyor belt, a bottling line, or a packaging machine)','Identify and label at least 4 components: one sensor, one actuator, one PLC, and one HMI if present','For each component, write one sentence explaining its role in the system','Photograph your sketch or type your answers clearly','Submit via the form below'] },
+    { title:'Ladder Logic Diagram', desc:'Write a basic ladder logic program by hand or using free software.', steps:['Using paper or a free tool like LDmicro or OpenPLC Editor, write a ladder logic program for this scenario: A motor starts when Start button (NO) is pressed and stops when Stop button (NC) is pressed','Your program must include: one normally open start contact, one normally closed stop contact, one output coil for the motor, and a seal-in (latch) contact in parallel with the start button','Label every contact and coil clearly','Take a clear photo or screenshot of your completed ladder diagram','Submit via the form below'] },
+    { title:'Timers and Counters Program', desc:'Write a ladder logic program that uses a timer and a counter.', steps:['Design a ladder logic program for this scenario: A warning lamp turns ON 5 seconds after a machine starts (TON timer) and the machine shuts down after 10 cycles (CTU counter)','Draw or program the complete ladder logic showing the TON timer rung and CTU counter rung','Label the preset values (PT for timer, PV for counter) clearly','Write a short explanation (3-5 sentences) of how each rung works','Submit your diagram and explanation via the form below'] },
+    { title:'Factory I/O Scene Exploration', desc:'Navigate Factory I/O and identify the key elements of a simulation scene.', steps:['Open Factory I/O and load the From A to B or any conveyor scene','Identify and list at least 5 sensors and 5 actuators visible in the scene','For each item, note its name in Factory I/O and what real-world component it represents','Take a screenshot of the scene with components visible','Submit your screenshot and component list via the form below'] },
+    { title:'PLC to Factory I/O Connection', desc:'Connect a PLC program to Factory I/O and simulate a conveyor belt.', steps:['Open Factory I/O and select the From A to B scene','Connect it to your PLC software using the built-in driver','Write a ladder logic program: pressing Start activates the conveyor motor; pressing Stop deactivates it','Map your PLC inputs and outputs to the Factory I/O tags correctly','Run the simulation, verify the conveyor starts and stops, and screenshot the running simulation','Submit your screenshot and a brief description of how you connected the PLC to Factory I/O via the form below'] },
+    { title:'Final Automation Project', desc:'Your final project — design, program, and simulate a complete PLC automation system.', steps:['Choose one: a traffic light sequence controller, a tank fill-and-drain system, or a sorting conveyor','Write the complete ladder logic including: start/stop control, at least one timer, at least one counter, and proper I/O labelling','Simulate it in Factory I/O or draw a detailed annotated diagram if unavailable','Write a short project report (half a page): describe the system, explain your logic, and state simulation results','Submit your ladder logic screenshots/diagram and project report via the form below'] },
   ],
 };
 
@@ -1472,8 +1605,8 @@ const CLASS_LEARNINGS = {
   'python':         ['Python variables, data types, and scripting basics','Control flow — loops, conditionals, and functions','Working with libraries and data structures','Applying Python to engineering and data problems'],
   'autocad':        ['AutoCAD interface, drawing, and precision tools','Editing commands — trim, offset, mirror, and array','Dimensioning, annotation, and title blocks','Electrical schematic drawing to IEC/ANSI standards'],
   'proteus':        ['Proteus interface and component library navigation','Simulating basic circuits — resistors, LEDs, and capacitors','Digital logic circuits, flip-flops, and 7-segment displays','Virtual instruments — oscilloscope, voltmeter, and signal analysis'],
-  'ai':      ['Foundations of AI and large language models','Effective prompt engineering techniques and patterns','Applying AI tools to real engineering and productivity tasks','Responsible and ethical use of AI in professional contexts'],
-  'plc': ['Control system fundamentals and block diagrams','Transfer functions and system modelling in MATLAB/Simulink','Stability analysis — Bode plots and root locus','PID controller design and simulation'],
+  'ai':             ['Foundations of AI and large language models','Effective prompt writing — clarity, context, and iteration','Applying AI tools to engineering, research, coding, and productivity','Ethics, limitations, and responsible use of AI'],
+  'plc':            ['Industrial automation fundamentals — PLCs, sensors, and actuators','Ladder logic programming — contacts, coils, and rungs','Timers (TON, TOF) and counters (CTU) in ladder programs','Factory I/O simulation and connecting PLC programs to virtual factory scenes'],
 };
 
 function generateCertId(studentName, classId){
