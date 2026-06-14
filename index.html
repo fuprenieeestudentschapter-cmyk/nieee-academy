@@ -654,56 +654,128 @@ const CLASSES = [
     lessons:[
       { week:1, title:'Introduction to video editing', topic:'Timelines, cuts, and file formats', driveId:null, youtubeId:'KrOnvasLYuU',
         quiz:[
-          { q:'What is a timeline in a video editor?', opts:['A file storage folder','A visual sequence of clips arranged in order','A colour grading tool','An audio mixer'], ans:1 },
-          { q:'Which file format is most commonly used for high-quality video export?', opts:['MP3','GIF','MP4','DOCX'], ans:2 },
-          { q:'What is a "cut" in video editing?', opts:['Deleting the entire project','An instant transition from one clip to another','Adding a filter','Changing the audio'], ans:1 },
-          { q:'Frame rate (fps) refers to:', opts:['The file size of a video','How many frames are shown per second','The resolution of the video','The length of the video'], ans:1 },
-          { q:'What does "rendering" a video mean?', opts:['Filming new footage','Processing and exporting the final edited video','Adding subtitles','Uploading to YouTube'], ans:1 },
+          { q:'According to the video, what are the three "main stakes" that define every edit?', opts:['Resolution, frame rate, and codec','Pacing, style, and objective','Music, colour, and transitions','Length, title, and thumbnail'], ans:1 },
+          { q:'For YouTube videos, what is described as the primary objective?', opts:['To win awards','To get views','To sell a product','To tell a slow story'], ans:1 },
+          { q:'Which genre is described as using a smoother edit style, avoiding jump cuts?', opts:['YouTube/gaming','Travel/cinematic','Commercial','Vlogs'], ans:1 },
+          { q:'In narrative filmmaking, what does the video say is "the best edit"?', opts:['One with the most cuts','One that is invisible to the viewer','One with the fastest pace','One with no music'], ans:1 },
+          { q:'Commercial editing is primarily driven by:', opts:['Story','Emotion and selling the product','Length','Random shots'], ans:1 },
+          { q:'According to the video, before you start editing you should first:', opts:['Add music','Review your footage and understand the genre, pace, and style you are going for','Export a draft','Delete unused clips'], ans:1 },
+          { q:'According to the video, "over-editing" a clip (cutting it too many times) makes it look like:', opts:['A movie trailer','A swiss cheese grater','A documentary','A music video'], ans:1 },
+        ],
+        typedQuestions:[
+          'Explain the three "main stakes" of every video edit (pacing, style, objective) in your own words.',
+          'Describe how the objective, style, and pacing of a YouTube video differ from those of a travel/cinematic video.',
+          'Why does the video say the "best edit" in narrative filmmaking is one that is invisible?',
+          'What is commercial editing mainly trying to achieve, according to the video?',
+          'Why is hooking the viewer in the first few seconds especially important for YouTube content?',
+          'What does the video mean by "choose a level of importance per segment" when editing?',
+          'Explain what it means to "over-edit" a clip, and why this can be a problem.',
+          'Pick one of the four genres discussed (YouTube, travel, narrative, commercial) and describe how you would approach editing a video in that genre.'
         ]
       },
       { week:2, title:'Transitions and effects', topic:'Smooth cuts, motion effects, and text overlays', driveId:null, youtubeId:'TKXBAaQB03U',
-          quiz:[
-          { q:'What is the purpose of a transition in video editing?', opts:['To delete a clip','To move smoothly between two clips','To change the aspect ratio','To add music'], ans:1 },
-          { q:'A "fade to black" transition is commonly used to indicate:', opts:['A new scene starting','The end of a segment or scene','A colour change','An audio cut'], ans:1 },
-          { q:'Text overlays in videos are used to:', opts:['Replace the video footage','Add titles, subtitles, or information on screen','Change the frame rate','Remove background noise'], ans:1 },
-          { q:'What does "motion graphics" refer to?', opts:['Filming movement','Animated graphic elements added to video','A camera filter','A type of audio effect'], ans:1 },
-          { q:'Which type of transition is most professional for documentary-style videos?', opts:['Star wipe','Spin transition','Simple cut or cross dissolve','Checkerboard wipe'], ans:2 },
+        quiz:[
+          { q:'What is a "cut" in video editing?', opts:['A gradual fade between scenes','An instant switch from one shot to another','Adding music','Zooming in slowly'], ans:1 },
+          { q:'A "fade" transition is when a shot dissolves to or from:', opts:['Another shot directly','A solid colour, usually black or white','A split screen','A blurred frame'], ans:1 },
+          { q:'What does a "dissolve" transition traditionally suggest?', opts:['A jump cut','A longer passage of time between scenes','That a scene is ending permanently','Nothing — it is purely decorative'], ans:1 },
+          { q:'A "match cut" connects two shots by using similar:', opts:['Audio levels only','Shapes, compositions, colours, movement, or sound','File formats','Aspect ratios'], ans:1 },
+          { q:'A "whip pan" (or swish pan) is described as:', opts:['A slow zoom','A quick horizontal camera rotation that blurs the image','A colour correction technique','A type of fade'], ans:1 },
+          { q:'A "smash cut" is best described as:', opts:['A smooth dissolve','An abrupt cut using high contrast in both visuals and audio','A slow fade to white','A circular iris transition'], ans:1 },
+          { q:'A "J-cut" is when:', opts:['The video of the next scene appears before its audio','The audio of the next scene begins before its image','Two scenes play side by side','The screen splits into quarters'], ans:1 },
+        ],
+        typedQuestions:[
+          'Describe the difference between a "cut" and a "fade", and give an example of when each might be used.',
+          'What does a "dissolve" usually suggest to the audience, and how does a "match dissolve" combine two techniques?',
+          'Explain what a "match cut" is and how it can create meaning between two shots.',
+          'Describe the "iris" transition and how it has historically been used in film.',
+          'What is a "wipe" transition and what kind of look or feel does it usually create?',
+          'Explain the difference between a J-cut and an L-cut, and why editors use them in dialogue.',
+          'What is a "whip pan" and when might an editor use it as a transition?',
+          'Choose any 3 transitions from this lesson and explain, for each, a type of video (e.g. vlog, film, advert) where it would work well.'
         ]
       },
       { week:3, title:'Audio editing', topic:'Background music, voiceovers, and noise removal', driveId:null, youtubeId:'ZDqfifJ8nZw',
         quiz:[
-          { q:'What is a voiceover in video production?', opts:['Background music','A recorded narration played over video footage','A sound effect','An interview clip'], ans:1 },
-          { q:'Audio levels in video should typically peak at:', opts:['-6dB to -3dB','+10dB','0dB','As high as possible'], ans:0 },
-          { q:'What is the purpose of noise removal in audio editing?', opts:['To add echo','To eliminate unwanted background sounds','To increase volume','To add music'], ans:1 },
-          { q:'Fading audio in and out is used to:', opts:['Cut the audio abruptly','Create smooth audio transitions','Increase bass','Remove the audio completely'], ans:1 },
-          { q:'Which audio file format gives the best quality?', opts:['MP3','WAV','WMA','AAC'], ans:1 },
+          { q:'According to the video, why might audio quality be even more important than video quality for content creators?', opts:['Audio is cheaper to produce','Viewers click off videos with bad audio even if the video looks great','Audio takes less storage','It does not matter at all'], ans:1 },
+          { q:'What feature can automatically align separately recorded audio with your video footage?', opts:['Auto captions','Sync video to sound','Colour match','Beat sync only'], ans:1 },
+          { q:'What does the "Mark Beats" / auto-generate beats feature do?', opts:['Adds subtitles automatically','Detects and marks the rhythmic beats in a music track','Removes background noise','Changes the video resolution'], ans:1 },
+          { q:'For the most fluent feel, where does the video suggest a cut should ideally happen relative to a beat drop?', opts:['Exactly on the beat','One frame before the beat drops','Several seconds after the beat','It never matters'], ans:1 },
+          { q:'A video is made up of a sequence of:', opts:['Layers','Frames, each a still image','Filters','Transitions only'], ans:1 },
+          { q:'What is the benefit of using auto beat detection when editing clips to music?', opts:['It saves time compared to manually finding each beat','It removes the need for music entirely','It automatically adds subtitles','It changes the aspect ratio'], ans:0 },
+          { q:'According to the video, if you record with an external microphone separate from your camera, you should:', opts:['Ignore the camera\'s built-in audio','Use a sync feature to align the external audio with the video','Always re-record','Mute all audio'], ans:1 },
+        ],
+        typedQuestions:[
+          'Why does the video argue that audio quality can be even more important than video quality?',
+          'Explain how a "sync video to sound" feature helps when you record with a separate microphone.',
+          'What is "Mark Beats" (auto-generate beats) and how does it help when editing to music?',
+          'Explain the difference between cutting exactly on a beat versus one frame before the beat, and why this matters.',
+          'Why is it useful to understand that a video is made up of individual frames when fine-tuning your edit?',
+          'Describe a situation where syncing clips to music beats would improve a video (e.g. vlog, travel video).',
+          'What should you consider when choosing music or sound effects for a video, based on this lesson?',
+          'If you were editing a 30-second clip with background music, describe the steps you would take to align your cuts with the beat.'
         ]
       },
       { week:4, title:'Colour grading basics', topic:'Mood, tone, and colour correction', driveId:null, youtubeId:'TMnBLZy3WFg',
         quiz:[
-          { q:'What is the difference between colour correction and colour grading?', opts:['They are the same thing','Correction fixes technical issues; grading creates a stylistic look','Grading is done first','Correction is only for audio'], ans:1 },
-          { q:'Increasing the "exposure" of a video clip will:', opts:['Make it darker','Make it brighter','Change the colour temperature','Add contrast'], ans:1 },
-          { q:'A warm colour grade typically uses more:', opts:['Blues and greens','Oranges and yellows','Purples and pinks','Greys and blacks'], ans:1 },
-          { q:'What does "white balance" control in a video?', opts:['The brightness of whites only','The overall colour temperature of the image','The audio levels','The frame rate'], ans:1 },
-          { q:'LUTs in colour grading are:', opts:['A type of audio filter','Preset colour transformations applied to footage','Video transitions','Screen recording tools'], ans:1 },
+          { q:'What does "shooting in log" mean, according to the video?', opts:['Recording in black and white','Using a camera profile that captures flat, low-contrast footage with more dynamic range','Recording only at night','Using no audio'], ans:1 },
+          { q:'To add contrast to log footage, the video recommends creating what shape on the Luma curve?', opts:['A straight line','An S-shaped curve','A circle','A zigzag'], ans:1 },
+          { q:'On the Luma curve, which part represents the shadows?', opts:['The top part','The middle part','The bottom part','There is no specific part'], ans:2 },
+          { q:'What does the HSL tool allow you to adjust for a specific colour?', opts:['File size','Hue, Saturation, and Lightness of that colour','Frame rate','Aspect ratio'], ans:1 },
+          { q:'According to the video, RGB curves (as opposed to the Luma curve) affect:', opts:['The whole image equally','Only one colour channel (red, green, or blue) at a time','Only the audio','Only the frame rate'], ans:1 },
+          { q:'What is the first, easiest step in colour grading mentioned in the video?', opts:['Apply a filter','Export the video','Add captions','Delete all clips'], ans:0 },
+          { q:'According to the video, when it comes to colour grading adjustments, it is generally better to:', opts:['Overdo every adjustment','Underdo it slightly rather than overdo it','Never touch the colour','Only use black and white'], ans:1 },
+        ],
+        typedQuestions:[
+          'Explain what "log" footage is and why some creators choose to shoot in log.',
+          'Describe how an S-shaped curve on the Luma curve adds contrast to flat footage.',
+          'What is the difference between adjusting "tint" and adjusting "white balance/temperature"?',
+          'Explain how the HSL tool can be used to change the colour of the sky in a shot without affecting other colours.',
+          'How do RGB curves differ from the Luma curve, and what extra control do they give you?',
+          'Why does the video warn against overdoing colour grading adjustments?',
+          'Describe the general colour grading workflow shown in the video, from log correction to final tweaks.',
+          'Why does the video suggest practising colour grading on different types of footage (sunny, cloudy, beach, forest)?'
         ]
       },
       { week:5, title:'Editing for platforms', topic:'Exporting for YouTube, Instagram, and WhatsApp', driveId:null, youtubeId:'nEwHL9GRuFk',
         quiz:[
-          { q:'What aspect ratio is standard for YouTube videos?', opts:['1:1','4:3','16:9','9:16'], ans:2 },
-          { q:'Instagram Reels are best exported in which aspect ratio?', opts:['16:9','4:3','1:1','9:16'], ans:3 },
-          { q:'What does "bitrate" affect in a video export?', opts:['The video length','Video quality and file size','The frame rate','The colour grade'], ans:1 },
-          { q:'For WhatsApp sharing, which is most important to consider?', opts:['4K resolution','Small file size for easy sharing','High bitrate','Lossless audio'], ans:1 },
-          { q:'H.264 is a commonly used video:', opts:['Editing software','Compression codec','Camera brand','Audio format'], ans:1 },
+          { q:'In a mobile editing app, what is the first step when starting a new project?', opts:['Add music','Select and import the footage you want to edit','Export the video','Choose a font'], ans:1 },
+          { q:'What does the "playhead" on the timeline represent?', opts:['The total length of the video','The current position being shown in the player window','The audio volume','The export quality'], ans:1 },
+          { q:'What does "splitting" a clip do?', opts:['Deletes the whole clip','Cuts the clip into two separate parts at the playhead','Changes the clip\'s colour','Adds a transition automatically'], ans:1 },
+          { q:'How can you shorten or lengthen a clip on the timeline?', opts:['By changing the aspect ratio','By dragging the handles at the left or right edge of the clip','By adding a filter','By muting the audio'], ans:1 },
+          { q:'What does the aspect ratio setting (e.g. 9:16, 1:1, 16:9) control?', opts:['The video\'s frame shape/orientation','The video\'s colour grade','The audio quality','The export file name'], ans:0 },
+          { q:'According to the video, what should drive your cuts when editing footage to a song?', opts:['Random timing','The beats/rhythm of the music','The longest clip first','The brightest clip first'], ans:1 },
+          { q:'What can you use to mute the audio of a specific clip on the timeline?', opts:['The export settings','A mute button associated with that clip','Deleting the clip','Changing the aspect ratio'], ans:1 },
+        ],
+        typedQuestions:[
+          'Describe the basic steps to start a new project and import footage in a mobile editing app like CapCut.',
+          'What is the "playhead" and how does it relate to what you see in the preview window?',
+          'Explain the difference between trimming a clip and splitting a clip.',
+          'Why might you want to rearrange the order of clips on your timeline, and how is this done?',
+          'Explain how to add music to your project and bring it to the start of your timeline.',
+          'Describe how cutting your video clips to match the beat of the music can improve an edit.',
+          'What is the purpose of the aspect ratio setting, and when might you choose 9:16 versus 16:9?',
+          'Summarise, in your own words, the basic editing workflow shown in this lesson from importing footage to a finished rough cut.'
         ]
       },
       { week:6, title:'Final project showcase', topic:'Present your completed 60-second edit', driveId:null, youtubeId:'D1b_y0B-g7o',
         quiz:[
-          { q:'A strong 60-second video should have:', opts:['As many transitions as possible','A clear beginning, middle, and end','Only one type of shot','No music'], ans:1 },
-          { q:'When reviewing your own edit, what should you check first?', opts:['The file name','Audio sync, pacing, and clarity of message','The export format','The file size'], ans:1 },
-          { q:'What is a "rough cut"?', opts:['The final exported video','An early version of the edit with all clips in place before fine-tuning','A deleted segment','A colour-graded version'], ans:1 },
-          { q:'Adding captions to a video is important because:', opts:['It makes the video longer','It improves accessibility for viewers','It increases file size','It changes the colour grade'], ans:1 },
-          { q:'The most important thing a video should do is:', opts:['Use the latest effects','Communicate its message clearly to the audience','Have the highest resolution','Be the longest possible'], ans:1 },
+          { q:'According to the video, what is the benefit of creating a reusable "template" project?', opts:['It makes the video longer','It saves time by reusing backgrounds, effects, and transitions for future edits','It automatically writes your script','It removes the need for music'], ans:1 },
+          { q:'What tool does the video recommend using to identify the font used in captions from another creator\'s video?', opts:['A colour picker','A font identifier website, using a screenshot of the captions','The export settings','The aspect ratio tool'], ans:1 },
+          { q:'According to the video, why should captions be split into shorter sentences?', opts:['To increase video length','So captions are not too long and stay readable and well-timed','To reduce file size','To change the font automatically'], ans:1 },
+          { q:'What does the video mean by "the big idea" when planning an edit?', opts:['The video\'s title only','Dividing the video into segments and deciding where to use backgrounds, b-roll, and the speaker','The export resolution','The colour grade'], ans:1 },
+          { q:'In the video\'s example, what is identified as "the hook"?', opts:['The last sentence of the video','The opening line/segment designed to grab attention','The credits','The music track'], ans:1 },
+          { q:'After installing a new font for captions, what does the video say you may need to do?', opts:['Nothing, it updates automatically','Close and reopen the editing app so it detects the new font','Reinstall the app entirely','Restart your phone only'], ans:1 },
+          { q:'According to the video, captions should ideally:', opts:['Never match the speaker\'s timing','Be matched/synced to when the speaker actually says those words','Always be in a different language','Be removed entirely'], ans:1 },
+        ],
+        typedQuestions:[
+          'Explain why creating a reusable template can make future edits faster, according to the video.',
+          'Describe the process of identifying and using a custom font for captions, as shown in the video.',
+          'Why does the video recommend splitting long captions into shorter sentences?',
+          'What is meant by "the big idea" of a video, and how does it help guide the editing process?',
+          'Explain what a "hook" is and why it is placed at the beginning of a video.',
+          'Why is it important to match captions to the timing of the speaker\'s voice?',
+          'Describe how b-roll and backgrounds can be used alongside a "talking head" segment.',
+          'Reflecting on everything covered across this Video Editing course, describe the final short video project you would like to create and which techniques from this course you would use.'
         ]
       },
     ]
@@ -1312,7 +1384,9 @@ function openLesson(classId,lessonIdx){
     container.innerHTML=`<div class="video-placeholder"><div class="play-icon">🎬</div><p>Video coming soon. Check back once your instructor uploads the recording for this lesson.</p></div>`;
   }
   renderQuizArea(classId,lessonIdx);
-  renderPracticalTask(classId,lessonIdx);
+  const isDone=getCompleted(classId).includes(lessonIdx);
+  if(isDone){ renderPracticalTask(classId,lessonIdx); }
+  else { const existing=document.getElementById('practical-task-area'); if(existing) existing.remove(); }
   showScreen('player');
 }
 
@@ -1363,7 +1437,7 @@ function renderPracticalTask(classId,lessonIdx){
     <div class="task-title">${t.title}</div>
     <div class="task-desc">${t.desc}</div>
     <ol class="task-steps">${t.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
-    <div class="task-note">💡 You must complete this task and submit it via the form below to fully unlock the next lesson.</div>
+    <div class="task-note">💡 Complete this task and submit your work via the form below as part of your assessment for this lesson.</div>
     <a href="${GOOGLE_FORM_URL}?entry.class=${encodeURIComponent(c.name)}&entry.lesson=${encodeURIComponent('Week '+lesson.week+': '+lesson.title)}" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-flex;margin-top:0.25rem;">Submit your work ↗</a>
   </div>`;
   // Insert practical task after quiz-area div
@@ -1535,6 +1609,7 @@ function submitTypedAnswers(classId,lessonIdx){
       </div>
     </div>
   </div>`;
+  renderPracticalTask(classId,lessonIdx);
 }
 
 
