@@ -1462,6 +1462,16 @@ const CLASSES = [
           { q:'What does "elif" mean in Python?', opts:['End if','Else if','Equal if','Empty if'], ans:1 },
           { q:'What is the output of: for i in range(3): print(i)', opts:['1 2 3','0 1 2','0 1 2 3','1 2'], ans:1 },
           { q:'Which operator checks if two values are equal in Python?', opts:['=','==','!=','>='], ans:1 },
+        ],
+       typedQuestions:[
+         'What is the purpose of an if statement in programming, and how is it structured in Python?',
+          'What is a "Ternary Operator" in Python, and why would you use it?',
+          'What are the three logical operators in Python and what are their functions?',
+          'What does "short-circuit" mean in the context of logical operators in Python?',
+          'Explain what "chaining comparison operators" means and provide a code example (e.g., if 18 <= age < 65:).',
+          'In Python, what is the difference between the == and = operators?',
+          'Why is indentation critical in Python when writing if statements?',
+          'What is the role of the elif keyword in an if statement structure?'
         ]
       },
       { week:3, title:'Functions and modules', topic:'Writing reusable code and importing libraries', driveId:null, youtubeId:'qbWBhyGmCs0',
@@ -1471,7 +1481,17 @@ const CLASSES = [
           { q:'How do you import a module in Python?', opts:['include math','require math','import math','use math'], ans:2 },
           { q:'What is the purpose of a module?', opts:['To create loops','To store reusable code and functions','To print output','To define variables'], ans:1 },
           { q:'What does math.sqrt(16) return?', opts:['8','4.0','2','16'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+          'What is the central philosophy behind using functions and modules in programming?',
+          'What is a function in programming, and what are the two main things a function can do?',
+          'Explain the difference between a "void" function and a "fruitful" function in Python.',
+          'What is a "parameter" in a function definition?',
+          'What is an "argument" in the context of a function call?',
+          'What is a "module" in Python, and how do you use one in your program?',
+          'What is the import keyword used for in Python?',
+          'According to the video, what does the math.fsum() function do?'
+       ]
       },
       { week:4, title:'Working with data', topic:'Lists, dictionaries, and file handling', driveId:null, youtubeId:'aequTxAvQq4',
         quiz:[
@@ -1480,7 +1500,17 @@ const CLASSES = [
           { q:'What does the append() method do to a list?', opts:['Removes the last item','Sorts the list','Adds an item to the end','Clears the list'], ans:2 },
           { q:'To open a file for reading in Python, which mode is used?', opts:['"w"','"a"','"r"','"x"'], ans:2 },
           { q:'What does len([1,2,3,4]) return?', opts:['3','5','4','0'], ans:2 },
-        ]
+        ],
+       typedQuestions:[
+          'What is the fundamental reason we need to work with files in programming, according to the video?',
+          'What are the two basic parameters you need to pass to the open() function in Python?',
+          'What are the three basic "modes" you can use to open a file in Python (e.g., read, write, append)?',
+          'What is the difference between the read() and readline() methods when working with files?',
+          'What is the difference between writing to a file with w and appending to it with a?',
+          'How does a for loop help when reading data from a file line by line?',
+          'What is the difference between rb (read binary) and r (read character) modes in Python?',
+          'How can you use Python to copy the contents of one file into another?'
+       ]
       },
       { week:5, title:'NumPy and Matplotlib', topic:'Data analysis and simple plotting', driveId:null, youtubeId:'7Lc2AxiM17o',
         quiz:[
@@ -1489,7 +1519,17 @@ const CLASSES = [
           { q:'What does Matplotlib do?', opts:['Runs machine learning models','Creates data visualisations and plots','Handles database queries','Builds web applications'], ans:1 },
           { q:'Which function in Matplotlib shows the plot on screen?', opts:['plt.draw()','plt.render()','plt.show()','plt.display()'], ans:2 },
           { q:'What does numpy.mean([2,4,6]) return?', opts:['6','2','4.0','12'], ans:2 },
-        ]
+        ],
+       typedQuestions:[
+          'What is Matplotlib, and what is it primarily used for in Python?',
+          'What is the standard alias for importing Matplotlib's plotting module (e.g., import matplotlib.pyplot as ...)?',
+          'What is the difference between a "Figure" and an "Axes" in Matplotlib's architecture?',
+          'How do you create a simple line plot in Matplotlib?',
+          'What is the difference between a plt.plot() function and a plt.scatter() function in Matplotlib?',
+          'What is a "subplot" in Matplotlib, and why is it useful?',
+          'How can you save a plot or figure you have created in Matplotlib to a file?',
+          'What are some of the key customizations you can make to a Matplotlib plot (e.g., colors, labels, grid, line styles)?'
+       ]
       },
       { week:6, title:'Final project showcase', topic:'Present your Python engineering mini-project', driveId:null, youtubeid:'Vl_G-F7m8c',
         quiz:[
@@ -1498,7 +1538,17 @@ const CLASSES = [
           { q:'Which of these makes Python code more readable?', opts:['Using very long variable names with no spaces','Consistent indentation and meaningful variable names','Writing everything on one line','Removing all spaces'], ans:1 },
           { q:'Version control tools like Git are used to:', opts:['Speed up your code','Track changes and collaborate on code','Format your code','Debug errors automatically'], ans:1 },
           { q:'What should you test before submitting a final Python project?', opts:['Only the first function','That the code runs without errors and produces correct output','Only the print statements','The file size'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+          'According to the description, what is the final project for the Python programming course?',
+          'What is the pillow library used for in Python?',
+          'What is the purpose of a "Grid" or "Pack" layout in GUI programming with Tkinter?',
+          'What is a "function" and what is the syntax for defining one in Python?',
+          'What is the purpose of the speech_recognition library?',
+          'What is the purpose of the pyttsx3 library?',
+          'What is a "webserver" in the context of the Python course project (as described in the description)?',
+          'According to the description, what is the final step of the Python project?'
+       ]
       },
     ]
   },
@@ -1513,7 +1563,17 @@ const CLASSES = [
           { q:'An actuator in an automation system is responsible for:', opts:['Detecting changes','Processing logic','Performing physical actions like moving or switching','Displaying information'], ans:2 },
           { q:'What is the role of a PLC in a factory?', opts:['To generate electricity','To control and automate machines and processes','To store products','To communicate with customers'], ans:1 },
           { q:'HMI in automation stands for:', opts:['High Machine Interface','Human-Machine Interface','Hardware Management Interface','Hydraulic Motor Integration'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+         'What is the core challenge of an industrial automation control system?',
+          'What is the role of an "input module" in an industrial control system?',
+          'What is a PLC, and what is its primary function?',
+          'What are the three main steps of a PLC's "scan cycle"?',
+          'What is the role of an "output module" in the control system architecture?',
+          'Why is a Variable Frequency Drive (VFD) used instead of a simple contactor for controlling motors?',
+          'What is a "closed-loop control" system, and what component is necessary to create one with a servo drive?',
+          'What is an HMI, and what is its purpose in the overall system?'
+       ]
       },
       { week:2, title:'Ladder logic fundamentals', topic:'Contacts, coils, and basic logic rungs', driveId:null, youtubeId:'IcAa_gdNe5o',
         quiz:[
@@ -1522,7 +1582,17 @@ const CLASSES = [
           { q:'What does a coil represent in ladder logic?', opts:['An input sensor','An output that is activated by the logic','A timer','A counter'], ans:1 },
           { q:'A normally closed (NC) contact passes current when:', opts:['It is energised','It is de-energised','There is an error','The PLC restarts'], ans:1 },
           { q:'What is a "rung" in a ladder logic program?', opts:['A physical wire','One line/row of logic in the program','A type of sensor','An output device'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+          'What is the central concept of an industrial automation control system?',
+          'What is a "digital input" and what type of electrical signal does it typically use?',
+          'What is an "analog input" and what type of signal does it typically measure?',
+          'What is a "contactors" and what is its role in controlling a motor?',
+          'What is a "Variable Frequency Drive" (VFD) and what is its advantage over a contactor?',
+          'What is a "servo drive" and what crucial capability does it provide for precise positioning?',
+          'Why do modern facilities use industrial networks (like Ethernet) rather than running point-to-point copper wires?',
+          'What is a "communication protocol" and why is it essential for an industrial network to function?'
+       ]
       },
       { week:3, title:'Timers and counters', topic:'Using TON, TOF, CTU in ladder programs', driveId:null, youtubeId:'BHbOXDt5O3o',
         quiz:[
@@ -1531,7 +1601,17 @@ const CLASSES = [
           { q:'What does the preset value (PT) in a timer define?', opts:['The current time','The time delay before the timer output activates','The reset value','The scan rate'], ans:1 },
           { q:'A TOF (Timer Off Delay) turns the output off:', opts:['Immediately when input goes off','After a set delay once the input goes off','Before the input activates','When power is lost'], ans:1 },
           { q:'In a CTU counter, the output (Q) activates when:', opts:['The count is zero','The accumulated value reaches the preset value','The reset is triggered','The timer expires'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+          'What are the three main types of PLC timers discussed in the transcript?',
+          'What is a "preset value" in a PLC timer?',
+          'What is an "accumulated value" in a PLC timer?',
+          'What happens to an On-Delay Timer when the input selector switch is turned on?',
+          'What is the key difference between an Off-Delay Timer and an On-Delay Timer?',
+          'What is the "timer done bit" and how does it function for an On-Delay and an Off-Delay timer?',
+          'What is the main characteristic of a "Retentive On-Delay" timer?',
+          'Why would a "Retentive On-Delay" timer require a separate reset bit?'
+       ]
       },
       { week:4, title:'Introduction to Factory I/O', topic:'Navigating the simulation environment', driveId:null, youtubeId:'6lZ30CaiHFo',
         quiz:[
@@ -1540,7 +1620,17 @@ const CLASSES = [
           { q:'In Factory I/O, "actuators" are mapped to PLC:', opts:['Inputs','Counters','Outputs','Memory bits'], ans:2 },
           { q:'What must be done in Factory I/O before running a simulation?', opts:['Install a new operating system','Connect Factory I/O to a PLC driver and configure I/O tags','Update the graphics card','Print the schematic'], ans:1 },
           { q:'Which of these is a scene available in Factory I/O?', opts:['A submarine engine room','A conveyor belt system','A nuclear reactor','An aircraft cockpit'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+           'What is Factory I/O, and what is its primary use as described in the video?',
+          'What does the "Palette" window in Factory I/O allow you to do?',
+          'How can you determine what types of sensors and actuators are in a specific Factory I/O scene?',
+          'Why is it beneficial to refer back to the Factory I/O website's documentation and manual?',
+          'What is the first step to connect Factory I/O to a PLC simulator?',
+          'Where can you find the "Tutorials and Samples" for different PLC brands on the Factory I/O website?',
+          'How do you differentiate between an "actuator tag" and a "sensor tag" in a Factory I/O scene?',
+          'What is the purpose of the "Drivers" menu in Factory I/O?'
+       ]
       },
       { week:5, title:'Connecting PLC to Factory I/O', topic:'Simulating a conveyor belt control system', driveId:null, youtubeId:'dFrg3-1PN18',
         quiz:[
@@ -1549,7 +1639,17 @@ const CLASSES = [
           { q:'What does a motor output coil control in a conveyor simulation?', opts:['The conveyor sensor','The conveyor belt motor (start/stop)','The PLC power','The HMI display'], ans:1 },
           { q:'An emergency stop (E-Stop) is typically wired as a:', opts:['Normally open contact','Normally closed contact','Output coil','Timer'], ans:1 },
           { q:'In Factory I/O, running the simulation allows you to:', opts:['Edit ladder logic in real time','See the physical effect of your PLC program in 3D','Generate automatic code','Print circuit diagrams'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+          'What is the main goal of the practical demo in this video?',
+          'What is the first thing the instructor does when selecting a new scene in Factory I/O?',
+          'In the Factory I/O scene for this demo, what are the roles of the sensor and the conveyor?',
+          'Why is it important to know if a sensor is "normally open" or "normally closed" when writing the PLC logic?',
+          'What is the function of the "Retro-reflective" sensor used in the Factory I/O scene?',
+          'In the ladder logic program, what is the purpose of the branch with the XIC instruction used alongside the output?',
+          'What does the IP address do in the context of connecting Factory I/O to a simulated PLC?',
+          'What is the final step to get the PLC program and the Factory I/O scene to communicate with each other?'
+       ]
       },
       { week:6, title:'Final project showcase', topic:'Present your automated factory simulation', driveId:null, youtubbeId:'ZWMz6J_Pdyo',
         quiz:[
@@ -1558,7 +1658,17 @@ const CLASSES = [
           { q:'What is the purpose of documenting a PLC program?', opts:['To make it longer','To explain the logic so others can understand and maintain it','To slow down the processor','To add more rungs'], ans:1 },
           { q:'A well-structured ladder logic program should be:', opts:['As complex as possible','Organised, commented, and easy to follow','Entirely in one rung','Without any timers'], ans:1 },
           { q:'What is the final step before deploying a PLC program in industry?', opts:['Deleting the simulation','Full testing and validation to confirm the system works safely','Increasing the timer values','Removing all counters'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+          'What is the name of the complex Factory I/O scene being examined in the final week?',
+          'Why is the elevator in the Factory I/O scene described as "basic" but still "pretty tough" to program?',
+          'What is the function of the "Remover Circuit" in the Factory I/O scene?',
+          'Why is it necessary to use a "Lift Slow" signal in combination with "Lift Up" when moving the elevator up to a specific level?',
+          'What is the purpose of the "Timer Pulse" in the Siemens PLC program for the elevator project?',
+          'How does the program determine which level (0, 1, or 2) a package should be sent to?',
+          'What is the purpose of the "Startup Block" in the PLC program?',
+          'According to the video, what is one way to make the elevator project even more advanced, as a suggestion for a future video?'
+       ]
       },
     ]
   },
@@ -1573,7 +1683,17 @@ const CLASSES = [
           { q:'What does the ERASE command do?', opts:['Undoes the last action','Deletes selected objects','Hides the object','Moves the object'], ans:1 },
           { q:'Which key cancels a command in AutoCAD?', opts:['Delete','Enter','Escape','Tab'], ans:2 },
           { q:'What is the function of the zoom tool in AutoCAD?', opts:['Changes the size of objects','Magnifies or reduces the view of the drawing','Prints the drawing','Exports the file'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+           'What is the first command you should type into AutoCAD to set up a drawing file, and why is it important?',
+           'What does the DYN MODE command do, and why does the instructor recommend setting it to 3?',
+           'According to the video, what are the two different ways to enter a command in AutoCAD?',
+           'What is the difference between a "Line" and a "Polyline" in AutoCAD?',
+           'How can you pan and zoom around the AutoCAD workspace using your mouse?',
+           'What is the purpose of the "OSNAP" (Object Snap) settings in AutoCAD?',
+           'What is the primary function of the "Modify" tab's tools (like Move, Copy, Rotate, etc.)?',
+           'What is the purpose of using "Layers" in an AutoCAD drawing?'
+       ]
       },
       { week:2, title:'Layers and line types', topic:'Organising drawings with layers and properties', driveId:null, youtubeId:'k5WDa83ylc0',
         quiz:[
@@ -1582,7 +1702,17 @@ const CLASSES = [
           { q:'A frozen layer in AutoCAD is:', opts:['Deleted permanently','Not visible and not regenerated, speeding up performance','Locked from editing','Saved as a template'], ans:1 },
           { q:'Line weight in a drawing refers to:', opts:['The length of a line','The colour of a line','The thickness of a line','The layer a line is on'], ans:2 },
           { q:'What does a dashed line typically represent in engineering drawings?', opts:['A visible edge','A hidden edge or feature not directly visible','A centre line only','A dimension line'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+          'What is the main problem described at the start of the video regarding layers in AutoCAD drawings?',
+          'What is the purpose of the "Layer Properties Manager"?',
+          'What is the difference between "turning off" a layer and "freezing" a layer in AutoCAD?',
+          'What does the "Lock/Unlock" command do to a layer?',
+          'What is the purpose of the "Isolate" command in the Layers panel?',
+          'What is a "Layer State Manager," and how does it help a designer manage complex drawings?',
+          'What does the "VP Freeze" command do, and in what context is it used?',
+          'What is the importance of the "Line Type" column in the Layer Properties Manager?'
+       ]
       },
       { week:3, title:'Editing tools', topic:'Trim, extend, offset, mirror, and array', driveId:null, youtubeId:'RRKL8qgz9Do',
         quiz:[
@@ -1591,7 +1721,17 @@ const CLASSES = [
           { q:'The MIRROR command:', opts:['Copies an object at a set distance','Creates a reflected copy of selected objects about a mirror line','Rotates an object 180 degrees','Scales an object'], ans:1 },
           { q:'An ARRAY creates:', opts:['A single copy','Multiple copies arranged in a pattern (rectangular or polar)','A scaled version','A trimmed version'], ans:1 },
           { q:'EXTEND in AutoCAD:', opts:['Shortens a line','Lengthens an object to meet a boundary edge','Deletes an object','Offsets an object'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+          'What is the "Modify" panel in AutoCAD, and what is its general purpose?',
+         'What does the "Move" command do, and what is required to use it?',
+         'What is the difference between the "Copy" command and the "Move" command?',
+         'How does the "Stretch" command differ from the "Move" command?',
+         'What does the "Rotate" command do, and what is a key feature (like reference) to use it more effectively?',
+         'What is the "Offset" command used for in AutoCAD?',
+         'What does the "Explode" command do to a complex object like a rectangle or block?',
+         'What is the purpose of the "Trim" command, and how do you use it?'
+       ]
       },
       { week:4, title:'Dimensioning and annotation', topic:'Adding dimensions, text, and leaders', driveId:null, youtubeId:'0Xcg3mTMQ54',
         quiz:[
@@ -1600,7 +1740,17 @@ const CLASSES = [
           { q:'What is the DTEXT command used for?', opts:['Drawing lines','Adding single-line text to a drawing','Creating dimensions','Inserting images'], ans:1 },
           { q:'Tolerance in dimensioning refers to:', opts:['The colour of the dimension','The acceptable range of variation for a measurement','The line weight','The font size'], ans:1 },
           { q:'A title block in a drawing contains:', opts:['Only the drawing itself','Project name, scale, date, drawn by, and revision information','Only the legend','Only the border'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+          'What is an "Annotative Dimension" in AutoCAD, and what is its main advantage?',
+         'Where do you go to modify the settings of an Annotative Dimension style?',
+         'What is the purpose of the DIMLAYER command in AutoCAD?',
+         'What needs to be done to an annotative dimension to make it appear in a viewport that has a different scale?',
+         'What happens to the annotative dimensions when the "Show Annotation Objects" icon is deactivated?',
+         'What is the purpose of the "Annotate" tab in AutoCAD?',
+         'How do you set the size of an annotation object like a dimension, ensuring it will be the correct size when printed?',
+         'What is the purpose of the "Scale" icon in the bottom right of the AutoCAD window in relation to annotative objects?'
+       ]
       },
       { week:5, title:'Drawing electrical schematics', topic:'Symbols, connections, and layout standards', driveId:null, youtubeId:'asPzWqRAgRg',
         quiz:[
@@ -1609,7 +1759,17 @@ const CLASSES = [
           { q:'What is the purpose of a ground symbol in an electrical schematic?', opts:['To show the power source','To indicate a reference point of zero voltage','To mark a switch','To show a lamp'], ans:1 },
           { q:'IEC and ANSI refer to:', opts:['Software brands','International standards for electrical symbols and diagrams','Types of cables','PLC brands'], ans:1 },
           { q:'In a schematic, a normally open switch is drawn as:', opts:['Two lines with a gap and no bridge','Two lines connected directly','A circle','A zigzag line'], ans:0 },
-        ]
+        ],
+       typedQuestions:[
+         'What is the main project described at the start of the tutorial?',
+         'What is the purpose of the UNITS command, and why is it important to set it before starting a drawing?',
+         'What are "Object Snaps," and why are they turned on for this tutorial?',
+         'What command is used to create a mirror image of an object?',
+         'What is the TRIM command used for in this electrical diagram project?',
+         'Why is the LTS command used, and what does it control?',
+         'How is a "Multiline Text" (MTEXT) object created in AutoCAD?',
+         'Why is the "Ortho Mode" important when drawing straight lines in AutoCAD?'
+       ]
       },
       { week:6, title:'Final project showcase', topic:'Present your dimensioned technical drawing', driveId:null, youtubeId:'OHGb8Ay_Ls',
         quiz:[
@@ -1618,7 +1778,17 @@ const CLASSES = [
           { q:'What does "As built" mean on an engineering drawing?', opts:['A preliminary sketch','A drawing that reflects what was actually constructed','A design proposal','A template'], ans:1 },
           { q:'Why is it important to use standard symbols in engineering drawings?', opts:['To make it artistic','So anyone trained in engineering can read and understand them','To save space','To speed up drawing'], ans:1 },
           { q:'Before printing a drawing, you should check:', opts:['The file name only','Scale, dimensions, title block, and layer visibility','Only the colours','Only the font size'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+         'According to the transcript, what is an engineering drawing?',
+         'What is the difference between a "Detail Drawing" and an "Assembly Drawing"?',
+         'What is the "Title Block" in a drawing, and what type of information is usually found there?',
+         'What is the difference between "First-Angle Projection" and "Third-Angle Projection"?',
+         'What is a "Sectional View" in a drawing, and why is it used?',
+         'What is a "Call Out" in a technical drawing, and how is it used?',
+         'Explain the concept of "Tolerancing" in a drawing.',
+         'According to the transcript, what is the "Golden Rule" when it comes to tolerancing?'
+       ]
       },
     ]
   },
@@ -1633,7 +1803,17 @@ const CLASSES = [
           { q:'How do you add a component in Proteus ISIS?', opts:['Press F1','Click the component mode button and search the library','Double click the canvas','Press Ctrl+N'], ans:1 },
           { q:'What does "running" a simulation in Proteus do?', opts:['Exports the schematic','Activates the circuit and shows real-time behaviour','Prints the circuit','Saves the file'], ans:1 },
           { q:'Wire in Proteus ISIS represents:', opts:['A component','An electrical connection between components','A power rail','A ground symbol'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+        'What is Proteus software primarily used for, according to the first tutorial?',
+         'What is the first step to start a new project in Proteus 8?',
+         'In the "New Project Wizard," what is the purpose of the "Firmware" page where you select a controller?',
+         'What is the "Selection Mode" tool (the default arrow) used for in the Proteus interface?',
+         'What is the "Component Mode" tool (the 'P' icon) used for?',
+         'What is the purpose of the "Play" button in the Proteus interface?',
+         'What is the purpose of the "Zoom to Fit" tool in Proteus?',
+         'What is the "Subcircuit Mode" used for, and what types of inputs/outputs can it provide?'
+       ]
       },
       { week:2, title:'Basic circuit simulation', topic:'Resistors, capacitors, LEDs, and voltage sources', driveId:null, youtubeId:'Oo_2J2traQc',
         quiz:[
@@ -1642,7 +1822,17 @@ const CLASSES = [
           { q:'A capacitor in a DC circuit will eventually:', opts:['Keep charging indefinitely','Block DC current once fully charged','Discharge continuously','Explode'], ans:1 },
           { q:'In Proteus, a VSOURCE component represents:', opts:['A variable resistor','A voltage signal source','A virtual switch','A ground'], ans:1 },
           { q:'What colour does an LED component in Proteus typically glow when forward biased?', opts:['Black','It depends on the LED type selected','Always blue','Always white'], ans:1 },
-        ]
+        ],
+       typedQuestions:[
+       'According to the description, what is the main project of Week 2?',
+         'What two main components are used to create the LED circuit with a switch?',
+         'What is the purpose of the DC Voltmeter in the simulation?',
+         'What is the likely state of a switch in a circuit to turn on an LED?',
+         'Why would a resistor be added to a circuit with an LED?',
+         'What is the basic function of an LED in a circuit?',
+         'What does a DC Voltmeter measure?',
+         'What is the key step after building the circuit to see it work?'
+       ]
       },
       { week:3, title:'Digital logic circuits', topic:'Gates, flip-flops, and 7-segment displays', driveId:null, youtubeId:'FC1anI-96nE',
         quiz:[
@@ -1651,7 +1841,17 @@ const CLASSES = [
           { q:'A D flip-flop stores:', opts:['Analogue voltage','One bit of digital data','Multiple bytes','A clock signal'], ans:1 },
           { q:'A 7-segment display shows:', opts:['Images','Numerical digits and some letters using 7 LED segments','Analogue waveforms','Binary code only'], ans:1 },
           { q:'An OR gate outputs HIGH when:', opts:['All inputs are LOW','No inputs are HIGH','At least one input is HIGH','Only two inputs are HIGH'], ans:2 },
-        ]
+        ],
+       typedQuestions:[
+         'According to the description, what was simulated in Week 3?',
+         'What are the two basic logic states (values) used in digital logic?',
+         'What is the purpose of a "Logic Toggle" in the Proteus simulation?',
+         'What are the three basic logic gates mentioned or implied in the tutorial?',
+         'What is an LED used for in the context of a digital logic simulation?',
+         'What is an AND gate's output state if one input is 0 and the other is 1?',
+         'What is an OR gate's output state if both inputs are 0?',
+         'What is a NOT gate used for?'
+       ]
       },
       { week:4, title:'Virtual instruments', topic:'Oscilloscope, voltmeter, and signal analysis', driveId:null, youtubeId:'aIwaoGASq0M',
         quiz:[
